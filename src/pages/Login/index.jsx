@@ -32,6 +32,9 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  typography: {
+    marginTop: theme.spacing(1)
+  }
 }));
 
 const theme = createTheme({
@@ -110,8 +113,11 @@ const Login = () => {
           </ThemeProvider>
 
           <ButtonAtoms fullWidth variant="contained" color="primary" title={"Sign In"} className={classes.submit} onClick={btnLogin} style={{ background: "green" }} />
-          <Grid container justifyContent="center">
-            <Grid item>
+          <Grid container justifyContent="center" direction="column" alignItems="center">
+            <Grid item className={classes.typography}>
+              <LinkAtoms to="/lupa-password" variant="body2" title={"Lupa password?"} style={{ color: "green" }} />
+            </Grid>
+            <Grid item className={classes.typography}>
               <LinkAtoms to="/register" variant="body2" title={"Belum punya akun? Daftar"} style={{ color: "green" }} />
             </Grid>
           </Grid>
