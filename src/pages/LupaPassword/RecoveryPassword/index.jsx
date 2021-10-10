@@ -6,12 +6,11 @@ import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { makeStyles, ThemeProvider, createTheme } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import { TypographyAtoms, ButtonAtoms, LinkAtoms } from "../../components/atoms";
+import { TypographyAtoms, ButtonAtoms, LinkAtoms } from "../../../components/atoms";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { Snackbar } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
-import { useDispatch } from "react-redux";
 import { green } from "@material-ui/core/colors";
 
 const useStyles = makeStyles((theme) => ({
@@ -43,13 +42,16 @@ const theme = createTheme({
   },
 });
 
-export default function LupaPassword() {
+export default function RecoveryPassword() {
   const classes = useStyles();
   const history = useHistory();
+  const username = history.location.state?.username;
+
   const [open, setOpen] = useState(false);
   const [response, setResponse] = useState("");
   const [state, setState] = useState({
-    username: "",
+    passwordLama: "",
+    passwordBaru: "",
   });
 
   const handleChange = (event) => {
@@ -61,16 +63,12 @@ export default function LupaPassword() {
   };
 
   const onKonfirmasi = () => {
+    console.log(`${JSON.stringify(state)}`);
     axios
-      .post("http://localhost:4000/auth/checkUsername", state)
+      .post(`http://localhost:4000/auth/recoveryPassword/${username}`, state)
       .then((res) => {
         console.log("response", res);
-        history.push({
-          pathname: "/recovery-password",
-          state: {
-            username: state.username,
-          },
-        });
+        history.push("/login");
       })
       .catch((err) => {
         const message = err.response.data.message;
@@ -94,11 +92,11 @@ export default function LupaPassword() {
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
-        <TypographyAtoms component="h1" variant="h5" title={"Lupa Password"} />
+        <TypographyAtoms component="h1" variant="h5" title={"Ganti Password"} />
         <form className={classes.form} noValidate>
           <ThemeProvider theme={theme}>
-            <TextField variant="outlined" margin="normal" required fullWidth id="username" label="Username" name="username" autoComplete="username" autoFocus onChange={handleChange} />
-            {/* <TextField variant="outlined" margin="normal" required fullWidth name="password" label="Password" type="password" id="password" autoComplete="current-password" /> */}
+            <TextField variant="outlined" margin="normal" required fullWidth label="Password Lama" name="passwordLama" type="password" onChange={handleChange} />
+            <TextField variant="outlined" margin="normal" required fullWidth name="passwordBaru" label="Password Baru" type="password" onChange={handleChange} />
           </ThemeProvider>
 
           <ButtonAtoms fullWidth variant="contained" color="primary" title={"Kofirmasi"} className={classes.submit} style={{ background: "green" }} onClick={onKonfirmasi} />
