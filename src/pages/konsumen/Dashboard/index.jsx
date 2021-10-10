@@ -21,7 +21,6 @@ const DashboardKonsumen = ({ userKategori }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log("DashboardKonsumen");
     const request = new FormData();
     request.append("username", dataUsers.username);
     axios
@@ -48,7 +47,9 @@ const DashboardKonsumen = ({ userKategori }) => {
       .catch((err) => console.log(err));
   }, [produk]);
 
-  const onAddToTroli = (id, image, namaProduk, deskripsiProduk, kategori, harga, stok) => {
+  const onAddToTroli = (id, image, namaProduk, deskripsiProduk, kategori, harga, stok, usernamePenjual) => {
+    console.log(`username penjual => ${usernamePenjual}`);
+    console.log(`produk => ${JSON.stringify(produk)}`);
     const data = new FormData();
     data.append("idProduk", id);
     data.append("namaProduk", namaProduk);
@@ -57,7 +58,8 @@ const DashboardKonsumen = ({ userKategori }) => {
     data.append("harga", harga);
     data.append("stok", stok);
     data.append("image", image);
-    data.append("username", dataUsers.username);
+    data.append("usernamePembeli", dataUsers.username);
+    data.append("usernamePenjual", usernamePenjual);
 
     axios
       .post("http://localhost:4000/troli/createTroli", data, {
@@ -79,8 +81,6 @@ const DashboardKonsumen = ({ userKategori }) => {
         setResponse(message);
         setOpen(true);
       });
-
-    console.log("dataUsers: ", dataUsers);
   };
 
   const handleClose = (event, reason) => {
@@ -99,23 +99,24 @@ const DashboardKonsumen = ({ userKategori }) => {
           <Grid container direction="row" spacing={2}>
             {produk
               ? produk.map((dataProduk) => {
-                  return (
-                    <Grid item md={3} key={dataProduk._id}>
-                      <CardAtoms
-                        id={dataProduk._id}
-                        image={`http://localhost:4000/${dataProduk.image}`}
-                        namaProduk={dataProduk.namaProduk}
-                        deskripsiProduk={dataProduk.deskripsiProduk}
-                        kategori={dataProduk.kategori}
-                        harga={dataProduk.harga}
-                        stok={dataProduk.stok}
-                        userKategori={userKategori}
-                        onAddToTroli={onAddToTroli}
-                        disableBtn={disableBtn[i++]}
-                      />
-                    </Grid>
-                  );
-                })
+                return (
+                  <Grid item md={3} key={dataProduk._id}>
+                    <CardAtoms
+                      id={dataProduk._id}
+                      image={`http://localhost:4000/${dataProduk.image}`}
+                      namaProduk={dataProduk.namaProduk}
+                      deskripsiProduk={dataProduk.deskripsiProduk}
+                      kategori={dataProduk.kategori}
+                      harga={dataProduk.harga}
+                      stok={dataProduk.stok}
+                      usernamePenjual={dataProduk.userNamePenjual}
+                      userKategori={userKategori}
+                      onAddToTroli={onAddToTroli}
+                      disableBtn={disableBtn[i++]}
+                    />
+                  </Grid>
+                );
+              })
               : []}
           </Grid>
         </Grid>

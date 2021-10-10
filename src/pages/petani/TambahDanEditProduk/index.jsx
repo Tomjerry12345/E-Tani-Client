@@ -1,5 +1,5 @@
 import { Container, FormControl, Grid, IconButton, TextField } from "@material-ui/core";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ButtonAtoms, TypographyAtoms } from "../../../components/atoms";
 import { makeStyles, ThemeProvider, createTheme } from "@material-ui/core/styles";
 import AddPhotoAlternateIcon from "@material-ui/icons/AddPhotoAlternate";
@@ -10,6 +10,7 @@ import { Select } from "@material-ui/core";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
 import { green } from "@material-ui/core/colors";
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -54,6 +55,12 @@ const TambahDanEditProduk = ({ title, btnTitle }) => {
   const [preview, setPreview] = useState(null);
   const [severity, setSeverity] = useState("");
 
+  const { dataUsers } = useSelector((state) => state);
+
+  useEffect(() => {
+    console.log(`dataUsers => ${JSON.stringify(dataUsers)}`)
+  }, [dataUsers])
+
   const handleChange = (event) => {
     const name = event.target.name;
     setState({
@@ -94,6 +101,7 @@ const TambahDanEditProduk = ({ title, btnTitle }) => {
     data.append("harga", state.harga);
     data.append("stok", state.stok);
     data.append("image", state.image);
+    data.append("userNamePenjual", dataUsers.username);
     if (btnTitle === "Simpan") {
       const insertData = axios.post("http://localhost:4000/produk/createProduk", data, {
         headers: {
@@ -112,7 +120,6 @@ const TambahDanEditProduk = ({ title, btnTitle }) => {
   };
 
   const onSetImage = (e) => {
-    // setImage("https://cf.shopee.co.id/file/ad052b9d10bad4bf49a3f146dfcae953");
     const file = e.target.files[0];
     setPreview(URL.createObjectURL(file));
     setState({
@@ -129,19 +136,17 @@ const TambahDanEditProduk = ({ title, btnTitle }) => {
     setOpen(false);
   };
 
-  // style={{ background: "#0222", width: "50%" }}
-
   let colorText, styleImage;
   if (preview === null) {
     colorText = "black";
     styleImage = {
       background: "#0222",
-      width: "50%",
+      height: "200px",
     };
   } else {
     styleImage = {
       background: `linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(${preview})`,
-      width: "50%",
+      height: "200px",
       backgroundPosition: "center",
       backgroundSize: "cover",
     };
@@ -162,7 +167,7 @@ const TambahDanEditProduk = ({ title, btnTitle }) => {
                   height: "50%",
                 }}
               >
-                <Grid container direction="column" alignItems="center" style={styleImage}>
+                <Grid container direction="column" alignItems="center" style={styleImage} justifyContent="center">
                   <Grid item>
                     <input accept="image/*" id="icon-button-file" type="file" hidden onChange={(e) => onSetImage(e)} />
                     <label htmlFor="icon-button-file">
@@ -222,7 +227,7 @@ const TambahDanEditProduk = ({ title, btnTitle }) => {
           </Alert>
         </Snackbar>
       </Container>
-    </div>
+    </div >
   );
 };
 

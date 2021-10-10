@@ -16,12 +16,12 @@ const Produk = ({ userKategori }) => {
   const [open, setOpen] = React.useState(false);
   const [response, setResponse] = React.useState("");
   const [severity, setSeverity] = React.useState("");
-  const { statusProduk } = useSelector((state) => state);
+  const { statusProduk, dataUsers } = useSelector((state) => state);
   const dispatch = useDispatch();
 
   useEffect(() => {
     console.log("Produk");
-    Axios.get("http://localhost:4000/produk/getAllProduk")
+    Axios.get(`http://localhost:4000/produk/getProduk/${dataUsers.username}`)
       .then((result) => {
         const data = result.data.data;
         setProduk(data);
@@ -81,23 +81,23 @@ const Produk = ({ userKategori }) => {
           <Grid container direction="row" spacing={2}>
             {produk
               ? produk.map((result) => {
-                  return (
-                    <Grid item md={3}>
-                      <CardAtoms
-                        key={result._id}
-                        id={result._id}
-                        image={`http://localhost:4000/${result.image}`}
-                        namaProduk={result.namaProduk}
-                        deskripsiProduk={result.deskripsiProduk}
-                        kategori={result.kategori}
-                        harga={result.harga}
-                        stok={result.stok}
-                        onDelete={onConfirmDelete}
-                        userKategori={userKategori}
-                      />
-                    </Grid>
-                  );
-                })
+                return (
+                  <Grid item md={3}>
+                    <CardAtoms
+                      key={result._id}
+                      id={result._id}
+                      image={`http://localhost:4000/${result.image}`}
+                      namaProduk={result.namaProduk}
+                      deskripsiProduk={result.deskripsiProduk}
+                      kategori={result.kategori}
+                      harga={result.harga}
+                      stok={result.stok}
+                      onDelete={onConfirmDelete}
+                      userKategori={userKategori}
+                    />
+                  </Grid>
+                );
+              })
               : []}
           </Grid>
         </Grid>

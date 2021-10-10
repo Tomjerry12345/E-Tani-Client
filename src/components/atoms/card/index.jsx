@@ -35,7 +35,7 @@ const CardAtoms = (props) => {
   const history = useHistory();
   const [disableBtn1, setDisableBtn] = useState(false);
 
-  const { id, image, namaProduk, deskripsiProduk, kategori, harga, stok, onDelete, userKategori, onAddToTroli, disableBtn } = props;
+  const { id, image, namaProduk, deskripsiProduk, kategori, harga, stok, usernamePenjual, onDelete, userKategori, onAddToTroli, disableBtn } = props;
 
   let button;
   if (userKategori === "Petani") {
@@ -59,7 +59,7 @@ const CardAtoms = (props) => {
         disabled={disableBtn ? disableBtn : disableBtn1}
         onClick={() => {
           setDisableBtn(true);
-          onAddToTroli(id, image, namaProduk, deskripsiProduk, kategori, harga, stok);
+          onAddToTroli(id, image, namaProduk, deskripsiProduk, kategori, harga, stok, usernamePenjual);
         }}
       >
         Tambah ke troli

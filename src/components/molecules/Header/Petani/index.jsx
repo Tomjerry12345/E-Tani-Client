@@ -163,7 +163,7 @@ const HeaderPetani = () => {
             </ListItemIcon>
             <ListItemText primary="Katalog Produk" />
           </ListItem>
-          <ListItem button onClick={() => history.push("/pesanan")}>
+          <ListItem button onClick={() => history.push("/petani/rincian-pesanan")}>
             <ListItemIcon>
               <BarChartIcon />
             </ListItemIcon>

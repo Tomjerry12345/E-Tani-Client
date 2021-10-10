@@ -3,8 +3,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { HeaderPetani, HeaderKonsumen } from "../../components/molecules";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { DashboardPetani, Pesanan, Produk, TambahDanEditProduk } from "../petani";
-import { AkunKonsumen, DashboardKonsumen, KategoriKonsumen, TroliKonsumen } from "../konsumen";
+import { DashboardPetani, Pesanan, Produk, RincianPesananPetani, TambahDanEditProduk } from "../petani";
+import { AkunKonsumen, DashboardKonsumen, KategoriKonsumen, RincianPesananKonsumen, TroliKonsumen } from "../konsumen";
 import { useHistory } from "react-router-dom";
 import Axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
@@ -95,6 +95,8 @@ const Home = () => {
               <Route path="/cari" component={TampilCari} />
               <Route path="/troli" component={TroliKonsumen} />
               <Route path="/akun" component={AkunKonsumen} />
+              <Route path="/konsumen/rincian-pesanan" component={RincianPesananKonsumen} />
+              <Route path="/petani/rincian-pesanan" component={RincianPesananPetani} />
             </Switch>
           </div>
         </main>
