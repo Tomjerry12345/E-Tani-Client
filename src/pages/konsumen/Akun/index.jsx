@@ -24,16 +24,16 @@ const AkunKonsumen = () => {
       <TypographyAtoms title={"Akun Saya"} variant="h6" />
       <Grid container direction="column" style={{ marginTop: "10px", paddingRight: "10px" }} spacing={2} alignItems="center">
         <Grid item>
-          <ButtonAtoms fullWidth title={"Pesanan Saya"} variant="contained" color="primary" startIcon={<ShoppingBasketIcon />} style={{ background: "green" }} size="large" onClick={() => history.push("/konsumen/rincian-pesanan")} />
+          <ButtonAtoms title={"Pesanan Saya"} variant="contained" color="primary" startIcon={<ShoppingBasketIcon />} style={{ background: "green", width: "50vw" }} size="large" onClick={() => history.push("/konsumen/rincian-pesanan")} />
         </Grid>
         <Grid item>
-          <ButtonAtoms title={"Alamat Saya"} variant="contained" color="primary" startIcon={<ShoppingBasketIcon />} style={{ justifyContent: "end", background: "green" }} size="large" />
+          <ButtonAtoms title={"Alamat Saya"} variant="contained" color="primary" startIcon={<ShoppingBasketIcon />} style={{  background: "green", width: "50vw" }} size="large" />
         </Grid>
         <Grid item>
-          <ButtonAtoms title={"Informasi Akun"} variant="contained" color="primary" startIcon={<ShoppingBasketIcon />} style={{ justifyContent: "end", background: "green" }} size="large" />
+          <ButtonAtoms title={"Informasi Akun"} variant="contained" color="primary" startIcon={<ShoppingBasketIcon />} style={{  background: "green", width: "50vw" }} size="large" />
         </Grid>
         <Grid item>
-          <ButtonAtoms title={"Keluar"} variant="contained" color="primary" startIcon={<ShoppingBasketIcon />} style={{ justifyContent: "end", background: "green" }} size="large" onClick={btnLogout} />
+          <ButtonAtoms title={"Keluar"} variant="contained" color="primary" startIcon={<ShoppingBasketIcon />} style={{  background: "green", width: "50vw" }} size="large" onClick={btnLogout} />
         </Grid>
       </Grid>
     </div>

@@ -46,7 +46,7 @@ function DashboardPetani() {
               </IconButton>
             </Grid>
             <Grid item>
-              <TypographyAtoms title={"Jumlah Pesanan: 5"} variant="subtitle1" />
+              <TypographyAtoms title={"Jumlah Pesanan: 0"} variant="subtitle1" />
             </Grid>
           </Grid>
         </Grid>

@@ -4,6 +4,11 @@ import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import StorefrontIcon from "@material-ui/icons/Storefront";
 import { TypographyAtoms } from "../../../components/atoms";
 import { useHistory } from "react-router-dom";
+import apple from "../../../assets/icon/apple.png";
+import cabbage from "../../../assets/icon/cabbage.png";
+import corn from "../../../assets/icon/corn.png";
+import onion from "../../../assets/icon/onion.png";
+import peanut from "../../../assets/icon/peanut.png";
 
 const KategoriProduk = ({ title, icon }) => {
   const history = useHistory();
@@ -16,9 +21,10 @@ const KategoriProduk = ({ title, icon }) => {
     <Grid item>
       <Grid container direction="column" alignItems="center">
         <Grid item>
-          <IconButton color="inherit" onClick={onBtnKategori}>
+          <img src={icon} alt="" width="60" height="60" />
+          {/* <IconButton color="inherit" onClick={onBtnKategori}>
             {icon}
-          </IconButton>
+          </IconButton> */}
         </Grid>
         <Grid item>
           <TypographyAtoms title={title} variant="subtitle" />
@@ -33,11 +39,11 @@ const KategoriKonsumen = () => {
     <div>
       <TypographyAtoms title={"Kategori"} variant="h6" />
       <Grid container justifyContent="flex-start" alignItems="flex-start" spacing={2}>
-        <KategoriProduk title={"Sayur-mayur"} icon=<StorefrontIcon fontSize="large" /> />
-        <KategoriProduk title={"Serelia"} icon=<ShoppingCartIcon fontSize="large" /> />
-        <KategoriProduk title={"Buah-buahan"} icon=<ShoppingCartIcon fontSize="large" /> />
-        <KategoriProduk title={"Kacang-kacangan"} icon=<ShoppingCartIcon fontSize="large" /> />
-        <KategoriProduk title={"Umbi-umbian"} icon=<ShoppingCartIcon fontSize="large" /> />
+        <KategoriProduk title={"Sayur-mayur"} icon={cabbage}/>
+        <KategoriProduk title={"Serelia"} icon={corn}/>
+        <KategoriProduk title={"Buah-buahan"} icon={apple} />
+        <KategoriProduk title={"Kacang-kacangan"} icon={peanut} />
+        <KategoriProduk title={"Umbi-umbian"}  icon={onion} />
       </Grid>
     </div>
   );
