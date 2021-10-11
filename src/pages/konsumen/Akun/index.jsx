@@ -9,7 +9,7 @@ import { useHistory } from "react-router";
 const AkunKonsumen = () => {
   const { statusLogin } = useSelector((state) => state);
   const dispatch = useDispatch();
-  const history = useHistory()
+  const history = useHistory();
   const btnLogout = () => {
     axios
       .put("http://localhost:4000/auth/logout")
@@ -22,18 +22,18 @@ const AkunKonsumen = () => {
   return (
     <div>
       <TypographyAtoms title={"Akun Saya"} variant="h6" />
-      <Grid container direction="column" style={{ marginTop: "10px", paddingRight: "10px" }} spacing={2}>
+      <Grid container direction="column" style={{ marginTop: "10px", paddingRight: "10px" }} spacing={2} alignItems="center">
         <Grid item>
-          <ButtonAtoms fullWidth title={"Pesanan Saya"} variant="contained" color="primary" startIcon={<ShoppingBasketIcon />} style={{ justifyContent: "end", background: "green" }} size="large" onClick={() => history.push('/konsumen/rincian-pesanan')} />
+          <ButtonAtoms fullWidth title={"Pesanan Saya"} variant="contained" color="primary" startIcon={<ShoppingBasketIcon />} style={{ background: "green" }} size="large" onClick={() => history.push("/konsumen/rincian-pesanan")} />
         </Grid>
         <Grid item>
-          <ButtonAtoms fullWidth title={"Alamat Saya"} variant="contained" color="primary" startIcon={<ShoppingBasketIcon />} style={{ justifyContent: "end", background: "green" }} size="large" />
+          <ButtonAtoms title={"Alamat Saya"} variant="contained" color="primary" startIcon={<ShoppingBasketIcon />} style={{ justifyContent: "end", background: "green" }} size="large" />
         </Grid>
         <Grid item>
-          <ButtonAtoms fullWidth title={"Informasi Akun"} variant="contained" color="primary" startIcon={<ShoppingBasketIcon />} style={{ justifyContent: "end", background: "green" }} size="large" />
+          <ButtonAtoms title={"Informasi Akun"} variant="contained" color="primary" startIcon={<ShoppingBasketIcon />} style={{ justifyContent: "end", background: "green" }} size="large" />
         </Grid>
         <Grid item>
-          <ButtonAtoms fullWidth title={"Keluar"} variant="contained" color="primary" startIcon={<ShoppingBasketIcon />} style={{ justifyContent: "end", background: "green" }} size="large" onClick={btnLogout} />
+          <ButtonAtoms title={"Keluar"} variant="contained" color="primary" startIcon={<ShoppingBasketIcon />} style={{ justifyContent: "end", background: "green" }} size="large" onClick={btnLogout} />
         </Grid>
       </Grid>
     </div>
