@@ -35,7 +35,7 @@ const Product = (props) => {
   const [checkBtn, setCheckBtn] = useState(null);
   let jumlah;
 
-  const { index, key, id, image, namaProduk, deskripsiProduk, kategori, harga, stok, usernamePenjual, usernamePembeli, onTotal } = props;
+  const { index, key, idProduk, id, image, namaProduk, deskripsiProduk, kategori, harga, stok, usernamePenjual, usernamePembeli, onTotal } = props;
 
   useEffect(() => {
     const harga1 = harga * jumlahBeli;
@@ -47,7 +47,7 @@ const Product = (props) => {
   const handleChange = (event) => {
     setChecked(event.target.checked);
     if (!checked) {
-      onTotal(total, index, true, false, namaProduk, harga, null, id, usernamePembeli, usernamePenjual);
+      onTotal(total, index, true, false, namaProduk, harga, null, id, usernamePembeli, usernamePenjual, idProduk);
     } else {
       setJumlahBeli(0);
       setTotal(0);
@@ -57,8 +57,10 @@ const Product = (props) => {
 
   const onClickTambah = () => {
     jumlah = jumlahBeli + 1;
-    setJumlahBeli(jumlah);
-    setCheckBtn(true);
+    if (jumlah <= stok) {
+      setJumlahBeli(jumlah);
+      setCheckBtn(true);
+    }
   };
 
   const onClickKurang = () => {
@@ -77,15 +79,18 @@ const Product = (props) => {
           </ThemeProvider>
         </div>
         <div style={{ marginLeft: 10 }}>
-          <img src={image} alt="Test" width="150" height="150" />
+          <img src={image} alt="Test" width="150" />
         </div>
         <div style={{ marginLeft: 20 }}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              {namaProduk}
+              <TypographyAtoms variant="h4" title={namaProduk} />
             </Grid>
             <Grid item xs={12}>
-              {"Rp. " + harga}
+              <TypographyAtoms variant="subtitle1" title={`Rp. ${harga}`} style={{ fontWeight: "bold", color: "green" }} />
+            </Grid>
+            <Grid item xs={12}>
+              <TypographyAtoms variant="subtitle1" title={`Stok tersedia : ${stok}`} style={{ fontWeight: "bold", color: "green" }} />
             </Grid>
             <Grid item xs={12} style={{ display: "flex" }}>
               <ButtonAtoms
@@ -122,7 +127,8 @@ const Product = (props) => {
 
 const TroliKonsumen = () => {
   const classes = useStyles();
-  const history = useHistory()
+  const history = useHistory();
+
   const { dataTroli, dataUsers } = useSelector((state) => state);
   const [total, setTotal] = useState(0);
   const [listHarga, setListHarga] = useState([0, 0, 0, 0, 0]);
@@ -130,6 +136,7 @@ const TroliKonsumen = () => {
   // const [metodePembayaran, setMetodePembayaran] = useState("cod");
   const [listPesanan, setListPesanan] = useState([]);
   const [listId, setListId] = useState([]);
+  const [listIdProduk, setListIdProduk] = useState([]);
 
   const [dataRincianPesanan, setDataRincianPesanan] = useState({
     usernamePembeli: "",
@@ -141,12 +148,13 @@ const TroliKonsumen = () => {
     statusPengiriman: "Belum Terkirim",
     statusPenerima: "Belum Diterima",
     metodePembayaran: "cod",
-    statusPembayaran: '',
+    statusPembayaran: "",
     alamatPembeli: dataUsers.alamat,
   });
 
   useEffect(() => {
-    console.log(`list id => ${listId}`)
+    console.log(`list id => ${listId}`);
+    console.log(`list id produk => ${listIdProduk}`);
     const reducer = (accumulator, curr) => accumulator + curr;
     const totalHarga = listHarga.reduce(reducer);
     setTotal(totalHarga);
@@ -168,20 +176,17 @@ const TroliKonsumen = () => {
               .delete(`http://localhost:4000/troli/delete/${id}`)
               .then((res) => {
                 console.log("res: ", res.data);
+                updateStok(dataRincianPesanan.jumlah);
               })
               .catch((err) => {
                 console.log(err);
               });
           });
-
-          history.push("/");
-
         });
     }
-
   }, [listHarga, dataRincianPesanan]);
 
-  const onTotal = (total, index, checked, isBtnClick, namaProduk, harga, jumlah, id, usernamePembeli, usernamePenjual) => {
+  const onTotal = (total, index, checked, isBtnClick, namaProduk, harga, jumlah, id, usernamePembeli, usernamePenjual, idProduk) => {
     console.log(`usernamePenjual => ${usernamePenjual} || usernamePembeli => ${usernamePembeli}`);
     if (total === 0) {
       const test = [];
@@ -207,58 +212,71 @@ const TroliKonsumen = () => {
           jumlah,
           harga,
           usernamePembeli,
-          usernamePenjual
+          usernamePenjual,
         },
       ]);
 
       if (isBtnClick) {
-        console.log("btnClick")
+        console.log("btnClick");
         const list = [];
         listPesanan.map((data) => {
           if (data.namaProduk === namaProduk) {
             data.jumlah = jumlah;
           }
-          console.log(`data => ${data}`)
+          console.log(`data => ${data}`);
           list.push(data);
         });
         setListPesanan(list);
       } else {
-        console.log(`btn not click`)
+        console.log(`btn not click`);
+        const utilsListProduk = [];
+
+        console.log(`list id produk length => ${listIdProduk.length}`);
+
+        setListIdProduk([...listIdProduk, idProduk]);
       }
 
-      setListId([...listId, id]);
+      if (id !== undefined) setListId([...listId, id]);
     } else {
       const list = [];
       const listId1 = [];
+      const listIdProduk1 = [];
+
       listPesanan.map((res, i) => {
         if (index !== i) list.push(res);
       });
+
       listId.map((res, i) => {
         if (index !== i) listId1.push(res);
       });
+
+      listIdProduk.map((res, i) => {
+        if (index !== i) listIdProduk1.push(res);
+      });
+
       console.log(`list => ${list}`);
       setListPesanan(list);
       setListId(listId1);
+      setListIdProduk(listIdProduk1);
     }
   };
 
   const onClickPesan = () => {
+    const listNamaProduk = [];
+    const listJumlah = [];
+    const listHarga = [];
+    const listUsernamePenjual = [];
+    let usernamePembeli = "";
 
-    if (dataRincianPesanan.metodePembayaran === 'cod') {
-      const listNamaProduk = []
-      const listJumlah = []
-      const listHarga = []
-      const listUsernamePenjual = []
-      let usernamePembeli = ''
+    listPesanan.map((data) => {
+      listNamaProduk.push(data.namaProduk);
+      listJumlah.push(data.jumlah);
+      listHarga.push(data.harga);
+      listUsernamePenjual.push(data.usernamePenjual);
+      usernamePembeli = data.usernamePembeli;
+    });
 
-      listPesanan.map(data => {
-        listNamaProduk.push(data.namaProduk)
-        listJumlah.push(data.jumlah)
-        listHarga.push(data.harga)
-        listUsernamePenjual.push(data.usernamePenjual)
-        usernamePembeli = data.usernamePembeli
-      })
-
+    if (dataRincianPesanan.metodePembayaran === "cod") {
       setDataRincianPesanan({
         ...dataRincianPesanan,
         usernamePembeli: usernamePembeli,
@@ -266,20 +284,18 @@ const TroliKonsumen = () => {
         namaProduk: listNamaProduk,
         jumlah: listJumlah,
         harga: listHarga,
-        statusPembayaran: '-',
+        statusPembayaran: "-",
         rincian: {
           gross_amount: total,
           transaction_status: "-",
         },
-      })
-
+      });
     } else {
-      paymentGateway()
+      paymentGateway(listNamaProduk, listJumlah, listHarga, listUsernamePenjual, usernamePembeli);
     }
-
   };
 
-  const paymentGateway = () => {
+  const paymentGateway = (listNamaProduk, listJumlah, listHarga, listUsernamePenjual, usernamePembeli) => {
     axios
       .post("http://localhost:4000/pembayaran/transaction", {
         total,
@@ -287,25 +303,12 @@ const TroliKonsumen = () => {
       .then((res) => {
         const transactionToken = res.data.transactionToken;
 
-        const listNamaProduk = []
-        const listJumlah = []
-        const listHarga = []
-        const listUsernamePenjual = []
-        let usernamePembeli = ''
         window.snap.pay(transactionToken, {
           onSuccess: function (result) {
             alert("payment success!");
             console.log(result);
           },
           onPending: function (result) {
-            listPesanan.map(data => {
-              listNamaProduk.push(data.namaProduk)
-              listJumlah.push(data.jumlah)
-              listHarga.push(data.harga)
-              listUsernamePenjual.push(data.usernamePenjual)
-              usernamePembeli = data.usernamePembeli
-            })
-
             setDataRincianPesanan({
               ...dataRincianPesanan,
               usernamePembeli: usernamePembeli,
@@ -314,8 +317,8 @@ const TroliKonsumen = () => {
               jumlah: listJumlah,
               harga: listHarga,
               rincian: result,
-              statusPembayaran: result.transaction_status
-            })
+              statusPembayaran: result.transaction_status,
+            });
 
             alert("wating your payment!");
             console.log(result);
@@ -334,18 +337,30 @@ const TroliKonsumen = () => {
       });
   };
 
-  const handleChange = (event) => {
+  const updateStok = (jumlah) => {
+    console.log(`list id produk => ${listIdProduk},  listJumlah => ${jumlah}`);
+    listIdProduk.map((id, index) => {
+      axios
+        .put(`http://localhost:4000/produk/updateStok/${id}`, { stok: jumlah[index] })
+        .then((res) => {
+          console.log();
+        })
+        .catch((err) => console.log(err));
+    });
+    history.push("/");
+  };
 
+  const handleChange = (event) => {
     setDataRincianPesanan({
       ...dataRincianPesanan,
-      metodePembayaran: event.target.value
-    })
+      metodePembayaran: event.target.value,
+    });
   };
 
   const handleChangeAlamat = (e) => {
     setDataRincianPesanan({
       ...dataRincianPesanan,
-      alamat: e.target.value,
+      alamatPembeli: e.target.value,
     });
   };
 
@@ -354,12 +369,23 @@ const TroliKonsumen = () => {
       <TypographyAtoms style={{ marginTop: 10, marginBottom: 20, fontWeight: "bold" }} title={"Troli Saya"} variant="h6" />
       <Grid container spacing={2}>
         <Grid item xs={12} md={12} lg={12}>
-          {dataTroli ? dataTroli.map((res, index) => <Product
-            index={index} key={index} id={res._id}
-            image={res.image} namaProduk={res.namaProduk}
-            harga={res.harga} usernamePembeli={res.usernamePembeli}
-            usernamePenjual={res.usernamePenjual} onTotal={onTotal} />) : []
-          }
+          {dataTroli
+            ? dataTroli.map((res, index) => (
+                <Product
+                  index={index}
+                  key={index}
+                  id={res._id}
+                  idProduk={res.idProduk}
+                  image={res.image}
+                  namaProduk={res.namaProduk}
+                  harga={res.harga}
+                  stok={res.stok}
+                  usernamePembeli={res.usernamePembeli}
+                  usernamePenjual={res.usernamePenjual}
+                  onTotal={onTotal}
+                />
+              ))
+            : []}
         </Grid>
         <Grid item style={{ marginBottom: "10px" }}>
           <FormControl component="fieldset">

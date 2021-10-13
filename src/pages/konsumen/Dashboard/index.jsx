@@ -27,6 +27,7 @@ const DashboardKonsumen = ({ userKategori }) => {
       .get("http://localhost:4000/produk/getAllProduk")
       .then((result) => {
         const data = result.data.data;
+        console.log(data);
         data.map((produk) => idProduk.push(produk._id));
         setProduk(data);
         return axios.post("http://localhost:4000/troli/getTroli", request, {
@@ -99,24 +100,24 @@ const DashboardKonsumen = ({ userKategori }) => {
           <Grid container direction="row" spacing={2}>
             {produk
               ? produk.map((dataProduk) => {
-                return (
-                  <Grid item md={3} key={dataProduk._id}>
-                    <CardAtoms
-                      id={dataProduk._id}
-                      image={`http://localhost:4000/${dataProduk.image}`}
-                      namaProduk={dataProduk.namaProduk}
-                      deskripsiProduk={dataProduk.deskripsiProduk}
-                      kategori={dataProduk.kategori}
-                      harga={dataProduk.harga}
-                      stok={dataProduk.stok}
-                      usernamePenjual={dataProduk.userNamePenjual}
-                      userKategori={userKategori}
-                      onAddToTroli={onAddToTroli}
-                      disableBtn={disableBtn[i++]}
-                    />
-                  </Grid>
-                );
-              })
+                  return (
+                    <Grid item md={3} key={dataProduk._id}>
+                      <CardAtoms
+                        id={dataProduk._id}
+                        image={`http://localhost:4000/${dataProduk.image}`}
+                        namaProduk={dataProduk.namaProduk}
+                        deskripsiProduk={dataProduk.deskripsiProduk}
+                        kategori={dataProduk.kategori}
+                        harga={dataProduk.harga}
+                        stok={dataProduk.stok}
+                        userNamePenjual={dataProduk.userNamePenjual}
+                        userKategori={userKategori}
+                        onAddToTroli={onAddToTroli}
+                        disableBtn={disableBtn[i++]}
+                      />
+                    </Grid>
+                  );
+                })
               : []}
           </Grid>
         </Grid>

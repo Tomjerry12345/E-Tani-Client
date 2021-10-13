@@ -49,7 +49,7 @@ const TampilCari = () => {
         dispatch({ type: "UPDATE_TROLI", payload: troli });
       })
       .catch((err) => console.log(err));
-  }, [produk]);
+  }, []);
 
   const onAddToTroli = (id, image, namaProduk, deskripsiProduk, kategori, harga, stok) => {
     const data = new FormData();

@@ -10,12 +10,12 @@ import { Snackbar } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import { useDispatch, useSelector } from "react-redux";
 
-const Produk = ({ userKategori }) => {
+const Produk = () => {
   const history = useHistory();
   const [produk, setProduk] = useState([]);
-  const [open, setOpen] = React.useState(false);
-  const [response, setResponse] = React.useState("");
-  const [severity, setSeverity] = React.useState("");
+  const [open, setOpen] = useState(false);
+  const [response, setResponse] = useState("");
+  const [severity, setSeverity] = useState("");
   const { statusProduk, dataUsers } = useSelector((state) => state);
   const dispatch = useDispatch();
 
@@ -24,6 +24,7 @@ const Produk = ({ userKategori }) => {
     Axios.get(`http://localhost:4000/produk/getProduk/${dataUsers.username}`)
       .then((result) => {
         const data = result.data.data;
+        console.log(data);
         setProduk(data);
       })
       .catch((err) => console.log(err));
@@ -75,29 +76,39 @@ const Produk = ({ userKategori }) => {
       <TypographyAtoms title={"Katalog Produk"} variant="subtitle" />
       <Grid container direction="column" style={{ marginTop: "10px" }} spacing={2}>
         <Grid item>
-          <ButtonAtoms title={"Tambah Produk"} startIcon={<AddIcon />} variant="contained" color="primary" onClick={() => history.push("/tambah-produk")} style={{ backgroundColor: "green" }} />
+          <ButtonAtoms
+            title={"Tambah Produk"}
+            startIcon={<AddIcon />}
+            variant="contained"
+            color="primary"
+            onClick={() => {
+              history.push({ pathname: "/tambahProduk", title: "Tambah Produk", btnTitle: "Simpan" });
+            }}
+            style={{ backgroundColor: "green" }}
+          />
         </Grid>
         <Grid item>
           <Grid container direction="row" spacing={2}>
             {produk
               ? produk.map((result) => {
-                return (
-                  <Grid item md={3}>
-                    <CardAtoms
-                      key={result._id}
-                      id={result._id}
-                      image={`http://localhost:4000/${result.image}`}
-                      namaProduk={result.namaProduk}
-                      deskripsiProduk={result.deskripsiProduk}
-                      kategori={result.kategori}
-                      harga={result.harga}
-                      stok={result.stok}
-                      onDelete={onConfirmDelete}
-                      userKategori={userKategori}
-                    />
-                  </Grid>
-                );
-              })
+                  return (
+                    <Grid item md={3}>
+                      <CardAtoms
+                        key={result._id}
+                        id={result._id}
+                        image={`http://localhost:4000/${result.image}`}
+                        namaProduk={result.namaProduk}
+                        deskripsiProduk={result.deskripsiProduk}
+                        kategori={result.kategori}
+                        harga={result.harga}
+                        stok={result.stok}
+                        userNamePenjual={result.userNamePenjual}
+                        onDelete={onConfirmDelete}
+                        userKategori={dataUsers.kategori}
+                      />
+                    </Grid>
+                  );
+                })
               : []}
           </Grid>
         </Grid>

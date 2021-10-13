@@ -35,13 +35,23 @@ const CardAtoms = (props) => {
   const history = useHistory();
   const [disableBtn1, setDisableBtn] = useState(false);
 
-  const { id, image, namaProduk, deskripsiProduk, kategori, harga, stok, usernamePenjual, onDelete, userKategori, onAddToTroli, disableBtn } = props;
+  const { id, image, namaProduk, deskripsiProduk, kategori, harga, stok, userNamePenjual, onDelete, userKategori, onAddToTroli, disableBtn } = props;
+
+  const data = {
+    image,
+    namaProduk,
+    deskripsiProduk,
+    kategori,
+    harga,
+    stok,
+    userNamePenjual,
+  };
 
   let button;
   if (userKategori === "Petani") {
     button = (
       <Fragment>
-        <ButtonAtoms size="small" color="primary" onClick={() => history.push({ pathname: "/edit-produk", id: id })} title={"Edit"} style={{ color: "green" }} />
+        <ButtonAtoms size="small" color="primary" onClick={() => history.push({ pathname: "/edit-produk", id: id, title: "Edit Produk", btnTitle: "Edit" })} title={"Edit"} style={{ color: "green" }} />
         <ButtonAtoms size="small" color="primary" onClick={() => onDelete(id)} title={"Delete"} style={{ color: "green" }} />
       </Fragment>
     );
@@ -59,7 +69,7 @@ const CardAtoms = (props) => {
         disabled={disableBtn ? disableBtn : disableBtn1}
         onClick={() => {
           setDisableBtn(true);
-          onAddToTroli(id, image, namaProduk, deskripsiProduk, kategori, harga, stok, usernamePenjual);
+          onAddToTroli(id, image, namaProduk, deskripsiProduk, kategori, harga, stok, userNamePenjual);
         }}
       >
         Tambah ke troli
@@ -67,13 +77,20 @@ const CardAtoms = (props) => {
     );
   }
 
+  const clickCard = () => {
+    history.push({ pathname: "/detail-produk", data });
+  };
+
   return (
     <Card className={classes.root}>
-      <CardActionArea>
+      <CardActionArea onClick={clickCard}>
         <CardMedia className={classes.media} image={image} title="Contemplative Reptile" />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
+          <Typography variant="h5" component="h2">
             {namaProduk}
+          </Typography>
+          <Typography variant="subtitle1" style={{ color: "green" }} gutterBottom>
+            {kategori}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
             {deskripsiProduk}

@@ -8,20 +8,40 @@ import { useDispatch, useSelector } from "react-redux";
 
 function DashboardPetani() {
   const [totalProduk, setTotalProduk] = useState(0);
-  const { dataProduk } = useSelector((state) => state);
+  const [totalPesanan, setTotalPesanan] = useState(0);
+  const { dataProduk, refresh, dataUsers } = useSelector((state) => state);
   const dispatch = useDispatch();
   useEffect(() => {
-    Axios.get("http://localhost:4000/produk/getAllProduk")
+    dispatch({ type: "UPDATE_REFRESH", payload: !refresh });
+    Axios.get(`http://localhost:4000/produk/getProduk/${dataUsers.username}`)
       .then((result) => {
         const data = result.data;
+        setTotalProduk(data.data.length);
         dispatch({ type: "UPDATE_PRODUK", payload: data });
-        setTotalProduk(data);
       })
       .catch((err) => console.log(err));
     return () => {
       setTotalProduk(0);
     };
   }, []);
+
+  useEffect(() => {
+    const request = new FormData();
+    request.append("username", dataUsers.username);
+    request.append("jenisAkun", dataUsers.kategori);
+    Axios.post("http://localhost:4000/rincian-pesanan/get/byName", request, {
+      headers: {
+        "content-type": "multipart/form-data",
+      },
+    })
+      .then((result) => {
+        const data1 = result.data.data;
+        console.log(`response => ${JSON.stringify(data1)}`);
+        setTotalPesanan(data1.length);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
   return (
     <div>
       <TypographyAtoms title={"Dashboard"} variant="subtitle1" />
@@ -34,7 +54,7 @@ function DashboardPetani() {
               </IconButton>
             </Grid>
             <Grid item>
-              <TypographyAtoms title={"Jumlah Produk: " + dataProduk.totalData} variant="subtitle1" />
+              <TypographyAtoms title={"Jumlah Produk: " + totalProduk} variant="subtitle1" />
             </Grid>
           </Grid>
         </Grid>
@@ -46,7 +66,7 @@ function DashboardPetani() {
               </IconButton>
             </Grid>
             <Grid item>
-              <TypographyAtoms title={"Jumlah Pesanan: 0"} variant="subtitle1" />
+              <TypographyAtoms title={`Jumlah Pesanan: ${totalPesanan}`} variant="subtitle1" />
             </Grid>
           </Grid>
         </Grid>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
@@ -6,7 +6,7 @@ import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { makeStyles, ThemeProvider, createTheme } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import { ButtonAtoms, TypographyAtoms } from "../../components/atoms";
+import { ButtonAtoms, LinkAtoms, TypographyAtoms } from "../../components/atoms";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import Snackbar from "@material-ui/core/Snackbar";
@@ -16,6 +16,8 @@ import { Alert } from "@material-ui/lab";
 import { useHistory } from "react-router-dom";
 import Axios from "axios";
 import { green } from "@material-ui/core/colors";
+import { IconButton } from "@material-ui/core";
+import AddPhotoAlternateIcon from "@material-ui/icons/AddPhotoAlternate";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -56,9 +58,12 @@ const Register = () => {
     kabupaten: "",
     kecamatan: "",
     kategori: "",
+    image: "",
   });
-  const [open, setOpen] = React.useState(false);
-  const [response, setResponse] = React.useState("");
+
+  const [preview, setPreview] = useState(null);
+  const [open, setOpen] = useState(false);
+  const [response, setResponse] = useState("");
 
   const handleChange = (event) => {
     const name = event.target.name;
@@ -80,6 +85,7 @@ const Register = () => {
     data.append("kecamatan", state.kecamatan);
     data.append("kategori", state.kategori);
     data.append("statusLogin", true);
+    data.append("image", state.image);
 
     console.log("data : ", data);
 
@@ -99,6 +105,15 @@ const Register = () => {
       });
   };
 
+  const onSetImage = (e) => {
+    const file = e.target.files[0];
+    setPreview(URL.createObjectURL(file));
+    setState({
+      ...state,
+      image: file,
+    });
+  };
+
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -106,6 +121,23 @@ const Register = () => {
 
     setOpen(false);
   };
+
+  let colorText, styleImage;
+  if (preview === null) {
+    colorText = "black";
+    styleImage = {
+      background: "#0222",
+      height: "200px",
+    };
+  } else {
+    styleImage = {
+      background: `linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(${preview})`,
+      height: "200px",
+      backgroundPosition: "center",
+      backgroundSize: "cover",
+    };
+    colorText = "white";
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -118,6 +150,27 @@ const Register = () => {
         <form className={classes.form}>
           <ThemeProvider theme={theme}>
             <Grid container spacing={2}>
+              <Grid
+                item
+                xs={12}
+                style={{
+                  height: "50%",
+                }}
+              >
+                <Grid container direction="column" alignItems="center" style={styleImage} justifyContent="center">
+                  <Grid item>
+                    <input accept="image/*" id="icon-button-file" type="file" hidden onChange={(e) => onSetImage(e)} />
+                    <label htmlFor="icon-button-file">
+                      <IconButton component="span">
+                        <AddPhotoAlternateIcon fontSize="large" style={{ color: `${colorText}` }} />
+                      </IconButton>
+                    </label>
+                  </Grid>
+                  <Grid item>
+                    <TypographyAtoms title={"Tambah Foto"} variant="subtitle" style={{ color: `${colorText}` }} />
+                  </Grid>
+                </Grid>
+              </Grid>
               <Grid item xs={12}>
                 <TextField autoComplete="namaLengkap" name="namaLengkap" variant="outlined" value={state.namaLengkap} required fullWidth id="namaLengkap" label="Nama Lengkap" autoFocus onChange={handleChange} />
               </Grid>
@@ -191,11 +244,11 @@ const Register = () => {
           </ThemeProvider>
 
           <ButtonAtoms fullWidth variant="contained" color="primary" className={classes.submit} title={"Daftar"} onClick={clickBtnRegister} style={{ background: "green" }} />
-          {/* <Grid container justifyContent="center">
-            <Grid item>
-              <LinkAtoms href="#" variant="body2" title={"Already have an account? Sign in"} />
+          <Grid container justifyContent="center">
+            <Grid item className={classes.typography}>
+              <LinkAtoms to="/login" variant="body2" title={"Sudah punya akun? Login"} style={{ color: "green" }} />
             </Grid>
-          </Grid> */}
+          </Grid>
         </form>
         <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
           <Alert onClose={handleClose} severity="error">

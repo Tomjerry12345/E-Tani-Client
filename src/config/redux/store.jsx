@@ -6,6 +6,7 @@ const intialState = {
   dataTroli: [],
   statusLogin: true,
   statusProduk: true,
+  refresh: true,
 };
 
 const reducer = (state = intialState, action) => {
@@ -41,6 +42,13 @@ const reducer = (state = intialState, action) => {
     return {
       ...state,
       statusProduk: action.payload,
+    };
+  }
+
+  if (action.type === "UPDATE_REFRESH") {
+    return {
+      ...state,
+      refresh: action.payload,
     };
   }
 

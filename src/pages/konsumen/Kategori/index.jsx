@@ -21,7 +21,7 @@ const KategoriProduk = ({ title, icon }) => {
     <Grid item>
       <Grid container direction="column" alignItems="center">
         <Grid item>
-          <img src={icon} alt="" width="60" height="60" />
+          <img src={icon} alt="" width="60" height="60" onClick={onBtnKategori} />
           {/* <IconButton color="inherit" onClick={onBtnKategori}>
             {icon}
           </IconButton> */}
@@ -39,11 +39,11 @@ const KategoriKonsumen = () => {
     <div>
       <TypographyAtoms title={"Kategori"} variant="h6" />
       <Grid container justifyContent="flex-start" alignItems="flex-start" spacing={2}>
-        <KategoriProduk title={"Sayur-mayur"} icon={cabbage}/>
-        <KategoriProduk title={"Serelia"} icon={corn}/>
+        <KategoriProduk title={"Sayur-mayur"} icon={cabbage} />
+        <KategoriProduk title={"Serelia"} icon={corn} />
         <KategoriProduk title={"Buah-buahan"} icon={apple} />
         <KategoriProduk title={"Kacang-kacangan"} icon={peanut} />
-        <KategoriProduk title={"Umbi-umbian"}  icon={onion} />
+        <KategoriProduk title={"Umbi-umbian"} icon={onion} />
       </Grid>
     </div>
   );

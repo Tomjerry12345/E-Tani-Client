@@ -10,7 +10,7 @@ import { Select } from "@material-ui/core";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
 import { green } from "@material-ui/core/colors";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -38,7 +38,7 @@ const theme = createTheme({
   },
 });
 
-const TambahDanEditProduk = ({ title, btnTitle }) => {
+const TambahDanEditProduk = () => {
   const classes = useStyles();
   const location = useLocation();
   const [state, setState] = useState({
@@ -55,11 +55,14 @@ const TambahDanEditProduk = ({ title, btnTitle }) => {
   const [preview, setPreview] = useState(null);
   const [severity, setSeverity] = useState("");
 
-  const { dataUsers } = useSelector((state) => state);
+  const dispatch = useDispatch();
+
+  const { dataUsers, refresh } = useSelector((state) => state);
 
   useEffect(() => {
-    console.log(`dataUsers => ${JSON.stringify(dataUsers)}`)
-  }, [dataUsers])
+    console.log(`dataUsers => ${JSON.stringify(dataUsers)}`);
+    dispatch({ type: "UPDATE_REFRESH", payload: !refresh });
+  }, [dataUsers]);
 
   const handleChange = (event) => {
     const name = event.target.name;
@@ -102,7 +105,7 @@ const TambahDanEditProduk = ({ title, btnTitle }) => {
     data.append("stok", state.stok);
     data.append("image", state.image);
     data.append("userNamePenjual", dataUsers.username);
-    if (btnTitle === "Simpan") {
+    if (location.btnTitle === "Simpan") {
       const insertData = axios.post("http://localhost:4000/produk/createProduk", data, {
         headers: {
           "content-type": "multipart/form-data",
@@ -156,7 +159,7 @@ const TambahDanEditProduk = ({ title, btnTitle }) => {
   return (
     <div>
       <Container component="main" maxWidth="xs">
-        <TypographyAtoms title={title} variant="h6" />
+        <TypographyAtoms title={location.title} variant="h6" />
         <ThemeProvider theme={theme}>
           <form className={classes.form} noValidate>
             <Grid container spacing={2} justifyContent="flex-start" alignItems="flex-start">
@@ -220,14 +223,14 @@ const TambahDanEditProduk = ({ title, btnTitle }) => {
             </Grid>
           </form>
         </ThemeProvider>
-        <ButtonAtoms style={{ backgroundColor: "green" }} fullWidth variant="contained" color="primary" className={classes.submit} title={btnTitle} onClick={btnClick} />
+        <ButtonAtoms style={{ backgroundColor: "green" }} fullWidth variant="contained" color="primary" className={classes.submit} title={location.btnTitle} onClick={btnClick} />
         <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
           <Alert onClose={handleClose} severity={severity}>
             {response}
           </Alert>
         </Snackbar>
       </Container>
-    </div >
+    </div>
   );
 };
 

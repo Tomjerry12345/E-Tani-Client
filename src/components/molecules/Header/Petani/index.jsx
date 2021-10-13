@@ -1,11 +1,9 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
-// import Badge from "@material-ui/core/Badge";
 import MenuIcon from "@material-ui/icons/Menu";
-// import NotificationsIcon from "@material-ui/icons/Notifications";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
@@ -23,7 +21,9 @@ import BarChartIcon from "@material-ui/icons/BarChart";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-// import { Link } from "react-router-dom";
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import Logo from "../../../../assets/icon/logo.png";
+import { Box, CardMedia } from "@material-ui/core";
 
 const drawerWidth = 240;
 
@@ -89,8 +89,17 @@ const HeaderPetani = () => {
   const history = useHistory();
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const { statusLogin } = useSelector((state) => state);
+  const { statusLogin, refresh } = useSelector((state) => state);
   const dispatch = useDispatch();
+  const path = history.location.pathname;
+  const [hideArrow, setHideArrow] = useState(false);
+
+  useEffect(() => {
+    console.log(`path: ${path}`);
+    console.log(`refresh: ${refresh}`);
+    path !== "/" && path !== "/produk" && path !== "/petani/rincian-pesanan" ? setHideArrow(true) : setHideArrow(false);
+  }, [refresh]);
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -115,11 +124,26 @@ const HeaderPetani = () => {
           <IconButton edge="start" color="inherit" aria-label="open drawer" onClick={handleDrawerOpen} className={clsx(classes.menuButton, open && classes.menuButtonHidden)}>
             <MenuIcon />
           </IconButton>
-          <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
+          {!hideArrow ? null : (
+            <IconButton color="inherit" onClick={() => history.push("/")}>
+              <ArrowBackIcon />
+            </IconButton>
+          )}
+          <Box className={classes.title}>
+            <img src={Logo} alt="logo" width="60" />
+          </Box>
+          <CardMedia image={Logo} />
+          {/* <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
             Dashboard
-          </Typography>
+          </Typography> */}
           <div className={classes.icon} style={{ marginRight: "10px" }}>
-            <IconButton color="inherit" onClick={() => history.push("/akun")}>
+            <IconButton
+              color="inherit"
+              onClick={() => {
+                dispatch({ type: "UPDATE_REFRESH", payload: !refresh });
+                history.push("/akun");
+              }}
+            >
               <AccountCircleIcon />
             </IconButton>
             <Typography variant="subtitle1" color="inherit" noWrap style={{ marginBottom: "10px" }}>
@@ -151,19 +175,37 @@ const HeaderPetani = () => {
         </div>
         <Divider />
         <List>
-          <ListItem button onClick={() => history.push("/")}>
+          <ListItem
+            button
+            onClick={() => {
+              dispatch({ type: "UPDATE_REFRESH", payload: !refresh });
+              history.push("/");
+            }}
+          >
             <ListItemIcon>
               <DashboardIcon />
             </ListItemIcon>
             <ListItemText primary="Dashboard" />
           </ListItem>
-          <ListItem button onClick={() => history.push("/produk")}>
+          <ListItem
+            button
+            onClick={() => {
+              dispatch({ type: "UPDATE_REFRESH", payload: !refresh });
+              history.push("/produk");
+            }}
+          >
             <ListItemIcon>
               <ShoppingCartIcon />
             </ListItemIcon>
             <ListItemText primary="Katalog Produk" />
           </ListItem>
-          <ListItem button onClick={() => history.push("/petani/rincian-pesanan")}>
+          <ListItem
+            button
+            onClick={() => {
+              dispatch({ type: "UPDATE_REFRESH", payload: !refresh });
+              history.push("/petani/rincian-pesanan");
+            }}
+          >
             <ListItemIcon>
               <BarChartIcon />
             </ListItemIcon>

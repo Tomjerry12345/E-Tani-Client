@@ -12,6 +12,9 @@ import SearchIcon from "@material-ui/icons/Search";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,12 +38,17 @@ const useStyles = makeStyles((theme) => ({
 const HeaderKonsumen = () => {
   const classes = useStyles();
   const history = useHistory();
+
+  const path = history.location.pathname;
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
   const { dataTroli } = useSelector((state) => state);
   const [totalData, setTotalData] = useState(0);
   const [cari, setCari] = useState("");
+  const [hideArrow, setHideArrow] = useState(false);
 
   useEffect(() => {
-    console.log("dataTroli: ", dataTroli);
+    path !== "/" ? setHideArrow(true) : setHideArrow(false);
     let sumData = 0;
     dataTroli.map(() => (sumData = sumData + 1));
     setTotalData(sumData);
@@ -50,10 +58,26 @@ const HeaderKonsumen = () => {
     setCari(event.target.value);
   };
 
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = (event) => {
+    console.log(`click menu ${event}`);
+    event === "pesananSaya" ? history.push("/konsumen/rincian-pesanan") : history.push("/akun");
+    setAnchorEl(null);
+  };
+
   return (
     <Fragment>
       <AppBar position="absolute" style={{ background: "green" }}>
         <Toolbar className={classes.toolbar}>
+          {!hideArrow ? null : (
+            <IconButton color="inherit" onClick={() => history.push("/")}>
+              <ArrowBackIcon />
+            </IconButton>
+          )}
+
           <Typography component="h1" variant="h6" color="inherit" noWrap style={{ width: "20ch" }}>
             Dashboard
           </Typography>
@@ -93,13 +117,17 @@ const HeaderKonsumen = () => {
             </Typography>
           </div>
           <div className={classes.icon} style={{ marginRight: "10px" }}>
-            <IconButton color="inherit" onClick={() => history.push("/akun")}>
+            <IconButton color="inherit" aria-controls="simple-menu" aria-haspopup="true" onClick={(event) => setAnchorEl(event.currentTarget)}>
               <AccountCircleIcon />
             </IconButton>
             <Typography variant="subtitle1" color="inherit" noWrap style={{ marginBottom: "10px" }}>
               Akun
             </Typography>
           </div>
+          <Menu id="simple-menu" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
+            <MenuItem onClick={() => handleClose("pesananSaya")}>Pesanan saya</MenuItem>
+            <MenuItem onClick={() => handleClose("informasiAkun")}>Informasi Akun</MenuItem>
+          </Menu>
         </Toolbar>
       </AppBar>
     </Fragment>

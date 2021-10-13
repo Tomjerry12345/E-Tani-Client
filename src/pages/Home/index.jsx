@@ -4,12 +4,14 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import { HeaderPetani, HeaderKonsumen } from "../../components/molecules";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { DashboardPetani, Pesanan, Produk, RincianPesananPetani, TambahDanEditProduk } from "../petani";
-import { AkunKonsumen, DashboardKonsumen, KategoriKonsumen, RincianPesananKonsumen, TroliKonsumen } from "../konsumen";
+import { DashboardKonsumen, KategoriKonsumen, RincianPesananKonsumen, TroliKonsumen } from "../konsumen";
 import { useHistory } from "react-router-dom";
 import Axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import TampilKategori from "../konsumen/Kategori/TampilKategori";
 import TampilCari from "../konsumen/cari";
+import { AkunPage } from "../Akun";
+import DetailProduk from "../detail";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,8 +37,6 @@ const Home = () => {
 
   const { dataUsers, statusLogin } = useSelector((state) => state);
   const dispatch = useDispatch();
-
-  console.log("dataUsers: ", dataUsers);
 
   let header;
   let routerx;
@@ -80,21 +80,16 @@ const Home = () => {
           <div className={classes.container}>
             <Switch>
               {routerx}
-              <Route path="/produk">
-                <Produk userKategori={"Petani"} />
-              </Route>
+              <Route path="/produk" component={Produk} />
+              <Route path="/detail-produk" component={DetailProduk} />
               <Route path="/pesan" component={Pesanan} />
-              <Route path="/tambah-produk">
-                <TambahDanEditProduk title={"Tambah Produk"} btnTitle={"Simpan"} />
-              </Route>
-              <Route path="/edit-produk">
-                <TambahDanEditProduk title={"Edit Produk"} btnTitle={"Update"} />
-              </Route>
+              <Route path="/tambahProduk" component={TambahDanEditProduk} />
+              <Route path="/edit-produk" component={TambahDanEditProduk} />
               <Route path="/kategori" component={KategoriKonsumen} />
               <Route path="/tampil-kategori" component={TampilKategori} />
               <Route path="/cari" component={TampilCari} />
               <Route path="/troli" component={TroliKonsumen} />
-              <Route path="/akun" component={AkunKonsumen} />
+              <Route path="/akun" component={AkunPage} />
               <Route path="/konsumen/rincian-pesanan" component={RincianPesananKonsumen} />
               <Route path="/petani/rincian-pesanan" component={RincianPesananPetani} />
             </Switch>
