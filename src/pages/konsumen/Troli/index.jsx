@@ -120,7 +120,6 @@ const Product = (props) => {
           </Grid>
         </div>
       </Grid>
-      <h1>{total}</h1>
     </Grid>
   );
 };
@@ -133,7 +132,6 @@ const TroliKonsumen = () => {
   const [total, setTotal] = useState(0);
   const [listHarga, setListHarga] = useState([0, 0, 0, 0, 0]);
   const [disableBtn, setDisableBtn] = useState(true);
-  // const [metodePembayaran, setMetodePembayaran] = useState("cod");
   const [listPesanan, setListPesanan] = useState([]);
   const [listId, setListId] = useState([]);
   const [listIdProduk, setListIdProduk] = useState([]);
@@ -187,7 +185,6 @@ const TroliKonsumen = () => {
   }, [listHarga, dataRincianPesanan]);
 
   const onTotal = (total, index, checked, isBtnClick, namaProduk, harga, jumlah, id, usernamePembeli, usernamePenjual, idProduk) => {
-    console.log(`usernamePenjual => ${usernamePenjual} || usernamePembeli => ${usernamePembeli}`);
     if (total === 0) {
       const test = [];
       listHarga.map((res, i) => {
@@ -217,7 +214,6 @@ const TroliKonsumen = () => {
       ]);
 
       if (isBtnClick) {
-        console.log("btnClick");
         const list = [];
         listPesanan.map((data) => {
           if (data.namaProduk === namaProduk) {
@@ -228,9 +224,6 @@ const TroliKonsumen = () => {
         });
         setListPesanan(list);
       } else {
-        console.log(`btn not click`);
-        const utilsListProduk = [];
-
         console.log(`list id produk length => ${listIdProduk.length}`);
 
         setListIdProduk([...listIdProduk, idProduk]);

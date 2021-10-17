@@ -17,7 +17,8 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
   },
   root: {
-    width: "600px",
+    width: "80vw",
+    maxWidth: "600px",
   },
   media: {
     height: 250,

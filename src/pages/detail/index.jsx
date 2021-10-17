@@ -16,11 +16,10 @@ export default function DetailProduk() {
   return (
     <div>
       <Grid container>
-        <Grid item md={2} />
-        <Grid item md={4} sm>
+        <Grid item md={6} xs={12}>
           <img src={data.image} alt="gambar" width="500" />
         </Grid>
-        <Grid item md sm>
+        <Grid item md={6} sxs={12}>
           <Grid container>
             <Grid item xs={12}>
               <Typography

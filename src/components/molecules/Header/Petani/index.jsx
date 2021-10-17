@@ -129,10 +129,13 @@ const HeaderPetani = () => {
               <ArrowBackIcon />
             </IconButton>
           )}
-          <Box className={classes.title}>
+          <Box style={{ marginRight: "10px" }}>
             <img src={Logo} alt="logo" width="60" />
           </Box>
-          <CardMedia image={Logo} />
+          <Typography className={classes.title} component="h1" variant="h6" color="inherit" noWrap>
+          E-Tani
+          </Typography>
+          {/* <CardMedia image={Logo} /> */}
           {/* <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
             Dashboard
           </Typography> */}

@@ -18,15 +18,15 @@ const KategoriProduk = ({ title, icon }) => {
   };
 
   return (
-    <Grid item>
+    <Grid item md={2} sm={2} xs={6}>
       <Grid container direction="column" alignItems="center">
-        <Grid item>
+        <Grid item md>
           <img src={icon} alt="" width="60" height="60" onClick={onBtnKategori} />
           {/* <IconButton color="inherit" onClick={onBtnKategori}>
             {icon}
           </IconButton> */}
         </Grid>
-        <Grid item>
+        <Grid item md>
           <TypographyAtoms title={title} variant="subtitle" />
         </Grid>
       </Grid>
@@ -37,7 +37,7 @@ const KategoriProduk = ({ title, icon }) => {
 const KategoriKonsumen = () => {
   return (
     <div>
-      <TypographyAtoms title={"Kategori"} variant="h6" />
+      <TypographyAtoms title={"Kategori"} variant="h6" style={{ margin: "20px 0 20px 0" }} />
       <Grid container justifyContent="flex-start" alignItems="flex-start" spacing={2}>
         <KategoriProduk title={"Sayur-mayur"} icon={cabbage} />
         <KategoriProduk title={"Serelia"} icon={corn} />
