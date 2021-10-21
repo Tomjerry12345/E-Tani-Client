@@ -150,9 +150,10 @@ const TroliKonsumen = () => {
     alamatPembeli: dataUsers.alamat,
   });
 
+  // console.log(`list id produk => ${dataTroli}`);
+  // console.log(`list id produk}`);
+
   useEffect(() => {
-    console.log(`list id => ${listId}`);
-    console.log(`list id produk => ${listIdProduk}`);
     const reducer = (accumulator, curr) => accumulator + curr;
     const totalHarga = listHarga.reduce(reducer);
     setTotal(totalHarga);
@@ -247,7 +248,6 @@ const TroliKonsumen = () => {
         if (index !== i) listIdProduk1.push(res);
       });
 
-      console.log(`list => ${list}`);
       setListPesanan(list);
       setListId(listId1);
       setListIdProduk(listIdProduk1);
@@ -255,6 +255,7 @@ const TroliKonsumen = () => {
   };
 
   const onClickPesan = () => {
+    console.log(`list pesanan => ${JSON.stringify(listPesanan)}`);
     const listNamaProduk = [];
     const listJumlah = [];
     const listHarga = [];
@@ -265,6 +266,7 @@ const TroliKonsumen = () => {
       listNamaProduk.push(data.namaProduk);
       listJumlah.push(data.jumlah);
       listHarga.push(data.harga);
+      // console.log(`data list pesanan => ${data}`);
       listUsernamePenjual.push(data.usernamePenjual);
       usernamePembeli = data.usernamePembeli;
     });

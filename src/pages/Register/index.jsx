@@ -49,6 +49,35 @@ const Register = () => {
   const classes = useStyles();
   const history = useHistory();
 
+  const dataKecamatan = {
+    takalar: ["Manggarabombang", "Mappakasunggu", "Polombangkeng Selatan", "Polombangkeng Utara", "Galesong Selatan", "Galesong Utara", "Pattalassang", "Galesong"],
+    gowa: [
+      "Parangloe",
+      "Manuju",
+      "Tinggimoncong",
+      "Tombolo Pao",
+      "Parigi",
+      "Bungaya",
+      "Bontolempangan",
+      "Tompobulu",
+      "Biringbulu",
+      "Somba Opu",
+      "Bontomarannu",
+      "Pattallassang",
+      "Pallangga",
+      "Barombong",
+      "Bajeng",
+      "Bajeng Barat",
+      "Bontonompo",
+      "Bontonompo Selatan",
+      "Parangloe",
+      "Tinggimoncong",
+      "Bungaya",
+      "Bontolempangan",
+      "Tompobulu",
+    ],
+  };
+
   const [state, setState] = React.useState({
     namaLengkap: "",
     username: "",
@@ -67,6 +96,9 @@ const Register = () => {
 
   const handleChange = (event) => {
     const name = event.target.name;
+    const value = event.target.value;
+
+    console.log(`name => ${name} === value => ${value}`);
     setState({
       ...state,
       [name]: event.target.value,
@@ -206,8 +238,7 @@ const Register = () => {
                     }}
                   >
                     <option aria-label="None" value="" />
-                    <option value={"Bulukumba"}>Bulukumba</option>
-                    <option value={"Bone"}>Bone</option>
+                    <option value={"Takalar"}>Takalar</option>
                     <option value={"Gowa"}>Gowa</option>
                   </Select>
                 </FormControl>
@@ -218,6 +249,7 @@ const Register = () => {
                   <InputLabel htmlFor="kecamatan">Kecamatan</InputLabel>
                   <Select
                     native
+                    disabled={state.kabupaten === "" ? true : false}
                     value={state.kecamatan}
                     onChange={handleChange}
                     label="kecamatan"
@@ -226,10 +258,9 @@ const Register = () => {
                       id: "kecamatan",
                     }}
                   >
-                    <option aria-label="None" value="" />
-                    <option value={"Herlang"}>Herlang</option>
-                    <option value={"Samata"}>Samata</option>
-                    <option value={"Bira"}>Bira</option>
+                    {/* {state.kabupaten === "" ? <option aria-label="None" value="" /> : null} */}
+
+                    {state.kabupaten === "Takalar" ? dataKecamatan.takalar.map((kecamatan) => <option value={kecamatan}>{kecamatan}</option>) : dataKecamatan.gowa.map((kecamatan) => <option value={kecamatan}>{kecamatan}</option>)}
                   </Select>
                 </FormControl>
               </Grid>

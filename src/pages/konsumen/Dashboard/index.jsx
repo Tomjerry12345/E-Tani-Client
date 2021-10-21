@@ -17,10 +17,11 @@ const DashboardKonsumen = ({ userKategori }) => {
   const [disableBtn, setDisableBtn] = useState([]);
   let i = 0;
 
-  const { dataUsers, statusProduk } = useSelector((state) => state);
+  const { dataUsers, dataTroli, statusProduk } = useSelector((state) => state);
   const dispatch = useDispatch();
 
   useEffect(() => {
+    console.log(`dataTroli => ${dataTroli}`);
     const request = new FormData();
     request.append("username", dataUsers.username);
     axios

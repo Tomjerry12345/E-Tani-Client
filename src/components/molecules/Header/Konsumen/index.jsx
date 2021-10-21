@@ -397,7 +397,7 @@ export const HeaderKonsumen = () => {
           <IconButton color="inherit" onClick={() => history.push("/kategori")}>
             <CategoryIcon />
           </IconButton>
-          <IconButton color="inherit" onClick={() => history.push("/checkout")}>
+          <IconButton color="inherit" onClick={() => history.push("/troli")}>
             <Badge badgeContent={totalData} color="secondary">
               <ShoppingCartIcon />
             </Badge>

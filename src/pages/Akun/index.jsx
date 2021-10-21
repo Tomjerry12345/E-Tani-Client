@@ -52,6 +52,9 @@ export const AkunPage = () => {
       .then((result) => {
         console.log(result);
         dispatch({ type: "UPDATE_STATUS_LOGIN", payload: !statusLogin });
+        dispatch({ type: "UPDATE_PRODUK", payload: {} });
+        dispatch({ type: "UPDATE_TROLI", payload: [] });
+        dispatch({ type: "UPDATE_USERS", payload: {} });
       })
       .catch((err) => console.log(err));
   };
