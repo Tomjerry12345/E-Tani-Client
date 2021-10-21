@@ -57,10 +57,24 @@ const TambahDanEditProduk = () => {
 
   const dispatch = useDispatch();
 
-  const { dataUsers, refresh } = useSelector((state) => state);
+  const data = location.data
+
+  const { dataUsers, refresh, dataProduk } = useSelector((state) => state);
 
   useEffect(() => {
-    console.log(`dataUsers => ${JSON.stringify(dataUsers)}`);
+    if (location.btnTitle !== "Simpan") {
+      setState({
+        ...state,
+        namaProduk: data.namaProduk,
+        deskripsiProduk: data.deskripsiProduk,
+        kategori: data.kategori,
+        harga: data.harga,
+        stok: data.stok,
+        image: data.image,
+      })
+      setPreview(data.image)
+    }
+    console.log(`dataProduk => ${JSON.stringify(data)}`);
     dispatch({ type: "UPDATE_REFRESH", payload: !refresh });
   }, [dataUsers]);
 

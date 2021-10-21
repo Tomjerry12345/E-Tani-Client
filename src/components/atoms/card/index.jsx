@@ -51,7 +51,7 @@ const CardAtoms = (props) => {
   if (userKategori === "Petani") {
     button = (
       <Fragment>
-        <ButtonAtoms size="small" color="primary" onClick={() => history.push({ pathname: "/edit-produk", id: id, title: "Edit Produk", btnTitle: "Edit" })} title={"Edit"} style={{ color: "green" }} />
+        <ButtonAtoms size="small" color="primary" onClick={() => history.push({ pathname: "/edit-produk", id: id, title: "Edit Produk", btnTitle: "Edit", data: data  })} title={"Edit"} style={{ color: "green" }} />
         <ButtonAtoms size="small" color="primary" onClick={() => onDelete(id)} title={"Delete"} style={{ color: "green" }} />
       </Fragment>
     );
