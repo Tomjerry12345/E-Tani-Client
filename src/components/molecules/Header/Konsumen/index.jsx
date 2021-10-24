@@ -342,6 +342,10 @@ export const HeaderKonsumen = () => {
     setTotalData(sumData);
   }, [dataTroli]);
 
+  const onChange = (e) => {
+    setCari(e.target.value);
+  };
+
   const handleChange = (event) => {
     console.log(`${event.keyCode}`);
     if (event.keyCode == 13) {
@@ -353,9 +357,9 @@ export const HeaderKonsumen = () => {
     // setCari(event.target.value);
   };
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+  // const handleClick = (event) => {
+  //   setAnchorEl(event.currentTarget);
+  // };
 
   const handleClose = (event) => {
     console.log(`click menu ${event}`);
@@ -391,7 +395,7 @@ export const HeaderKonsumen = () => {
               inputProps={{ "aria-label": "search" }}
               onKeyDown={handleChange}
               value={cari}
-              // onChange={handleChange}
+              onChange={onChange}
             />
           </div>
           <IconButton color="inherit" onClick={() => history.push("/kategori")}>

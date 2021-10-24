@@ -1,7 +1,7 @@
 // @flow
 import React, { useState } from "react";
 import { CardAtoms, TypographyAtoms } from "../../../components/atoms";
-import { Grid } from "@material-ui/core";
+import { Box, Grid, Paper } from "@material-ui/core";
 import { useEffect } from "react";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
@@ -100,25 +100,29 @@ const TampilCari = () => {
       <Grid container direction="column" style={{ marginTop: "10px" }} spacing={2}>
         <Grid item>
           <Grid container direction="row" spacing={2}>
-            {produk
-              ? produk.map((dataProduk) => {
-                  return (
-                    <Grid item md={4} sm={6} xs={12} key={dataProduk._id}>
-                      <CardAtoms
-                        id={dataProduk._id}
-                        image={`http://localhost:4000/${dataProduk.image}`}
-                        namaProduk={dataProduk.namaProduk}
-                        deskripsiProduk={dataProduk.deskripsiProduk}
-                        kategori={dataProduk.kategori}
-                        harga={dataProduk.harga}
-                        stok={dataProduk.stok}
-                        onAddToTroli={onAddToTroli}
-                        disableBtn={disableBtn[i++]}
-                      />
-                    </Grid>
-                  );
-                })
-              : []}
+            {produk.length > 0 ? (
+              produk.map((dataProduk) => {
+                return (
+                  <Grid item md={4} sm={6} xs={12} key={dataProduk._id}>
+                    <CardAtoms
+                      id={dataProduk._id}
+                      image={`http://localhost:4000/${dataProduk.image}`}
+                      namaProduk={dataProduk.namaProduk}
+                      deskripsiProduk={dataProduk.deskripsiProduk}
+                      kategori={dataProduk.kategori}
+                      harga={dataProduk.harga}
+                      stok={dataProduk.stok}
+                      onAddToTroli={onAddToTroli}
+                      disableBtn={disableBtn[i++]}
+                    />
+                  </Grid>
+                );
+              })
+            ) : (
+              <Box component={Paper} style={{ width: "96vw", height: "50vh" }} justifyContent="center" display="flex" alignItems="center">
+                <TypographyAtoms title={"Produk tidak ditemukan"} variant="h6" />
+              </Box>
+            )}
           </Grid>
         </Grid>
       </Grid>
