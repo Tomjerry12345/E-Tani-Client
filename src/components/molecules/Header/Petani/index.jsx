@@ -133,7 +133,7 @@ const HeaderPetani = () => {
             <img src={Logo} alt="logo" width="60" />
           </Box>
           <Typography className={classes.title} component="h1" variant="h6" color="inherit" noWrap>
-          E-Tani
+            E-Tani
           </Typography>
           {/* <CardMedia image={Logo} /> */}
           {/* <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>

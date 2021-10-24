@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import TampilKategori from "../konsumen/Kategori/TampilKategori";
 import TampilCari from "../konsumen/cari";
 import { AkunPage } from "../Akun";
+import EditAkun from "../Akun/EditAkun";
 import DetailProduk from "../detail";
 
 const useStyles = makeStyles((theme) => ({
@@ -90,6 +91,7 @@ const Home = () => {
               <Route path="/cari" component={TampilCari} />
               <Route path="/troli" component={TroliKonsumen} />
               <Route path="/akun" component={AkunPage} />
+              <Route path="/edit-akun" component={EditAkun} />
               <Route path="/konsumen/rincian-pesanan" component={RincianPesananKonsumen} />
               <Route path="/petani/rincian-pesanan" component={RincianPesananPetani} />
             </Switch>

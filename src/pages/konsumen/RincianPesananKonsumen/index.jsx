@@ -31,17 +31,19 @@ const useStyles = makeStyles((theme) => ({
   errorBtn: {
     backgroundColor: theme.palette.error.dark,
     color: "white",
+    fontSize: "10px",
     "&:hover": {
       backgroundColor: theme.palette.error.dark,
-      fontSize: "16px",
+      fontSize: "12px",
     },
   },
   succesBtn: {
     backgroundColor: theme.palette.success.dark,
     color: "white",
+    fontSize: "10px",
     "&:hover": {
       backgroundColor: theme.palette.success.dark,
-      fontSize: "16px",
+      fontSize: "12px",
     },
   },
 }));
@@ -50,6 +52,7 @@ export default function RincianPesanan(props) {
   const classes = useStyles();
   const { dataUsers } = useSelector((state) => state);
   const [data, setData] = useState([]);
+  const [transactionStatus, setTransactionStatus] = useState([]);
   const [refresh, setRefresh] = useState(false);
   const [hover, setHover] = useState(false);
 
@@ -59,16 +62,16 @@ export default function RincianPesanan(props) {
 
   const theme = createTheme();
 
-  const window_450 = useMediaQuery(theme.breakpoints.down("880"));
-  let window_1092 = useMediaQuery(theme.breakpoints.down("1092"));
+  const md = useMediaQuery(theme.breakpoints.down("md"));
+  // let window_1092 = useMediaQuery(theme.breakpoints.down("1092"));
 
   //   if (window_450) {
   //     window_1092 = false;
   //   }
 
-  console.log(`window_450 => ${window_450}`);
-  console.log(`window_1092 => ${window_1092}`);
-  console.log(`window_1092_open => ${window_1092_open}`);
+  // console.log(`transactionStatus => ${transactionStatus}`);
+  // console.log(`window_1092 => ${window_1092}`);
+  // console.log(`window_1092_open => ${window_1092_open}`);
 
   useEffect(() => {
     const request = new FormData();
@@ -81,18 +84,35 @@ export default function RincianPesanan(props) {
         },
       })
       .then((result) => {
+        setTransactionStatus([]);
         const data1 = result.data.data;
+        // const listStatus = [];
         console.log(`response => ${JSON.stringify(data1)}`);
+
+        data1.map(async (res) => {
+          if (res.metodePembayaran === "digital") {
+            const res1 = await getStatusPembayaran(res.rincian);
+            console.log(`res1=> ${JSON.stringify(res1.data.status)}`);
+            setTransactionStatus((currentArray) => [...currentArray, res1.data.status]);
+          } else {
+            setTransactionStatus((currentArray) => [...currentArray, "-"]);
+          }
+        });
         setExpanded([...Array(data1.length)].map((val) => false));
         setData(data1);
       })
       .catch((err) => console.log(err));
   }, [refresh]);
 
-  useEffect(() => {
-    if (window_450) setWindow_1092_open(false);
-    else setWindow_1092_open(true);
-  }, [window_450]);
+  const getStatusPembayaran = (rincian) =>
+    axios.post("http://localhost:4000/pembayaran/getStatus/", {
+      rincian,
+    });
+
+  // useEffect(() => {
+  //   if (window_450) setWindow_1092_open(false);
+  //   else setWindow_1092_open(true);
+  // }, [window_450]);
 
   const btnTerima = (id, message) => {
     console.log(`id ${id}`);
@@ -112,6 +132,16 @@ export default function RincianPesanan(props) {
           "content-type": "multipart/form-data",
         },
       })
+      .then((result) => {
+        console.log(`response => ${result}`);
+        setRefresh(!refresh);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const deletePesanan = (id) => {
+    axios
+      .delete(`http://localhost:4000/rincian-pesanan/delete/${id}`)
       .then((result) => {
         console.log(`response => ${result}`);
         setRefresh(!refresh);
@@ -139,41 +169,26 @@ export default function RincianPesanan(props) {
       <Table className={classes.table} aria-label="collapsible table">
         <TableHead>
           <TableRow>
-            {/* {window_450 || window_1092 ? <TableCell /> : null} */}
-
             <TableCell>Nama Produk</TableCell>
             <TableCell align="right">Harga</TableCell>
             <TableCell align="right">Jumlah</TableCell>
             <TableCell align="right">Metode Pembayaran</TableCell>
-            {/* {!window_450 ? ( */}
             <Fragment>
               <TableCell align="right">Status Pembayaran</TableCell>
               <TableCell align="right">Status Pengiriman</TableCell>
               <TableCell align="right">Status Penerima</TableCell>
               <TableCell align="right">Alamat Pembeli</TableCell>
             </Fragment>
-            {/* ) : null} */}
-
-            {/* {window_1092 === false && window_1092_open ? ( */}
             <Fragment>
               <TableCell align="right">Total Harga</TableCell>
               <TableCell align="center">Action</TableCell>
             </Fragment>
-            {/* ) : null} */}
           </TableRow>
         </TableHead>
         <TableBody>
           {data.map((row, index) => (
             <Fragment>
               <TableRow key={index}>
-                {/* {window_450 || window_1092 ? (
-                  <TableCell>
-                    <IconButton aria-label="expand row" size="small" onClick={() => handleClick(index)}>
-                      {expanded[index] ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-                    </IconButton>
-                  </TableCell>
-                ) : null} */}
-
                 <TableCell component="th" scope="row">
                   {row.namaProduk.map((res, index) => (
                     <TypographyAtoms variant="subtitle1" title={res} />
@@ -190,109 +205,33 @@ export default function RincianPesanan(props) {
                   ))}
                 </TableCell>
                 <TableCell align="right">{row.metodePembayaran}</TableCell>
-                {/* {!window_450 ? ( */}
                 <Fragment>
-                  <TableCell align="right">{row.rincian.transaction_status}</TableCell>
+                  <TableCell align="right">{transactionStatus[index]}</TableCell>
                   <TableCell align="right">{row.statusPengiriman}</TableCell>
                   <TableCell align="right">{row.statusPenerima}</TableCell>
                   <TableCell align="right">{row.alamatPembeli}</TableCell>
                 </Fragment>
-                {/* ) : null} */}
-                {/* {!window_1092 ? ( */}
                 <Fragment>
                   <TableCell align="right">{row.rincian.gross_amount}</TableCell>
                   <TableCell align="right">
-                    <Button
-                      // color={row.statusPenerima === "Sudah Diterima" ? "succes" : "error"}
-                      className={row.statusPenerima !== "Sudah Diterima" ? classes.succesBtn : classes.errorBtn}
-                      onMouseEnter={() => setHover(true)}
-                      onMouseLeave={() => setHover(false)}
-                      variant="contained"
-                      onClick={() => btnTerima(row._id, row.statusPenerima)}
-                    >
-                      {row.statusPenerima === "Sudah Diterima" ? "Belum Diterima" : "Sudah Diterima"}
-                    </Button>
+                    <Box display="flex">
+                      <Button
+                        className={row.statusPenerima !== "Sudah Diterima" ? classes.succesBtn : classes.errorBtn}
+                        onMouseEnter={() => setHover(true)}
+                        onMouseLeave={() => setHover(false)}
+                        variant="contained"
+                        style={{ margin: "8px" }}
+                        onClick={() => btnTerima(row._id, row.statusPenerima)}
+                      >
+                        {row.statusPenerima === "Sudah Diterima" ? "Belum Diterima" : "Sudah Diterima"}
+                      </Button>
+                      <Button variant="contained" style={{ margin: "8px", background: "red", color: "white", fontSize: "10px" }} onClick={() => deletePesanan(row._id)}>
+                        Batalkan Pesanan
+                      </Button>
+                    </Box>
                   </TableCell>
                 </Fragment>
-                {/* ) : null} */}
               </TableRow>
-              {/* <TableRow>
-                <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-                  <Collapse in={expanded[index]} timeout="auto" unmountOnExit>
-                    <Box margin={1}>
-                      <Typography variant="h6" gutterBottom component="div">
-                        Data Lainnya
-                      </Typography>
-                      <Table size="small" aria-label="purchases">
-                        <TableHead>
-                          {window_450 ? (
-                            <TableRow>
-                              <TableCell align="right">Status Pembayaran</TableCell>
-                              <TableCell align="right">Status Pengiriman</TableCell>
-                              <TableCell align="right">Status Penerima</TableCell>
-                              <TableCell align="right">Alamat Pembeli</TableCell>
-                              <TableCell>Total Harga</TableCell>
-                              <TableCell>Action</TableCell>
-                            </TableRow>
-                          ) : null}
-                          {window_1092 === false && window_1092_open ? (
-                            <TableRow>
-                              <TableCell>Total Harga</TableCell>
-                              <TableCell>Action</TableCell>
-                            </TableRow>
-                          ) : null}
-                        </TableHead>
-                        {window_1092 === false && window_1092_open ? (
-                          <TableBody>
-                            <TableRow key={index}>
-                              <TableCell component="th" scope="row">
-                                {row.rincian.gross_amount}
-                              </TableCell>
-                              <TableCell>
-                                <Button
-                                  // color={row.statusPenerima === "Sudah Diterima" ? "succes" : "error"}
-                                  className={row.statusPenerima !== "Sudah Diterima" ? classes.succesBtn : classes.errorBtn}
-                                  onMouseEnter={() => setHover(true)}
-                                  onMouseLeave={() => setHover(false)}
-                                  variant="contained"
-                                  onClick={() => btnTerima(row._id, row.statusPenerima)}
-                                >
-                                  {row.statusPenerima === "Sudah Diterima" ? "Belum Diterima" : "Sudah Diterima"}
-                                </Button>
-                              </TableCell>
-                            </TableRow>
-                          </TableBody>
-                        ) : null}
-                        {window_450 ? (
-                          <TableBody>
-                            <TableRow key={index}>
-                              <TableCell align="right">{row.rincian.transaction_status}</TableCell>
-                              <TableCell align="right">{row.statusPengiriman}</TableCell>
-                              <TableCell align="right">{row.statusPenerima}</TableCell>
-                              <TableCell align="right">{row.alamatPembeli}</TableCell>
-                              <TableCell component="th" scope="row">
-                                {row.rincian.gross_amount}
-                              </TableCell>
-                              <TableCell>
-                                <Button
-                                  // color={row.statusPenerima === "Sudah Diterima" ? "succes" : "error"}
-                                  className={row.statusPenerima !== "Sudah Diterima" ? classes.succesBtn : classes.errorBtn}
-                                  onMouseEnter={() => setHover(true)}
-                                  onMouseLeave={() => setHover(false)}
-                                  variant="contained"
-                                  onClick={() => btnTerima(row._id, row.statusPenerima)}
-                                >
-                                  {row.statusPenerima === "Sudah Diterima" ? "Belum Diterima" : "Sudah Diterima"}
-                                </Button>
-                              </TableCell>
-                            </TableRow>
-                          </TableBody>
-                        ) : null}
-                      </Table>
-                    </Box>
-                  </Collapse>
-                </TableCell>
-              </TableRow> */}
             </Fragment>
           ))}
         </TableBody>

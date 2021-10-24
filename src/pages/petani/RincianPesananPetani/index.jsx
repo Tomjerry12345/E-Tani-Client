@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, createTheme } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -9,26 +9,30 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import { useSelector } from "react-redux";
 import axios from "axios";
-import { Button, Typography } from "@material-ui/core";
+import Box from "@material-ui/core/Box";
+import { Button, Typography, useMediaQuery } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   table: {
-    minWidth: 650,
+    // minWidth: 400,
+    // width: "100vw",
   },
   errorBtn: {
     backgroundColor: theme.palette.error.dark,
     color: "white",
+    fontSize: "10px",
     "&:hover": {
       backgroundColor: theme.palette.error.dark,
-      fontSize: "16px",
+      fontSize: "12px",
     },
   },
   succesBtn: {
     backgroundColor: theme.palette.success.dark,
     color: "white",
+    fontSize: "10px",
     "&:hover": {
       backgroundColor: theme.palette.success.dark,
-      fontSize: "16px",
+      fontSize: "12px",
     },
   },
 }));
@@ -40,6 +44,14 @@ export default function RincianPesanan() {
   const [refresh, setRefresh] = useState(false);
   const [hover, setHover] = useState(false);
   const [isBtnClick, setIsBtnClick] = useState(false);
+
+  const [transactionStatus, setTransactionStatus] = useState([]);
+
+  const theme = createTheme();
+
+  const md = useMediaQuery(theme.breakpoints.up("md"));
+
+  console.log(`md => ${md}`);
 
   useEffect(() => {
     const request = new FormData();
@@ -54,10 +66,24 @@ export default function RincianPesanan() {
       .then((result) => {
         const data1 = result.data.data;
         console.log(`response => ${JSON.stringify(data1)}`);
+        data1.map(async (res) => {
+          if (res.metodePembayaran === "digital") {
+            const res1 = await getStatusPembayaran(res.rincian);
+            console.log(`res1=> ${JSON.stringify(res1.data.status)}`);
+            setTransactionStatus((currentArray) => [...currentArray, res1.data.status]);
+          } else {
+            setTransactionStatus((currentArray) => [...currentArray, "-"]);
+          }
+        });
         setData(data1);
       })
       .catch((err) => console.log(err));
   }, [refresh]);
+
+  const getStatusPembayaran = (rincian) =>
+    axios.post("http://localhost:4000/pembayaran/getStatus/", {
+      rincian,
+    });
 
   const btnTerima = (id, message) => {
     console.log(`id ${id}`);
@@ -84,8 +110,18 @@ export default function RincianPesanan() {
       .catch((err) => console.log(err));
   };
 
+  const deletePesanan = (id) => {
+    axios
+      .delete(`http://localhost:4000/rincian-pesanan/delete/${id}`)
+      .then((result) => {
+        console.log(`response => ${result}`);
+        setRefresh(!refresh);
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} style={{ width: md ? "90vw" : "85vw" }}>
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
@@ -98,7 +134,7 @@ export default function RincianPesanan() {
             <TableCell align="right">Status Penerima</TableCell>
             <TableCell align="right">Alamat Pembeli</TableCell>
             <TableCell align="right">Total Harga</TableCell>
-            <TableCell align="right">Action</TableCell>
+            <TableCell align="center">Action</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -106,32 +142,43 @@ export default function RincianPesanan() {
             <TableRow key={index}>
               <TableCell component="th" scope="row">
                 {row.namaProduk.map((res, index) => (
-                  <Typography variant="subtitle1">
-                    {index + 1}. {res}
-                  </Typography>
+                  <Typography variant="subtitle1">{res}</Typography>
                 ))}
               </TableCell>
               <TableCell align="right">
                 {row.harga.map((res, index) => (
-                  <Typography variant="subtitle1">
-                    {index + 1}. {res}
-                  </Typography>
+                  <Typography variant="subtitle1">{res}</Typography>
                 ))}
               </TableCell>
               <TableCell align="right">
                 {row.jumlah.map((res, index) => (
-                  <Typography variant="subtitle1">
-                    {index + 1}. {res}
-                  </Typography>
+                  <Typography variant="subtitle1">{res}</Typography>
                 ))}
               </TableCell>
               <TableCell align="right">{row.metodePembayaran}</TableCell>
-              <TableCell align="right">{row.rincian.transaction_status}</TableCell>
+              <TableCell align="right">{transactionStatus[index]}</TableCell>
               <TableCell align="right">{row.statusPengiriman}</TableCell>
               <TableCell align="right">{row.statusPenerima}</TableCell>
               <TableCell align="right">{row.alamatPembeli}</TableCell>
               <TableCell align="right">{row.rincian.gross_amount}</TableCell>
               <TableCell align="right">
+                <Box display="flex">
+                  <Button
+                    className={row.statusPengiriman === "Sudah Terkirim" ? classes.succesBtn : classes.errorBtn}
+                    onMouseEnter={() => setHover(true)}
+                    onMouseLeave={() => setHover(false)}
+                    variant="contained"
+                    style={{ margin: "8px" }}
+                    onClick={() => btnTerima(row._id, row.statusPengiriman)}
+                  >
+                    {row.statusPengiriman === "Belum Terkirim" ? "Belum Terkirim" : "Sudah Terkirim"}
+                  </Button>
+                  <Button variant="contained" style={{ margin: "8px", background: "red", color: "white", fontSize: "10px" }} onClick={() => deletePesanan(row._id)}>
+                    Batalkan Pesanan
+                  </Button>
+                </Box>
+              </TableCell>
+              {/* <TableCell align="right">
                 <Button
                   // color={row.statusPenerima === "Sudah Diterima" ? "succes" : "error"}
                   className={row.statusPengiriman === "Sudah Terkirim" ? classes.succesBtn : classes.errorBtn}
@@ -142,7 +189,7 @@ export default function RincianPesanan() {
                 >
                   {row.statusPengiriman === "Belum Terkirim" ? "Belum Terkirim" : "Sudah Terkirim"}
                 </Button>
-              </TableCell>
+              </TableCell> */}
             </TableRow>
           ))}
         </TableBody>

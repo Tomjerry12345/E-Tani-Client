@@ -1,5 +1,5 @@
 // @flow
-import { Grid, Typography } from "@material-ui/core";
+import { Box, Grid, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
@@ -30,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(8),
     background: "green",
     color: "white",
+    margin: "8px",
   },
   items: {
     width: "100vw",
@@ -41,10 +42,6 @@ export const AkunPage = () => {
   const history = useHistory();
   const { dataUsers, statusLogin } = useSelector((state) => state);
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    console.log(`${JSON.stringify(dataUsers)}`);
-  }, []);
 
   const btnLogout = () => {
     axios
@@ -96,13 +93,31 @@ export const AkunPage = () => {
                   {dataUsers.noHp}
                 </Typography>
               </Grid>
-              {dataUsers.kategori === "Petani" ? null : (
-                <Grid item xs={12} style={{ width: "100vw" }}>
+              <Grid item xs={12} style={{ width: "100vw" }}>
+                <Box display="flex" style={{ padding: 4 }}>
+                  {dataUsers.kategori === "Petani" ? null : (
+                    <Button fullWidth className={classes.button} variant="contained" onClick={btnLogout}>
+                      Logout
+                    </Button>
+                  )}
+
+                  <Button fullWidth variant="contained" className={classes.button} onClick={() => history.push("/edit-akun")}>
+                    Edit Profil
+                  </Button>
+                </Box>
+              </Grid>
+              {/* {dataUsers.kategori === "Petani" ? null : (
+                <Grid item xs={12} md={6} style={{ width: "100vw" }}>
                   <Button fullWidth className={classes.button} variant="contained" onClick={btnLogout}>
                     Logout
                   </Button>
                 </Grid>
               )}
+              <Grid item xs={12} md={6} className={classes.button}>
+                <Button fullWidth variant="contained" onClick={btnLogout}>
+                  Logout
+                </Button>
+              </Grid> */}
             </Grid>
           </CardContent>
         </CardActionArea>
