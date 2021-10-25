@@ -102,7 +102,7 @@ const DashboardKonsumen = ({ userKategori }) => {
             {produk
               ? produk.map((dataProduk) => {
                   return (
-                    <Grid item md={4} sm={6} xs={12} key={dataProduk._id}>
+                    <Grid item md={3} sm={6} xs={12} key={dataProduk._id}>
                       <CardAtoms
                         id={dataProduk._id}
                         image={`http://localhost:4000/${dataProduk.image}`}

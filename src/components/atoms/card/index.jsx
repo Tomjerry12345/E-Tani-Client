@@ -9,10 +9,12 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { useHistory } from "react-router-dom";
 import ButtonAtoms from "../Button";
+import { Box } from "@material-ui/core";
 
 const useStyles = makeStyles({
   root: {
     maxWidth: 345,
+    height: 400,
   },
   media: {
     height: 140,
@@ -51,7 +53,7 @@ const CardAtoms = (props) => {
   if (userKategori === "Petani") {
     button = (
       <Fragment>
-        <ButtonAtoms size="small" color="primary" onClick={() => history.push({ pathname: "/edit-produk", id: id, title: "Edit Produk", btnTitle: "Edit", data: data  })} title={"Edit"} style={{ color: "green" }} />
+        <ButtonAtoms size="small" color="primary" onClick={() => history.push({ pathname: "/edit-produk", id: id, title: "Edit Produk", btnTitle: "Edit", data: data })} title={"Edit"} style={{ color: "green" }} />
         <ButtonAtoms size="small" color="primary" onClick={() => onDelete(id)} title={"Delete"} style={{ color: "green" }} />
       </Fragment>
     );
@@ -82,7 +84,7 @@ const CardAtoms = (props) => {
   };
 
   return (
-    <Card className={classes.root}>
+    <Card className={classes.root} style={{ position: "relative" }}>
       <CardActionArea onClick={clickCard}>
         <CardMedia className={classes.media} image={image} title="Contemplative Reptile" />
         <CardContent>
@@ -97,7 +99,9 @@ const CardAtoms = (props) => {
           </Typography>
         </CardContent>
       </CardActionArea>
-      <CardActions>{button}</CardActions>
+      <Box style={{ height: 70, position: "absolute", bottom: "0px" }}>
+        <CardActions style={{ position: "absolute", bottom: "0px", width: 344 }}>{button}</CardActions>
+      </Box>
     </Card>
   );
 };

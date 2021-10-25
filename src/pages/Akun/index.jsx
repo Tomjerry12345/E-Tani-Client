@@ -95,15 +95,14 @@ export const AkunPage = () => {
               </Grid>
               <Grid item xs={12} style={{ width: "100vw" }}>
                 <Box display="flex" style={{ padding: 4 }}>
+                  <Button fullWidth variant="contained" className={classes.button} onClick={() => history.push("/edit-akun")}>
+                    Edit Profil
+                  </Button>
                   {dataUsers.kategori === "Petani" ? null : (
                     <Button fullWidth className={classes.button} variant="contained" onClick={btnLogout}>
                       Logout
                     </Button>
                   )}
-
-                  <Button fullWidth variant="contained" className={classes.button} onClick={() => history.push("/edit-akun")}>
-                    Edit Profil
-                  </Button>
                 </Box>
               </Grid>
               {/* {dataUsers.kategori === "Petani" ? null : (

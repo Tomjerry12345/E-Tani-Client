@@ -92,7 +92,7 @@ const Produk = () => {
             {produk
               ? produk.map((result) => {
                   return (
-                    <Grid item md={3}>
+                    <Grid item md={3} sm={6} xs={12}>
                       <CardAtoms
                         key={result._id}
                         id={result._id}

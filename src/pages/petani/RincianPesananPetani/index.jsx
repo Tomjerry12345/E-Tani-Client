@@ -173,9 +173,9 @@ export default function RincianPesanan() {
                   >
                     {row.statusPengiriman === "Belum Terkirim" ? "Belum Terkirim" : "Sudah Terkirim"}
                   </Button>
-                  <Button variant="contained" style={{ margin: "8px", background: "red", color: "white", fontSize: "10px" }} onClick={() => deletePesanan(row._id)}>
+                  {/* <Button variant="contained" style={{ margin: "8px", background: "red", color: "white", fontSize: "10px" }} onClick={() => deletePesanan(row._id)}>
                     Batalkan Pesanan
-                  </Button>
+                  </Button> */}
                 </Box>
               </TableCell>
               {/* <TableCell align="right">
