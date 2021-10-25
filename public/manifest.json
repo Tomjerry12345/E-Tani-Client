@@ -3,17 +3,17 @@
   "name": "E-Tani",
   "icons": [
     {
-      "src": "/public/logopwa64.png",
+      "src": "logopwa64.png",
       "sizes": "64x646",
       "type": "image/png"
     },
     {
-      "src": "/public/logo192.png",
+      "src": "logopwa192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "/public/logopwa512.png",
+      "src": "logopwa512.png",
       "type": "image/png",
       "sizes": "512x512"
     }
