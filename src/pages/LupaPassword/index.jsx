@@ -9,10 +9,11 @@ import Container from "@material-ui/core/Container";
 import { TypographyAtoms, ButtonAtoms, LinkAtoms } from "../../components/atoms";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
-import { Snackbar } from "@material-ui/core";
+import { Snackbar, Box } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import { useDispatch } from "react-redux";
 import { green } from "@material-ui/core/colors";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -51,6 +52,8 @@ export default function LupaPassword() {
   const [state, setState] = useState({
     username: "",
   });
+
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (event) => {
     const name = event.target.name;
@@ -95,6 +98,11 @@ export default function LupaPassword() {
           <LockOutlinedIcon />
         </Avatar>
         <TypographyAtoms component="h1" variant="h5" title={"Lupa Password"} />
+        {loading && (
+          <Box display="flex" className={classes.progress} style={{ margin: 8 }}>
+            <CircularProgress />
+          </Box>
+        )}
         <form className={classes.form} noValidate>
           <ThemeProvider theme={theme}>
             <TextField variant="outlined" margin="normal" required fullWidth id="username" label="Username" name="username" autoComplete="username" autoFocus onChange={handleChange} />

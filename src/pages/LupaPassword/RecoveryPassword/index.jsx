@@ -9,9 +9,10 @@ import Container from "@material-ui/core/Container";
 import { TypographyAtoms, ButtonAtoms, LinkAtoms } from "../../../components/atoms";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
-import { Snackbar } from "@material-ui/core";
+import { Snackbar, Box } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import { green } from "@material-ui/core/colors";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -50,9 +51,11 @@ export default function RecoveryPassword() {
   const [open, setOpen] = useState(false);
   const [response, setResponse] = useState("");
   const [state, setState] = useState({
-    passwordLama: "",
+    // passwordLama: "",
     passwordBaru: "",
   });
+
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (event) => {
     const name = event.target.name;
@@ -63,17 +66,20 @@ export default function RecoveryPassword() {
   };
 
   const onKonfirmasi = () => {
+    setLoading(true);
     console.log(`${JSON.stringify(state)}`);
     axios
       .post(`http://localhost:4000/auth/recoveryPassword/${username}`, state)
       .then((res) => {
         console.log("response", res);
         history.push("/login");
+        setLoading(false);
       })
       .catch((err) => {
         const message = err.response.data.message;
         setResponse(message);
         setOpen(true);
+        setLoading(false);
       });
   };
 
@@ -93,9 +99,14 @@ export default function RecoveryPassword() {
           <LockOutlinedIcon />
         </Avatar>
         <TypographyAtoms component="h1" variant="h5" title={"Ganti Password"} />
+        {loading && (
+          <Box display="flex" className={classes.progress} style={{ margin: 8 }}>
+            <CircularProgress />
+          </Box>
+        )}
         <form className={classes.form} noValidate>
           <ThemeProvider theme={theme}>
-            <TextField variant="outlined" margin="normal" required fullWidth label="Password Lama" name="passwordLama" type="password" onChange={handleChange} />
+            {/* <TextField variant="outlined" margin="normal" required fullWidth label="Password Lama" name="passwordLama" type="password" onChange={handleChange} /> */}
             <TextField variant="outlined" margin="normal" required fullWidth name="passwordBaru" label="Password Baru" type="password" onChange={handleChange} />
           </ThemeProvider>
 

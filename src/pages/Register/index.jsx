@@ -16,8 +16,9 @@ import { Alert } from "@material-ui/lab";
 import { useHistory } from "react-router-dom";
 import Axios from "axios";
 import { green } from "@material-ui/core/colors";
-import { IconButton } from "@material-ui/core";
+import { IconButton, Box } from "@material-ui/core";
 import AddPhotoAlternateIcon from "@material-ui/icons/AddPhotoAlternate";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -94,6 +95,8 @@ const Register = () => {
   const [open, setOpen] = useState(false);
   const [response, setResponse] = useState("");
 
+  const [loading, setLoading] = useState(false);
+
   const handleChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
@@ -106,6 +109,7 @@ const Register = () => {
   };
 
   const clickBtnRegister = () => {
+    setLoading(true);
     const data = new FormData();
     data.append("namaLengkap", state.namaLengkap);
     data.append("username", state.username);
@@ -129,11 +133,13 @@ const Register = () => {
       .then((res) => {
         console.log("post succes : ", res.data.message);
         history.push("/");
+        setLoading(false);
       })
       .catch((err) => {
         const message = err.response.data.message;
         setResponse(message);
         setOpen(true);
+        setLoading(false);
       });
   };
 
@@ -179,6 +185,11 @@ const Register = () => {
           <LockOutlinedIcon />
         </Avatar>
         <TypographyAtoms component="h1" variant="h5" title={"Daftar"} />
+        {loading && (
+          <Box display="flex" className={classes.progress} style={{ margin: 8 }}>
+            <CircularProgress />
+          </Box>
+        )}
         <form className={classes.form}>
           <ThemeProvider theme={theme}>
             <Grid container spacing={2}>

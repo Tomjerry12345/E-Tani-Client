@@ -9,10 +9,12 @@ import Container from "@material-ui/core/Container";
 import { TypographyAtoms, ButtonAtoms, LinkAtoms } from "../../components/atoms";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
-import { Snackbar } from "@material-ui/core";
+import { Box, Snackbar } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import { useDispatch } from "react-redux";
 import { green } from "@material-ui/core/colors";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import { FlashOnTwoTone } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -33,8 +35,8 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
   typography: {
-    marginTop: theme.spacing(1)
-  }
+    marginTop: theme.spacing(1),
+  },
 }));
 
 const theme = createTheme({
@@ -53,6 +55,8 @@ const Login = () => {
     password: "",
   });
 
+  const [loading, setLoading] = useState(false);
+
   const [open, setOpen] = useState(false);
   const [response, setResponse] = useState("");
 
@@ -65,6 +69,7 @@ const Login = () => {
   };
 
   const btnLogin = () => {
+    setLoading(true);
     const data = new FormData();
     data.append("username", state.username);
     data.append("password", state.password);
@@ -82,11 +87,13 @@ const Login = () => {
         console.log("post succes : ", res.data.message);
         dispatch({ type: "UPDATE_USERS", payload: res.data.data });
         history.push("/");
+        setLoading(false);
       })
       .catch((err) => {
         const message = err.response.data.message;
         setResponse(message);
         setOpen(true);
+        setLoading(false);
       });
   };
 
@@ -106,6 +113,11 @@ const Login = () => {
           <LockOutlinedIcon />
         </Avatar>
         <TypographyAtoms component="h1" variant="h5" title={"Login"} />
+        {loading && (
+          <Box display="flex" className={classes.progress} style={{ margin: 8 }}>
+            <CircularProgress />
+          </Box>
+        )}
         <form className={classes.form} noValidate>
           <ThemeProvider theme={theme}>
             <TextField variant="outlined" margin="normal" required fullWidth id="username" label="Username" name="username" autoComplete="username" autoFocus value={state.namaLengkap} onChange={handleChange} />
