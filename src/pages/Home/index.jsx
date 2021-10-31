@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { HeaderPetani, HeaderKonsumen } from "../../components/molecules";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
@@ -13,6 +13,7 @@ import TampilCari from "../konsumen/cari";
 import { AkunPage } from "../Akun";
 import EditAkun from "../Akun/EditAkun";
 import DetailProduk from "../detail";
+import { useMediaQuery } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,9 +43,13 @@ const Home = () => {
   let header;
   let routerx;
 
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down("sm"));
+  const url = matches ? "192.168.43.184" : "localhost";
+
   useEffect(() => {
     console.log("statusLogin");
-    Axios.get("http://localhost:4000/users/getAllUsers")
+    Axios.get(`http://${url}:4000/users/getAllUsers`)
       .then((result) => {
         const data = result.data.data;
         if (data.length === 0) {

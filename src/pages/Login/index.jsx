@@ -4,12 +4,12 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import { makeStyles, ThemeProvider, createTheme } from "@material-ui/core/styles";
+import { makeStyles, ThemeProvider, createTheme, useTheme } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { TypographyAtoms, ButtonAtoms, LinkAtoms } from "../../components/atoms";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
-import { Box, Snackbar } from "@material-ui/core";
+import { Box, Snackbar, useMediaQuery } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import { useDispatch } from "react-redux";
 import { green } from "@material-ui/core/colors";
@@ -50,6 +50,10 @@ const Login = () => {
   const history = useHistory();
   const dispatch = useDispatch();
 
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down("sm"));
+  const url = matches ? "192.168.43.184" : "localhost";
+
   const [state, setState] = useState({
     username: "",
     password: "",
@@ -77,7 +81,7 @@ const Login = () => {
     console.log("data : ", data);
 
     axios
-      .post("http://localhost:4000/auth/login", data, {
+      .post(`http://${url}:4000/auth/login`, data, {
         headers: {
           "content-type": "multipart/form-data",
         },

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { makeStyles, createTheme } from "@material-ui/core/styles";
+import { makeStyles, createTheme, useTheme } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -10,7 +10,6 @@ import Paper from "@material-ui/core/Paper";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { Button, Grid, IconButton, useMediaQuery } from "@material-ui/core";
-import TableTesting from "./TableTesting";
 import { TypographyAtoms } from "../../../components/atoms";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
@@ -54,31 +53,18 @@ export default function RincianPesanan(props) {
   const [data, setData] = useState([]);
   const [transactionStatus, setTransactionStatus] = useState([]);
   const [refresh, setRefresh] = useState(false);
-  const [hover, setHover] = useState(false);
+  const [open, setOpen] = useState([]);
 
-  const [expanded, setExpanded] = useState();
-
-  const [window_1092_open, setWindow_1092_open] = useState(true);
-
-  const theme = createTheme();
-
-  const md = useMediaQuery(theme.breakpoints.down("md"));
-  // let window_1092 = useMediaQuery(theme.breakpoints.down("1092"));
-
-  //   if (window_450) {
-  //     window_1092 = false;
-  //   }
-
-  // console.log(`transactionStatus => ${transactionStatus}`);
-  // console.log(`window_1092 => ${window_1092}`);
-  // console.log(`window_1092_open => ${window_1092_open}`);
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down("sm"));
+  const url = matches ? "192.168.43.184" : "localhost";
 
   useEffect(() => {
     const request = new FormData();
     request.append("username", dataUsers.username);
     request.append("jenisAkun", dataUsers.kategori);
     axios
-      .post("http://localhost:4000/rincian-pesanan/get/byName", request, {
+      .post(`http://${url}:4000/rincian-pesanan/get/byName`, request, {
         headers: {
           "content-type": "multipart/form-data",
         },
@@ -86,7 +72,6 @@ export default function RincianPesanan(props) {
       .then((result) => {
         setTransactionStatus([]);
         const data1 = result.data.data;
-        // const listStatus = [];
         console.log(`response => ${JSON.stringify(data1)}`);
 
         data1.map(async (res) => {
@@ -98,27 +83,19 @@ export default function RincianPesanan(props) {
             setTransactionStatus((currentArray) => [...currentArray, "-"]);
           }
         });
-        setExpanded([...Array(data1.length)].map((val) => false));
         setData(data1);
+        setOpen([...Array(data1.length)].map((val) => false));
       })
       .catch((err) => console.log(err));
   }, [refresh]);
 
   const getStatusPembayaran = (rincian) =>
-    axios.post("http://localhost:4000/pembayaran/getStatus/", {
+    axios.post(`http://${url}:4000/pembayaran/getStatus/`, {
       rincian,
     });
 
-  // useEffect(() => {
-  //   if (window_450) setWindow_1092_open(false);
-  //   else setWindow_1092_open(true);
-  // }, [window_450]);
-
   const btnTerima = (id, message) => {
     console.log(`id ${id}`);
-    // const request = new FormData();
-    // request.append("message", message);
-    // request.append("jenisAkun", dataUsers.kategori);
     const status = message === "Sudah Diterima" ? "Belum Diterima" : "Sudah Diterima";
     const data = {
       message: status,
@@ -126,7 +103,7 @@ export default function RincianPesanan(props) {
     };
 
     axios
-      .put(`http://localhost:4000/rincian-pesanan/update/${id}`, {
+      .put(`http://${url}:4000/rincian-pesanan/update/${id}`, {
         data,
         headers: {
           "content-type": "multipart/form-data",
@@ -141,7 +118,7 @@ export default function RincianPesanan(props) {
 
   const deletePesanan = (id) => {
     axios
-      .delete(`http://localhost:4000/rincian-pesanan/delete/${id}`)
+      .delete(`http://${url}:4000/rincian-pesanan/delete/${id}`)
       .then((result) => {
         console.log(`response => ${result}`);
         setRefresh(!refresh);
@@ -150,8 +127,8 @@ export default function RincianPesanan(props) {
   };
 
   const handleClick = (index) => {
-    setExpanded(
-      expanded.map((boolean_value, i) => {
+    setOpen(
+      open.map((boolean_value, i) => {
         if (index === i) {
           // once we retrieve the collapse index, we negate it
           return !boolean_value;
@@ -165,12 +142,13 @@ export default function RincianPesanan(props) {
 
   return (
     // <TableTesting />
-    <TableContainer component={Paper} style={{ width: "96vw" }}>
+    <TableContainer component={Paper} style={{ width: "97vw" }}>
       <Table className={classes.table} aria-label="collapsible table">
         <TableHead>
           <TableRow>
-            <TableCell>Nama Produk</TableCell>
-            <TableCell align="right">Harga</TableCell>
+            <TableCell align="left"></TableCell>
+            <TableCell align="left">Nama Produk</TableCell>
+            <TableCell align="left">Harga</TableCell>
             <TableCell align="right">Jumlah</TableCell>
             <TableCell align="right">Metode Pembayaran</TableCell>
             <Fragment>
@@ -189,20 +167,30 @@ export default function RincianPesanan(props) {
           {data.map((row, index) => (
             <Fragment>
               <TableRow key={index}>
-                <TableCell component="th" scope="row">
-                  {row.namaProduk.map((res, index) => (
-                    <TypographyAtoms variant="subtitle1" title={res} />
-                  ))}
+                {row.namaProduk.length > 1 ? (
+                  <TableCell>
+                    <IconButton aria-label="expand row" size="small" onClick={() => handleClick(index)}>
+                      {open[index] ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+                    </IconButton>
+                  </TableCell>
+                ) : (
+                  <TableCell></TableCell>
+                )}
+
+                <TableCell component="th">
+                  {/* {row.namaProduk.map((res, index) => `[${index + 1}] ${res} `)} */}
+                  {`${row.namaProduk[0]}`}
+                  {row.namaProduk.length > 1 ? <p>...</p> : null}
+                </TableCell>
+                <TableCell component="th">
+                  {`${row.harga[0]}`}
+                  {row.namaProduk.length > 1 ? <p>...</p> : null}
+                  {/* {row.harga.map((res, index) => `[${index + 1}] ${res} `)} */}
                 </TableCell>
                 <TableCell align="right">
-                  {row.harga.map((res, index) => (
-                    <TypographyAtoms variant="subtitle1" title={res} />
-                  ))}
-                </TableCell>
-                <TableCell align="right">
-                  {row.jumlah.map((res, index) => (
-                    <TypographyAtoms variant="subtitle1" title={res} />
-                  ))}
+                  {`${row.jumlah[0]}`}
+                  {row.namaProduk.length > 1 ? <p>...</p> : null}
+                  {/* {row.jumlah.map((res, index) => `[${index + 1}] ${res} `)} */}
                 </TableCell>
                 <TableCell align="right">{row.metodePembayaran}</TableCell>
                 <Fragment>
@@ -215,14 +203,7 @@ export default function RincianPesanan(props) {
                   <TableCell align="right">{row.rincian.gross_amount}</TableCell>
                   <TableCell align="right">
                     <Box display="flex">
-                      <Button
-                        className={row.statusPenerima !== "Sudah Diterima" ? classes.succesBtn : classes.errorBtn}
-                        onMouseEnter={() => setHover(true)}
-                        onMouseLeave={() => setHover(false)}
-                        variant="contained"
-                        style={{ margin: "8px" }}
-                        onClick={() => btnTerima(row._id, row.statusPenerima)}
-                      >
+                      <Button className={row.statusPenerima !== "Sudah Diterima" ? classes.succesBtn : classes.errorBtn} variant="contained" style={{ margin: "8px" }} onClick={() => btnTerima(row._id, row.statusPenerima)}>
                         {row.statusPenerima === "Sudah Diterima" ? "Belum Diterima" : "Sudah Diterima"}
                       </Button>
                       <Button variant="contained" style={{ margin: "8px", background: "red", color: "white", fontSize: "10px" }} onClick={() => deletePesanan(row._id)}>
@@ -231,6 +212,47 @@ export default function RincianPesanan(props) {
                     </Box>
                   </TableCell>
                 </Fragment>
+              </TableRow>
+              <TableRow>
+                {row.namaProduk.length > 1 ? (
+                  <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+                    <Collapse in={open[index]} timeout="auto" unmountOnExit>
+                      <Box margin={1}>
+                        <Typography variant="h6" gutterBottom component="div">
+                          Data lainnya
+                        </Typography>
+                        <Table size="small" aria-label="purchases">
+                          <TableHead>
+                            <TableRow>
+                              <TableCell>
+                                <TypographyAtoms variant="h6" title={"Nama Produk"} />
+                              </TableCell>
+                              <TableCell>
+                                <TypographyAtoms variant="h6" title={"Harga"} />
+                              </TableCell>
+                              <TableCell align="right">
+                                <TypographyAtoms variant="h6" title={"Jumlah"} />
+                              </TableCell>
+                            </TableRow>
+                          </TableHead>
+                          <TableBody>
+                            {row.namaProduk.map((data, index) =>
+                              index > 0 ? (
+                                <TableRow key={index}>
+                                  <TableCell component="th" scope="row">
+                                    {data}
+                                  </TableCell>
+                                  <TableCell>{row.harga[index]}</TableCell>
+                                  <TableCell align="right">{row.jumlah[index]}</TableCell>
+                                </TableRow>
+                              ) : null
+                            )}
+                          </TableBody>
+                        </Table>
+                      </Box>
+                    </Collapse>
+                  </TableCell>
+                ) : null}
               </TableRow>
             </Fragment>
           ))}

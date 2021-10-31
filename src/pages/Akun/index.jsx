@@ -1,6 +1,6 @@
 // @flow
-import { Box, Grid, Typography } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import { Box, Grid, Typography, useMediaQuery } from "@material-ui/core";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
@@ -43,9 +43,13 @@ export const AkunPage = () => {
   const { dataUsers, statusLogin } = useSelector((state) => state);
   const dispatch = useDispatch();
 
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down("sm"));
+  const url = matches ? "192.168.43.184" : "localhost";
+
   const btnLogout = () => {
     axios
-      .put("http://localhost:4000/auth/logout")
+      .put(`http://${url}:4000/auth/logout`)
       .then((result) => {
         console.log(result);
         dispatch({ type: "UPDATE_STATUS_LOGIN", payload: !statusLogin });
@@ -60,7 +64,7 @@ export const AkunPage = () => {
     <div className={classes.container}>
       <Card className={classes.root}>
         <CardActionArea>
-          <CardMedia className={classes.media} image={`http://localhost:4000/${dataUsers.image}`} title="Contemplative Reptile" />
+          <CardMedia className={classes.media} image={`http://${url}:4000/${dataUsers.image}`} title="Contemplative Reptile" />
           <CardContent>
             <Grid container direction="column" alignItems="center" justifyContent="center">
               <Grid item>

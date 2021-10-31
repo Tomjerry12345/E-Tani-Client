@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Grid } from "@material-ui/core";
+import { Grid, useMediaQuery, useTheme } from "@material-ui/core";
 import { CardAtoms, TypographyAtoms } from "../../../components/atoms";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,6 +17,12 @@ const DashboardKonsumen = ({ userKategori }) => {
   const [disableBtn, setDisableBtn] = useState([]);
   let i = 0;
 
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down("sm"));
+  const url = matches ? "192.168.43.184" : "localhost";
+
+  console.log(`url => ${url}`);
+
   const { dataUsers, dataTroli, statusProduk } = useSelector((state) => state);
   const dispatch = useDispatch();
 
@@ -25,13 +31,13 @@ const DashboardKonsumen = ({ userKategori }) => {
     const request = new FormData();
     request.append("username", dataUsers.username);
     axios
-      .get("http://localhost:4000/produk/getAllProduk")
+      .get(`http://${url}:4000/produk/getAllProduk`)
       .then((result) => {
         const data = result.data.data;
         console.log(data);
         data.map((produk) => idProduk.push(produk._id));
         setProduk(data);
-        return axios.post("http://localhost:4000/troli/getTroli", request, {
+        return axios.post(`http://${url}:4000/troli/getTroli`, request, {
           headers: {
             "content-type": "multipart/form-data",
           },
