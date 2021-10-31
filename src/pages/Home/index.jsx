@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { HeaderPetani, HeaderKonsumen } from "../../components/molecules";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
@@ -13,7 +13,6 @@ import TampilCari from "../konsumen/cari";
 import { AkunPage } from "../Akun";
 import EditAkun from "../Akun/EditAkun";
 import DetailProduk from "../detail";
-import { useMediaQuery } from "@material-ui/core";
 import { baseUrl } from "../../config/constant/Constant";
 
 const useStyles = makeStyles((theme) => ({
@@ -27,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     height: "100vh",
   },
   container: {
-    paddingTop: theme.spacing(4),
+    paddingTop: theme.spacing(2),
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2),
     paddingBottom: theme.spacing(2),
@@ -43,10 +42,6 @@ const Home = () => {
 
   let header;
   let routerx;
-
-  const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.down("sm"));
-  const url = matches ? "192.168.43.184" : "localhost";
 
   useEffect(() => {
     console.log("statusLogin");

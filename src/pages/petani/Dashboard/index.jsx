@@ -45,7 +45,7 @@ function DashboardPetani() {
 
   return (
     <div>
-      <TypographyAtoms title={"Dashboard"} variant="subtitle1" />
+      <TypographyAtoms title={"Dashboard"} variant="h6" style={{ fontWeight: "bold", marginBottom: 16 }} />
       <Grid container justifyContent="flex-start" alignItems="flex-start" spacing={2}>
         <Grid item>
           <Grid container direction="column" alignItems="center">

@@ -27,6 +27,7 @@ import { Box, useMediaQuery } from "@material-ui/core";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
+import { baseUrl } from "../../../../config/constant/Constant";
 
 const drawerWidth = 240;
 
@@ -124,7 +125,7 @@ const HeaderPetani = () => {
 
   const btnLogout = () => {
     axios
-      .put("http://localhost:4000/auth/logout")
+      .put(`${baseUrl}/auth/logout`)
       .then((result) => {
         console.log(result);
         dispatch({ type: "UPDATE_STATUS_LOGIN", payload: !statusLogin });
@@ -155,42 +156,40 @@ const HeaderPetani = () => {
             <Typography className={classes.title} component="h1" variant="h6" color="inherit" noWrap></Typography>
           )}
 
-          <div className={classes.icon}>
-            {!matches ? (
-              <div className={classes.icon} style={{ marginRight: "10px" }}>
-                <IconButton
-                  color="inherit"
-                  onClick={() => {
-                    dispatch({ type: "UPDATE_REFRESH", payload: !refresh });
-                    history.push("/akun");
-                  }}
-                >
-                  <AccountCircleIcon />
-                </IconButton>
-                <Typography variant="subtitle1" color="inherit" noWrap style={{ marginBottom: "10px" }}>
-                  Akun
-                </Typography>
-                <IconButton color="inherit" onClick={btnLogout}>
-                  <ExitToAppIcon />
-                </IconButton>
-                <Typography variant="subtitle1" color="inherit" noWrap style={{ marginBottom: "10px" }}>
-                  Keluar
-                </Typography>
-              </div>
-            ) : (
-              <Fragment>
-                <IconButton color="inherit" aria-label="more" aria-controls="long-menu" aria-haspopup="true" onClick={(event) => setAnchorEl(event.currentTarget)}>
-                  <MoreVertIcon />
-                </IconButton>
+          {!matches ? (
+            <Fragment style={{ marginRight: "10px" }}>
+              <IconButton
+                color="inherit"
+                onClick={() => {
+                  dispatch({ type: "UPDATE_REFRESH", payload: !refresh });
+                  history.push("/akun");
+                }}
+              >
+                <AccountCircleIcon />
+              </IconButton>
+              {/* <Typography variant="subtitle1" color="inherit" noWrap style={{ marginBottom: "10px" }}>
+                Akun
+              </Typography> */}
+              <IconButton color="inherit" onClick={btnLogout}>
+                <ExitToAppIcon />
+              </IconButton>
+              {/* <Typography variant="subtitle1" color="inherit" noWrap style={{ marginBottom: "10px" }}>
+                Keluar
+              </Typography> */}
+            </Fragment>
+          ) : (
+            <Fragment>
+              <IconButton color="inherit" aria-label="more" aria-controls="long-menu" aria-haspopup="true" onClick={(event) => setAnchorEl(event.currentTarget)}>
+                <MoreVertIcon />
+              </IconButton>
 
-                <Menu id="long-menu" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
-                  <MenuItem onClick={() => handleClose("informasiAkun")}>Informasi Akun</MenuItem>
+              <Menu id="long-menu" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
+                <MenuItem onClick={() => handleClose("informasiAkun")}>Informasi Akun</MenuItem>
 
-                  <MenuItem onClick={() => handleClose("keluar")}>Keluar</MenuItem>
-                </Menu>
-              </Fragment>
-            )}
-          </div>
+                <MenuItem onClick={() => handleClose("keluar")}>Keluar</MenuItem>
+              </Menu>
+            </Fragment>
+          )}
         </Toolbar>
       </AppBar>
       <Drawer
