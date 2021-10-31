@@ -11,6 +11,7 @@ import axios from "axios";
 import { useLocation } from "react-router-dom";
 import { green } from "@material-ui/core/colors";
 import { useSelector, useDispatch } from "react-redux";
+import { baseUrl } from "../../../config/constant/Constant";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -57,7 +58,7 @@ const TambahDanEditProduk = () => {
 
   const dispatch = useDispatch();
 
-  const data = location.data
+  const data = location.data;
 
   const { dataUsers, refresh, dataProduk } = useSelector((state) => state);
 
@@ -71,8 +72,8 @@ const TambahDanEditProduk = () => {
         harga: data.harga,
         stok: data.stok,
         image: data.image,
-      })
-      setPreview(data.image)
+      });
+      setPreview(data.image);
     }
     console.log(`dataProduk => ${JSON.stringify(data)}`);
     dispatch({ type: "UPDATE_REFRESH", payload: !refresh });
@@ -120,14 +121,14 @@ const TambahDanEditProduk = () => {
     data.append("image", state.image);
     data.append("userNamePenjual", dataUsers.username);
     if (location.btnTitle === "Simpan") {
-      const insertData = axios.post("http://localhost:4000/produk/createProduk", data, {
+      const insertData = axios.post(`${baseUrl}/produk/createProduk`, data, {
         headers: {
           "content-type": "multipart/form-data",
         },
       });
       requestProduk(insertData);
     } else {
-      const updateData = axios.put(`http://localhost:4000/produk/${location.id}`, data, {
+      const updateData = axios.put(`${baseUrl}/produk/${location.id}`, data, {
         headers: {
           "content-type": "multipart/form-data",
         },

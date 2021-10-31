@@ -19,6 +19,7 @@ import AddPhotoAlternateIcon from "@material-ui/icons/AddPhotoAlternate";
 import { ButtonAtoms, LinkAtoms, TypographyAtoms } from "../../../components/atoms";
 import { RadioMolecules } from "../../../components/molecules";
 import { useDispatch, useSelector } from "react-redux";
+import { baseUrl } from "../../../config/constant/Constant";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -99,7 +100,7 @@ const EditAkun = () => {
   });
 
   useEffect(() => {
-    setPreview(`http://localhost:4000/${dataUsers.image}`);
+    setPreview(`${baseUrl}/${dataUsers.image}`);
     console.log(`${JSON.stringify(dataUsers)}`);
   }, []);
 
@@ -126,7 +127,7 @@ const EditAkun = () => {
 
     // console.log("data : ", data);
 
-    Axios.put(`http://localhost:4000/users/update/${dataUsers._id}`, data, {
+    Axios.put(`${baseUrl}/users/update/${dataUsers._id}`, data, {
       headers: {
         "content-type": "multipart/form-data",
       },

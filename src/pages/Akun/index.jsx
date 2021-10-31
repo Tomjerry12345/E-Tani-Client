@@ -10,6 +10,7 @@ import Button from "@material-ui/core/Button";
 import { useHistory } from "react-router";
 import { useEffect } from "react";
 import axios from "axios";
+import { baseUrl } from "../../config/constant/Constant";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -43,13 +44,9 @@ export const AkunPage = () => {
   const { dataUsers, statusLogin } = useSelector((state) => state);
   const dispatch = useDispatch();
 
-  const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.down("sm"));
-  const url = matches ? "192.168.43.184" : "localhost";
-
   const btnLogout = () => {
     axios
-      .put(`http://${url}:4000/auth/logout`)
+      .put(`${baseUrl}/auth/logout`)
       .then((result) => {
         console.log(result);
         dispatch({ type: "UPDATE_STATUS_LOGIN", payload: !statusLogin });
@@ -64,7 +61,7 @@ export const AkunPage = () => {
     <div className={classes.container}>
       <Card className={classes.root}>
         <CardActionArea>
-          <CardMedia className={classes.media} image={`http://${url}:4000/${dataUsers.image}`} title="Contemplative Reptile" />
+          <CardMedia className={classes.media} image={`${baseUrl}/${dataUsers.image}`} title="Contemplative Reptile" />
           <CardContent>
             <Grid container direction="column" alignItems="center" justifyContent="center">
               <Grid item>

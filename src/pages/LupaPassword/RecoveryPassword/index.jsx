@@ -13,6 +13,7 @@ import { Snackbar, Box } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import { green } from "@material-ui/core/colors";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import { baseUrl } from "../../../config/constant/Constant";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -69,7 +70,7 @@ export default function RecoveryPassword() {
     setLoading(true);
     console.log(`${JSON.stringify(state)}`);
     axios
-      .post(`http://localhost:4000/auth/recoveryPassword/${username}`, state)
+      .post(`${baseUrl}/auth/recoveryPassword/${username}`, state)
       .then((res) => {
         console.log("response", res);
         history.push("/login");

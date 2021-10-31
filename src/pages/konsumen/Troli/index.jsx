@@ -6,6 +6,7 @@ import { makeStyles, ThemeProvider, createTheme } from "@material-ui/core/styles
 import { green } from "@material-ui/core/colors";
 import axios from "axios";
 import { useHistory } from "react-router";
+import { baseUrl } from "../../../config/constant/Constant";
 
 const useStyles = makeStyles({
   button: {
@@ -165,14 +166,14 @@ const TroliKonsumen = () => {
       console.log(dataRincianPesanan);
 
       axios
-        .post("http://localhost:4000/rincian-pesanan/add", {
+        .post(`${baseUrl}/rincian-pesanan/add`, {
           dataRincianPesanan,
         })
         .then((res) => {
           console.log(res);
           listId.map((id) => {
             axios
-              .delete(`http://localhost:4000/troli/delete/${id}`)
+              .delete(`${baseUrl}/troli/delete/${id}`)
               .then((res) => {
                 console.log("res: ", res.data);
                 updateStok(dataRincianPesanan.jumlah);
@@ -292,7 +293,7 @@ const TroliKonsumen = () => {
 
   const paymentGateway = (listNamaProduk, listJumlah, listHarga, listUsernamePenjual, usernamePembeli) => {
     axios
-      .post("http://localhost:4000/pembayaran/transaction", {
+      .post(`${baseUrl}/pembayaran/transaction`, {
         total,
       })
       .then((res) => {
@@ -336,7 +337,7 @@ const TroliKonsumen = () => {
     console.log(`list id produk => ${listIdProduk},  listJumlah => ${jumlah}`);
     listIdProduk.map((id, index) => {
       axios
-        .put(`http://localhost:4000/produk/updateStok/${id}`, { stok: jumlah[index] })
+        .put(`${baseUrl}/produk/updateStok/${id}`, { stok: jumlah[index] })
         .then((res) => {
           console.log();
         })

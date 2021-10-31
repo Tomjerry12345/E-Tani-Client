@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { HeaderPetani, HeaderKonsumen } from "../../components/molecules";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { DashboardPetani, Pesanan, Produk, RincianPesananPetani, TambahDanEditProduk } from "../petani";
+import { DashboardPetani, Produk, RincianPesananPetani, TambahDanEditProduk } from "../petani";
 import { DashboardKonsumen, KategoriKonsumen, RincianPesananKonsumen, TroliKonsumen } from "../konsumen";
 import { useHistory } from "react-router-dom";
 import Axios from "axios";
@@ -14,6 +14,7 @@ import { AkunPage } from "../Akun";
 import EditAkun from "../Akun/EditAkun";
 import DetailProduk from "../detail";
 import { useMediaQuery } from "@material-ui/core";
+import { baseUrl } from "../../config/constant/Constant";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -49,7 +50,7 @@ const Home = () => {
 
   useEffect(() => {
     console.log("statusLogin");
-    Axios.get(`http://${url}:4000/users/getAllUsers`)
+    Axios.get(`${baseUrl}/users/getAllUsers`)
       .then((result) => {
         const data = result.data.data;
         if (data.length === 0) {
@@ -88,7 +89,6 @@ const Home = () => {
               {routerx}
               <Route path="/produk" component={Produk} />
               <Route path="/detail-produk" component={DetailProduk} />
-              <Route path="/pesan" component={Pesanan} />
               <Route path="/tambahProduk" component={TambahDanEditProduk} />
               <Route path="/edit-produk" component={TambahDanEditProduk} />
               <Route path="/kategori" component={KategoriKonsumen} />

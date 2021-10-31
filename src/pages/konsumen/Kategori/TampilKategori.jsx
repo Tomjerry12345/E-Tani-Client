@@ -8,6 +8,7 @@ import { useLocation } from "react-router-dom";
 import { Snackbar } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import { useDispatch, useSelector } from "react-redux";
+import { baseUrl } from "../../../config/constant/Constant";
 
 const TampilKategori = () => {
   const [produk, setProduk] = useState([]);
@@ -28,12 +29,12 @@ const TampilKategori = () => {
     const request = new FormData();
     request.append("username", dataUsers.username);
     axios
-      .get(`http://localhost:4000/produk/kategori/${location.state.kategori}`)
+      .get(`${baseUrl}/produk/kategori/${location.state.kategori}`)
       .then((result) => {
         const data = result.data.data;
         data.map((produk) => idProduk.push(produk._id));
         setProduk(data);
-        return axios.post("http://localhost:4000/troli/getTroli", request, {
+        return axios.post(`${baseUrl}/troli/getTroli`, request, {
           headers: {
             "content-type": "multipart/form-data",
           },
@@ -63,7 +64,7 @@ const TampilKategori = () => {
     data.append("username", dataUsers.username);
 
     axios
-      .post("http://localhost:4000/troli/createTroli", data, {
+      .post(`${baseUrl}/troli/createTroli`, data, {
         headers: {
           "content-type": "multipart/form-data",
         },
@@ -107,7 +108,7 @@ const TampilKategori = () => {
                   <Grid item md={3} key={dataProduk._id}>
                     <CardAtoms
                       id={dataProduk._id}
-                      image={`http://localhost:4000/${dataProduk.image}`}
+                      image={`${baseUrl}/${dataProduk.image}`}
                       namaProduk={dataProduk.namaProduk}
                       deskripsiProduk={dataProduk.deskripsiProduk}
                       kategori={dataProduk.kategori}

@@ -15,6 +15,7 @@ import { useDispatch } from "react-redux";
 import { green } from "@material-ui/core/colors";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { FlashOnTwoTone } from "@material-ui/icons";
+import { baseUrl } from "../../config/constant/Constant";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -81,7 +82,7 @@ const Login = () => {
     console.log("data : ", data);
 
     axios
-      .post(`http://${url}:4000/auth/login`, data, {
+      .post(`${baseUrl}/auth/login`, data, {
         headers: {
           "content-type": "multipart/form-data",
         },

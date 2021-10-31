@@ -14,6 +14,7 @@ import { Alert } from "@material-ui/lab";
 import { useDispatch } from "react-redux";
 import { green } from "@material-ui/core/colors";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import { baseUrl } from "../../config/constant/Constant";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -65,7 +66,7 @@ export default function LupaPassword() {
 
   const onKonfirmasi = () => {
     axios
-      .post("http://localhost:4000/auth/checkUsername", state)
+      .post(`${baseUrl}/auth/checkUsername`, state)
       .then((res) => {
         console.log("response", res);
         history.push({

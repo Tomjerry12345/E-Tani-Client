@@ -18,6 +18,7 @@ import { Fragment } from "react";
 import Collapse from "@material-ui/core/Collapse";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
+import { baseUrl } from "../../../config/constant/Constant";
 
 const useStyles = makeStyles((theme) => ({
   table: {
@@ -55,16 +56,12 @@ export default function RincianPesanan(props) {
   const [refresh, setRefresh] = useState(false);
   const [open, setOpen] = useState([]);
 
-  const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.down("sm"));
-  const url = matches ? "192.168.43.184" : "localhost";
-
   useEffect(() => {
     const request = new FormData();
     request.append("username", dataUsers.username);
     request.append("jenisAkun", dataUsers.kategori);
     axios
-      .post(`http://${url}:4000/rincian-pesanan/get/byName`, request, {
+      .post(`${baseUrl}/rincian-pesanan/get/byName`, request, {
         headers: {
           "content-type": "multipart/form-data",
         },
@@ -90,7 +87,7 @@ export default function RincianPesanan(props) {
   }, [refresh]);
 
   const getStatusPembayaran = (rincian) =>
-    axios.post(`http://${url}:4000/pembayaran/getStatus/`, {
+    axios.post(`${baseUrl}/pembayaran/getStatus/`, {
       rincian,
     });
 
@@ -103,7 +100,7 @@ export default function RincianPesanan(props) {
     };
 
     axios
-      .put(`http://${url}:4000/rincian-pesanan/update/${id}`, {
+      .put(`${baseUrl}/rincian-pesanan/update/${id}`, {
         data,
         headers: {
           "content-type": "multipart/form-data",
@@ -118,7 +115,7 @@ export default function RincianPesanan(props) {
 
   const deletePesanan = (id) => {
     axios
-      .delete(`http://${url}:4000/rincian-pesanan/delete/${id}`)
+      .delete(`${baseUrl}/rincian-pesanan/delete/${id}`)
       .then((result) => {
         console.log(`response => ${result}`);
         setRefresh(!refresh);

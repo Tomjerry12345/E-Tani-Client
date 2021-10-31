@@ -4,7 +4,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 import clsx from "clsx";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
@@ -23,7 +23,10 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import Logo from "../../../../assets/icon/logo.png";
-import { Box, CardMedia } from "@material-ui/core";
+import { Box, useMediaQuery } from "@material-ui/core";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
 
 const drawerWidth = 240;
 
@@ -94,6 +97,11 @@ const HeaderPetani = () => {
   const path = history.location.pathname;
   const [hideArrow, setHideArrow] = useState(false);
 
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down("sm"));
+
+  const [anchorEl, setAnchorEl] = useState(null);
+
   useEffect(() => {
     console.log(`path: ${path}`);
     console.log(`refresh: ${refresh}`);
@@ -105,6 +113,13 @@ const HeaderPetani = () => {
   };
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const handleClose = (event) => {
+    console.log(`click menu ${event}`);
+    if (event === "informasiAkun") history.push("/akun");
+    else if (event === "keluar") btnLogout();
+    setAnchorEl(null);
   };
 
   const btnLogout = () => {
@@ -132,34 +147,49 @@ const HeaderPetani = () => {
           <Box style={{ marginRight: "10px" }}>
             <img src={Logo} alt="logo" width="60" />
           </Box>
-          <Typography className={classes.title} component="h1" variant="h6" color="inherit" noWrap>
-            E-Tani
-          </Typography>
-          {/* <CardMedia image={Logo} /> */}
-          {/* <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            Dashboard
-          </Typography> */}
-          <div className={classes.icon} style={{ marginRight: "10px" }}>
-            <IconButton
-              color="inherit"
-              onClick={() => {
-                dispatch({ type: "UPDATE_REFRESH", payload: !refresh });
-                history.push("/akun");
-              }}
-            >
-              <AccountCircleIcon />
-            </IconButton>
-            <Typography variant="subtitle1" color="inherit" noWrap style={{ marginBottom: "10px" }}>
-              Akun
+          {!matches ? (
+            <Typography className={classes.title} component="h1" variant="h6" color="inherit" noWrap>
+              E-Tani
             </Typography>
-          </div>
+          ) : (
+            <Typography className={classes.title} component="h1" variant="h6" color="inherit" noWrap></Typography>
+          )}
+
           <div className={classes.icon}>
-            <IconButton color="inherit" onClick={btnLogout}>
-              <ExitToAppIcon />
-            </IconButton>
-            <Typography variant="subtitle1" color="inherit" noWrap style={{ marginBottom: "10px" }}>
-              Keluar
-            </Typography>
+            {!matches ? (
+              <div className={classes.icon} style={{ marginRight: "10px" }}>
+                <IconButton
+                  color="inherit"
+                  onClick={() => {
+                    dispatch({ type: "UPDATE_REFRESH", payload: !refresh });
+                    history.push("/akun");
+                  }}
+                >
+                  <AccountCircleIcon />
+                </IconButton>
+                <Typography variant="subtitle1" color="inherit" noWrap style={{ marginBottom: "10px" }}>
+                  Akun
+                </Typography>
+                <IconButton color="inherit" onClick={btnLogout}>
+                  <ExitToAppIcon />
+                </IconButton>
+                <Typography variant="subtitle1" color="inherit" noWrap style={{ marginBottom: "10px" }}>
+                  Keluar
+                </Typography>
+              </div>
+            ) : (
+              <Fragment>
+                <IconButton color="inherit" aria-label="more" aria-controls="long-menu" aria-haspopup="true" onClick={(event) => setAnchorEl(event.currentTarget)}>
+                  <MoreVertIcon />
+                </IconButton>
+
+                <Menu id="long-menu" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
+                  <MenuItem onClick={() => handleClose("informasiAkun")}>Informasi Akun</MenuItem>
+
+                  <MenuItem onClick={() => handleClose("keluar")}>Keluar</MenuItem>
+                </Menu>
+              </Fragment>
+            )}
           </div>
         </Toolbar>
       </AppBar>
@@ -169,7 +199,7 @@ const HeaderPetani = () => {
           paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
         }}
         open={open}
-        style={{ marginTop: "32px" }}
+        style={{ marginTop: "8px" }}
       >
         <div className={classes.toolbarIcon}>
           <IconButton onClick={handleDrawerClose}>

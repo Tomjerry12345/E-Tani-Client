@@ -9,6 +9,7 @@ import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 import { Snackbar } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import { useDispatch, useSelector } from "react-redux";
+import { baseUrl } from "../../../config/constant/Constant";
 
 const Produk = () => {
   const history = useHistory();
@@ -21,7 +22,7 @@ const Produk = () => {
 
   useEffect(() => {
     console.log("Produk");
-    Axios.get(`http://localhost:4000/produk/getProduk/${dataUsers.username}`)
+    Axios.get(`${baseUrl}/produk/getProduk/${dataUsers.username}`)
       .then((result) => {
         const data = result.data.data;
         console.log(data);
@@ -39,7 +40,7 @@ const Produk = () => {
           label: "Ya",
           onClick: () => {
             console.log("id", id);
-            Axios.delete(`http://localhost:4000/produk/${id}`)
+            Axios.delete(`${baseUrl}/produk/${id}`)
               .then((result) => {
                 const message = result.data.message;
                 console.log("delete succes", message);
@@ -96,7 +97,7 @@ const Produk = () => {
                       <CardAtoms
                         key={result._id}
                         id={result._id}
-                        image={`http://localhost:4000/${result.image}`}
+                        image={`${baseUrl}/${result.image}`}
                         namaProduk={result.namaProduk}
                         deskripsiProduk={result.deskripsiProduk}
                         kategori={result.kategori}

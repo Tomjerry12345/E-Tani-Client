@@ -8,6 +8,7 @@ import { useLocation } from "react-router-dom";
 import { Snackbar } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import { useDispatch, useSelector } from "react-redux";
+import { baseUrl } from "../../../config/constant/Constant";
 
 const TampilCari = () => {
   const [produk, setProduk] = useState([]);
@@ -28,12 +29,12 @@ const TampilCari = () => {
     const request = new FormData();
     request.append("username", dataUsers.username);
     axios
-      .get(`http://localhost:4000/produk/cari/${location.state.cari}`)
+      .get(`${baseUrl}/produk/cari/${location.state.cari}`)
       .then((result) => {
         const data = result.data.data;
         data.map((produk) => idProduk.push(produk._id));
         setProduk(data);
-        return axios.post("http://localhost:4000/troli/getTroli", request, {
+        return axios.post(`${baseUrl}/troli/getTroli`, request, {
           headers: {
             "content-type": "multipart/form-data",
           },

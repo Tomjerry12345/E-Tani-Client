@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Grid, useMediaQuery, useTheme } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import { CardAtoms, TypographyAtoms } from "../../../components/atoms";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { Snackbar } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
+import { baseUrl } from "../../../config/constant/Constant";
 
 const DashboardKonsumen = ({ userKategori }) => {
   const [produk, setProduk] = useState([]);
@@ -17,12 +18,6 @@ const DashboardKonsumen = ({ userKategori }) => {
   const [disableBtn, setDisableBtn] = useState([]);
   let i = 0;
 
-  const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.down("sm"));
-  const url = matches ? "192.168.43.184" : "localhost";
-
-  console.log(`url => ${url}`);
-
   const { dataUsers, dataTroli, statusProduk } = useSelector((state) => state);
   const dispatch = useDispatch();
 
@@ -31,13 +26,13 @@ const DashboardKonsumen = ({ userKategori }) => {
     const request = new FormData();
     request.append("username", dataUsers.username);
     axios
-      .get(`http://${url}:4000/produk/getAllProduk`)
+      .get(`${baseUrl}/produk/getAllProduk`)
       .then((result) => {
         const data = result.data.data;
         console.log(data);
         data.map((produk) => idProduk.push(produk._id));
         setProduk(data);
-        return axios.post(`http://${url}:4000/troli/getTroli`, request, {
+        return axios.post(`${baseUrl}/troli/getTroli`, request, {
           headers: {
             "content-type": "multipart/form-data",
           },
@@ -70,7 +65,7 @@ const DashboardKonsumen = ({ userKategori }) => {
     data.append("usernamePenjual", usernamePenjual);
 
     axios
-      .post("http://localhost:4000/troli/createTroli", data, {
+      .post(`${baseUrl}/troli/createTroli`, data, {
         headers: {
           "content-type": "multipart/form-data",
         },
@@ -111,7 +106,7 @@ const DashboardKonsumen = ({ userKategori }) => {
                     <Grid item lg={3} md={3} sm={6} xs={12} key={dataProduk._id}>
                       <CardAtoms
                         id={dataProduk._id}
-                        image={`http://localhost:4000/${dataProduk.image}`}
+                        image={`${baseUrl}/${dataProduk.image}`}
                         namaProduk={dataProduk.namaProduk}
                         deskripsiProduk={dataProduk.deskripsiProduk}
                         kategori={dataProduk.kategori}

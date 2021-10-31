@@ -19,6 +19,7 @@ import { green } from "@material-ui/core/colors";
 import { IconButton, Box } from "@material-ui/core";
 import AddPhotoAlternateIcon from "@material-ui/icons/AddPhotoAlternate";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import { baseUrl } from "../../config/constant/Constant";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -125,7 +126,7 @@ const Register = () => {
 
     console.log("data : ", data);
 
-    Axios.post("http://localhost:4000/auth/register", data, {
+    Axios.post(`${baseUrl}/auth/register`, data, {
       headers: {
         "content-type": "multipart/form-data",
       },

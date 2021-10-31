@@ -5,6 +5,7 @@ import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import StorefrontIcon from "@material-ui/icons/Storefront";
 import Axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
+import { baseUrl } from "../../../config/constant/Constant";
 
 function DashboardPetani() {
   const [totalProduk, setTotalProduk] = useState(0);
@@ -13,7 +14,7 @@ function DashboardPetani() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch({ type: "UPDATE_REFRESH", payload: !refresh });
-    Axios.get(`http://localhost:4000/produk/getProduk/${dataUsers.username}`)
+    Axios.get(`${baseUrl}/produk/getProduk/${dataUsers.username}`)
       .then((result) => {
         const data = result.data;
         setTotalProduk(data.data.length);
@@ -29,7 +30,7 @@ function DashboardPetani() {
     const request = new FormData();
     request.append("username", dataUsers.username);
     request.append("jenisAkun", dataUsers.kategori);
-    Axios.post("http://localhost:4000/rincian-pesanan/get/byName", request, {
+    Axios.post(`${baseUrl}/rincian-pesanan/get/byName`, request, {
       headers: {
         "content-type": "multipart/form-data",
       },
