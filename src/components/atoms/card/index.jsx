@@ -10,6 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import { useHistory } from "react-router-dom";
 import ButtonAtoms from "../Button";
 import { Box } from "@material-ui/core";
+import { baseUrl } from "../../../config/constant/Constant";
 
 const useStyles = makeStyles({
   root: {
@@ -86,7 +87,7 @@ const CardAtoms = (props) => {
   return (
     <Card className={classes.root} style={{ position: "relative" }}>
       <CardActionArea onClick={clickCard}>
-        <CardMedia className={classes.media} image={image} title="Contemplative Reptile" />
+        <CardMedia className={classes.media} image={`${baseUrl}/${image}`} title="Contemplative Reptile" />
         <CardContent>
           <Typography variant="h5" component="h2">
             {namaProduk}

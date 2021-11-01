@@ -97,7 +97,7 @@ const Produk = () => {
                       <CardAtoms
                         key={result._id}
                         id={result._id}
-                        image={`${baseUrl}/${result.image}`}
+                        image={result.image}
                         namaProduk={result.namaProduk}
                         deskripsiProduk={result.deskripsiProduk}
                         kategori={result.kategori}

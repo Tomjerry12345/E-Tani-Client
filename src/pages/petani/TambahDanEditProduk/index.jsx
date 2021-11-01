@@ -73,7 +73,10 @@ const TambahDanEditProduk = () => {
         stok: data.stok,
         image: data.image,
       });
-      setPreview(data.image);
+
+      console.log(`image => ${baseUrl}/${data.image}`);
+
+      setPreview(`${baseUrl}/${data.image}`);
     }
     console.log(`dataProduk => ${JSON.stringify(data)}`);
     dispatch({ type: "UPDATE_REFRESH", payload: !refresh });
@@ -102,6 +105,7 @@ const TambahDanEditProduk = () => {
         state.image = "";
         setPreview(null);
         setOpen(true);
+        dispatch({ type: "UPDATE_PRODUK", payload: res.data.data });
       })
       .catch((err) => {
         const message = err.response.data.message;
