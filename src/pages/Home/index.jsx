@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { HeaderPetani, HeaderKonsumen } from "../../components/molecules";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
@@ -14,6 +14,8 @@ import { AkunPage } from "../Akun";
 import EditAkun from "../Akun/EditAkun";
 import DetailProduk from "../detail";
 import { baseUrl } from "../../config/constant/Constant";
+import BottomKonsumen from "../../components/molecules/Bottom/Konsumen";
+import { useMediaQuery } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,6 +38,9 @@ const useStyles = makeStyles((theme) => ({
 const Home = () => {
   const classes = useStyles();
   const history = useHistory();
+
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down("sm"));
 
   const { dataUsers, statusLogin } = useSelector((state) => state);
   const dispatch = useDispatch();
@@ -71,33 +76,36 @@ const Home = () => {
   }
 
   return (
-    <div className={classes.root}>
-      <Router>
-        <CssBaseline />
-        {/* AppBar */}
-        {header}
+    <div>
+      <div className={classes.root}>
+        <Router>
+          <CssBaseline />
+          {/* AppBar */}
+          {header}
 
-        <main className={classes.content}>
-          <div className={classes.appBarSpacer} />
-          <div className={classes.container}>
-            <Switch>
-              {routerx}
-              <Route path="/produk" component={Produk} />
-              <Route path="/detail-produk" component={DetailProduk} />
-              <Route path="/tambahProduk" component={TambahDanEditProduk} />
-              <Route path="/edit-produk" component={TambahDanEditProduk} />
-              <Route path="/kategori" component={KategoriKonsumen} />
-              <Route path="/tampil-kategori" component={TampilKategori} />
-              <Route path="/cari" component={TampilCari} />
-              <Route path="/troli" component={TroliKonsumen} />
-              <Route path="/akun" component={AkunPage} />
-              <Route path="/edit-akun" component={EditAkun} />
-              <Route path="/konsumen/rincian-pesanan" component={RincianPesananKonsumen} />
-              <Route path="/petani/rincian-pesanan" component={RincianPesananPetani} />
-            </Switch>
-          </div>
-        </main>
-      </Router>
+          <main className={classes.content}>
+            <div className={classes.appBarSpacer} />
+            <div className={classes.container}>
+              <Switch>
+                {routerx}
+                <Route path="/produk" component={Produk} />
+                <Route path="/detail-produk" component={DetailProduk} />
+                <Route path="/tambahProduk" component={TambahDanEditProduk} />
+                <Route path="/edit-produk" component={TambahDanEditProduk} />
+                <Route path="/kategori" component={KategoriKonsumen} />
+                <Route path="/tampil-kategori" component={TampilKategori} />
+                <Route path="/cari" component={TampilCari} />
+                <Route path="/troli" component={TroliKonsumen} />
+                <Route path="/akun" component={AkunPage} />
+                <Route path="/edit-akun" component={EditAkun} />
+                <Route path="/konsumen/rincian-pesanan" component={RincianPesananKonsumen} />
+                <Route path="/petani/rincian-pesanan" component={RincianPesananPetani} />
+              </Switch>
+            </div>
+          </main>
+        </Router>
+      </div>
+      {matches ? <BottomKonsumen /> : null}
     </div>
   );
 };

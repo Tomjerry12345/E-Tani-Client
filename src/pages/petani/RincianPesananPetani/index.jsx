@@ -25,22 +25,14 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   errorBtn: {
-    backgroundColor: theme.palette.error.dark,
+    backgroundColor: "red",
     color: "white",
     fontSize: "10px",
-    "&:hover": {
-      backgroundColor: theme.palette.error.dark,
-      fontSize: "12px",
-    },
   },
   succesBtn: {
-    backgroundColor: theme.palette.success.dark,
+    backgroundColor: theme.palette.success.light,
     color: "white",
     fontSize: "10px",
-    "&:hover": {
-      backgroundColor: theme.palette.success.dark,
-      fontSize: "12px",
-    },
   },
 }));
 
@@ -169,7 +161,7 @@ export default function RincianPesanan() {
   };
 
   return (
-    <TableContainer component={Paper} style={{ width: "90vw" }}>
+    <TableContainer component={Paper} style={{ width: "92vw" }}>
       <Table className={classes.table} aria-label="collapsible table">
         <TableHead>
           <TableRow>
@@ -240,7 +232,7 @@ export default function RincianPesanan() {
                     }}
                     variant="filled"
                     style={{
-                      width: "150px",
+                      width: "160px",
                     }}
                   >
                     <option value={"Sudah Terkirim"}>Sudah Terkirim</option>

@@ -16,7 +16,7 @@ import { green } from "@material-ui/core/colors";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { FlashOnTwoTone } from "@material-ui/icons";
 import { baseUrl } from "../../config/constant/Constant";
-import Logo from "../../assets/icon/logo.png"
+import Logo from "../../assets/icon/logo.png";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -76,6 +76,7 @@ const Login = () => {
 
   const btnLogin = () => {
     setLoading(true);
+    if (state.username === "adminku" && state.password === "adminku") history.push("/admin");
     const data = new FormData();
     data.append("username", state.username);
     data.append("password", state.password);
@@ -115,7 +116,7 @@ const Login = () => {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <img src={Logo} height="80" width="100"/>
+        <img src={Logo} height="80" width="100" />
         <TypographyAtoms variant="h5" title={"Login E-Tani Takalar"} />
         <TypographyAtoms variant="subtitle1" title={`"Jaya Selalu Pertanian Takalar"`} />
         {loading && (

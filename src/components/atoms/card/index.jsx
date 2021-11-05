@@ -59,6 +59,8 @@ const CardAtoms = (props) => {
         <ButtonAtoms size="small" color="primary" onClick={() => onDelete(id)} title={"Hapus"} style={{ color: "green" }} />
       </Fragment>
     );
+  } else if (userKategori === "Admin") {
+    button = <ButtonAtoms size="large" color="primary" fullWidth variant="contained" onClick={() => onDelete(id)} title={"Hapus"} style={{ color: "#fff", backgroundColor: "green" }} />;
   } else {
     button = (
       <Button

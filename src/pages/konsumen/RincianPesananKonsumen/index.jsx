@@ -29,22 +29,14 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   errorBtn: {
-    backgroundColor: theme.palette.error.dark,
+    backgroundColor: theme.palette.error.light,
     color: "white",
     fontSize: "10px",
-    "&:hover": {
-      backgroundColor: theme.palette.error.dark,
-      fontSize: "12px",
-    },
   },
   succesBtn: {
-    backgroundColor: theme.palette.success.dark,
+    backgroundColor: theme.palette.success.light,
     color: "white",
     fontSize: "10px",
-    "&:hover": {
-      backgroundColor: theme.palette.success.dark,
-      fontSize: "12px",
-    },
   },
 }));
 

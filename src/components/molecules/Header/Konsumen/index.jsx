@@ -241,7 +241,8 @@ export const HeaderKonsumen = () => {
                 <MenuItem onClick={() => handleClose("informasiAkun")}>Informasi Akun</MenuItem>
               </Menu>
             </Fragment>
-          ) : (
+          ) : null}
+          {/* (
             <Fragment>
               <IconButton color="inherit" aria-label="more" aria-controls="long-menu" aria-haspopup="true" onClick={(event) => setAnchorEl(event.currentTarget)}>
                 <MoreVertIcon />
@@ -261,7 +262,7 @@ export const HeaderKonsumen = () => {
                 <MenuItem onClick={() => handleClose("informasiAkun")}>Informasi Akun</MenuItem>
               </Menu>
             </Fragment>
-          )}
+          ) */}
         </Toolbar>
       </AppBar>
     </div>

@@ -7,6 +7,7 @@ import { green } from "@material-ui/core/colors";
 import axios from "axios";
 import { useHistory } from "react-router";
 import { baseUrl } from "../../../config/constant/Constant";
+import { confirmAlert } from "react-confirm-alert";
 
 const useStyles = makeStyles({
   button: {
@@ -85,7 +86,7 @@ const Product = (props) => {
         <div style={{ marginLeft: 20 }}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <TypographyAtoms variant="subtitle1" style={{fontWeight: 'bold'}} title={namaProduk} />
+              <TypographyAtoms variant="subtitle1" style={{ fontWeight: "bold" }} title={namaProduk} />
             </Grid>
             <Grid item xs={12}>
               <TypographyAtoms variant="subtitle2" title={`Rp. ${harga}`} style={{ fontWeight: "bold", color: "green" }} />
@@ -136,6 +137,7 @@ const TroliKonsumen = () => {
   const [listPesanan, setListPesanan] = useState([]);
   const [listId, setListId] = useState([]);
   const [listIdProduk, setListIdProduk] = useState([]);
+  const [clickConfirm, setClickConfirm] = useState(false);
 
   const [dataRincianPesanan, setDataRincianPesanan] = useState({
     usernamePembeli: "",
@@ -184,7 +186,7 @@ const TroliKonsumen = () => {
           });
         });
     }
-  }, [listHarga, dataRincianPesanan]);
+  }, [listHarga, clickConfirm]);
 
   const onTotal = (total, index, checked, isBtnClick, namaProduk, harga, jumlah, id, usernamePembeli, usernamePenjual, idProduk) => {
     if (total === 0) {
@@ -286,6 +288,7 @@ const TroliKonsumen = () => {
           transaction_status: "-",
         },
       });
+      statusAlert("Pemesanan Berhasil");
     } else {
       paymentGateway(listNamaProduk, listJumlah, listHarga, listUsernamePenjual, usernamePembeli);
     }
@@ -316,15 +319,15 @@ const TroliKonsumen = () => {
               statusPembayaran: result.transaction_status,
             });
 
-            alert("wating your payment!");
+            statusAlert("Pemesanan Berhasil");
             console.log(result);
           },
           onError: function (result) {
-            alert("payment failed!");
+            statusAlert("Pemesanan Gagal");
             console.log(result);
           },
           onClose: function () {
-            alert("you closed the popup without finishing the payment");
+            statusAlert("Pemesanan Gagal");
           },
         });
       })
@@ -357,6 +360,21 @@ const TroliKonsumen = () => {
     setDataRincianPesanan({
       ...dataRincianPesanan,
       alamatPembeli: e.target.value,
+    });
+  };
+
+  const statusAlert = (msg) => {
+    confirmAlert({
+      // title: "Delete produk",
+      message: msg,
+      buttons: [
+        {
+          label: "Ok",
+          onClick: () => {
+            if (msg === "Pemesanan Berhasil") setClickConfirm(!clickConfirm);
+          },
+        },
+      ],
     });
   };
 

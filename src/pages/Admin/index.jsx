@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { ButtonAtoms, CardAtoms, TypographyAtoms } from "../../../components/atoms";
 import AddIcon from "@material-ui/icons/Add";
 import { Grid } from "@material-ui/core";
 import Axios from "axios";
@@ -9,9 +8,11 @@ import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 import { Snackbar } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import { useDispatch, useSelector } from "react-redux";
-import { baseUrl } from "../../../config/constant/Constant";
+import HeaderAdmin from "../../components/molecules/Header/Admin";
+import { ButtonAtoms, CardAtoms, TypographyAtoms } from "../../components/atoms";
+import { baseUrl } from "../../config/constant/Constant";
 
-const Produk = () => {
+const Admin = () => {
   const history = useHistory();
   const [produk, setProduk] = useState([]);
   const [open, setOpen] = useState(false);
@@ -22,7 +23,7 @@ const Produk = () => {
 
   useEffect(() => {
     console.log("Produk");
-    Axios.get(`${baseUrl}/produk/getProduk/${dataUsers.username}`)
+    Axios.get(`${baseUrl}/produk/getAllProduk`)
       .then((result) => {
         const data = result.data.data;
         console.log(data);
@@ -74,9 +75,10 @@ const Produk = () => {
 
   return (
     <div>
-      <TypographyAtoms title={"Katalog Produk"} variant="h5" style={{ fontWeight: "bold" }} />
-      <Grid container direction="column" style={{ marginTop: "10px" }} spacing={2}>
-        <Grid item>
+      <HeaderAdmin />
+      <TypographyAtoms title={"Katalog Produk"} variant="h5" style={{ fontWeight: "bold", marginTop: 100, marginLeft: 32 }} />
+      <Grid container direction="column" style={{ margin: 32 }} spacing={2}>
+        {/* <Grid item>
           <ButtonAtoms
             title={"Tambah Produk"}
             startIcon={<AddIcon />}
@@ -87,7 +89,7 @@ const Produk = () => {
             }}
             style={{ backgroundColor: "green" }}
           />
-        </Grid>
+        </Grid> */}
         <Grid item>
           <Grid container direction="row" spacing={2}>
             {produk
@@ -104,9 +106,8 @@ const Produk = () => {
                         harga={result.harga}
                         stok={result.stok}
                         userNamePenjual={result.userNamePenjual}
-                        namaPenjual={result.namaPenjual}
                         onDelete={onConfirmDelete}
-                        userKategori={dataUsers.kategori}
+                        userKategori={"Admin"}
                       />
                     </Grid>
                   );
@@ -124,4 +125,4 @@ const Produk = () => {
   );
 };
 
-export default Produk;
+export default Admin;
