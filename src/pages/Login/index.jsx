@@ -16,6 +16,7 @@ import { green } from "@material-ui/core/colors";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { FlashOnTwoTone } from "@material-ui/icons";
 import { baseUrl } from "../../config/constant/Constant";
+import Logo from "../../assets/icon/logo.png"
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -114,10 +115,9 @@ const Login = () => {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <TypographyAtoms component="h1" variant="h5" title={"Login"} />
+        <img src={Logo} height="80" width="100"/>
+        <TypographyAtoms variant="h5" title={"Login E-Tani Takalar"} />
+        <TypographyAtoms variant="subtitle1" title={`"Jaya Selalu Pertanian Takalar"`} />
         {loading && (
           <Box display="flex" className={classes.progress} style={{ margin: 8 }}>
             <CircularProgress />

@@ -124,6 +124,7 @@ const TambahDanEditProduk = () => {
     data.append("stok", state.stok);
     data.append("image", state.image);
     data.append("userNamePenjual", dataUsers.username);
+    data.append("namaPenjual", dataUsers.namaLengkap);
     if (location.btnTitle === "Simpan") {
       const insertData = axios.post(`${baseUrl}/produk/createProduk`, data, {
         headers: {

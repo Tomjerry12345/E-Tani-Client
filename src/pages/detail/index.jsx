@@ -79,7 +79,7 @@ export default function DetailProduk() {
               }}
             >
               <Typography variant="subtitle1">
-                Penjual: <span style={{ color: "green" }}>{data.userNamePenjual}</span>
+                Penjual: <span style={{ color: "green" }}>{data.namaPenjual}</span>
               </Typography>
             </Grid>
             <Grid

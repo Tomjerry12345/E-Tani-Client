@@ -20,6 +20,7 @@ import { IconButton, Box } from "@material-ui/core";
 import AddPhotoAlternateIcon from "@material-ui/icons/AddPhotoAlternate";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { baseUrl } from "../../config/constant/Constant";
+import Logo from "../../assets/icon/logo.png"
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -182,9 +183,7 @@ const Register = () => {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
+        <img src={Logo} height="80" width="100"/>
         <TypographyAtoms component="h1" variant="h5" title={"Daftar"} />
         {loading && (
           <Box display="flex" className={classes.progress} style={{ margin: 8 }}>

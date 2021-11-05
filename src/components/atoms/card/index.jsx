@@ -38,7 +38,7 @@ const CardAtoms = (props) => {
   const history = useHistory();
   const [disableBtn1, setDisableBtn] = useState(false);
 
-  const { id, image, namaProduk, deskripsiProduk, kategori, harga, stok, userNamePenjual, onDelete, userKategori, onAddToTroli, disableBtn } = props;
+  const { id, image, namaProduk, deskripsiProduk, kategori, harga, stok, userNamePenjual, namaPenjual, onDelete, userKategori, onAddToTroli, disableBtn } = props;
 
   const data = {
     image,
@@ -48,14 +48,15 @@ const CardAtoms = (props) => {
     harga,
     stok,
     userNamePenjual,
+    namaPenjual,
   };
 
   let button;
   if (userKategori === "Petani") {
     button = (
       <Fragment>
-        <ButtonAtoms size="small" color="primary" onClick={() => history.push({ pathname: "/edit-produk", id: id, title: "Edit Produk", btnTitle: "Edit", data: data })} title={"Edit"} style={{ color: "green" }} />
-        <ButtonAtoms size="small" color="primary" onClick={() => onDelete(id)} title={"Delete"} style={{ color: "green" }} />
+        <ButtonAtoms size="small" color="primary" onClick={() => history.push({ pathname: "/edit-produk", id: id, title: "Edit Produk", btnTitle: "Edit", data: data })} title={"Ubah"} style={{ color: "green" }} />
+        <ButtonAtoms size="small" color="primary" onClick={() => onDelete(id)} title={"Hapus"} style={{ color: "green" }} />
       </Fragment>
     );
   } else {
@@ -87,7 +88,7 @@ const CardAtoms = (props) => {
   return (
     <Card className={classes.root} style={{ position: "relative" }}>
       <CardActionArea onClick={clickCard}>
-        <CardMedia className={classes.media} image={`${baseUrl}/${image}`} title="Contemplative Reptile" />
+        <CardMedia className={classes.media} image={image} title="Contemplative Reptile" />
         <CardContent>
           <Typography variant="h5" component="h2">
             {namaProduk}

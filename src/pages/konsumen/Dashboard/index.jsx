@@ -96,7 +96,7 @@ const DashboardKonsumen = ({ userKategori }) => {
 
   return (
     <div>
-      <TypographyAtoms title={"Produk"} variant="h6" />
+      <TypographyAtoms title={"Produk"} variant="h5" style={{ fontWeight: "bold" }} />
       <Grid container direction="column" style={{ marginTop: "10px" }} spacing={2}>
         <Grid item>
           <Grid container direction="row" spacing={2}>
@@ -113,6 +113,7 @@ const DashboardKonsumen = ({ userKategori }) => {
                         harga={dataProduk.harga}
                         stok={dataProduk.stok}
                         userNamePenjual={dataProduk.userNamePenjual}
+                        namaPenjual={dataProduk.namaPenjual}
                         userKategori={userKategori}
                         onAddToTroli={onAddToTroli}
                         disableBtn={disableBtn[i++]}

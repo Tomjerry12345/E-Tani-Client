@@ -74,7 +74,7 @@ const Produk = () => {
 
   return (
     <div>
-      <TypographyAtoms title={"Katalog Produk"} variant="subtitle" />
+      <TypographyAtoms title={"Katalog Produk"} variant="h5" style={{fontWeight: 'bold'}} />
       <Grid container direction="column" style={{ marginTop: "10px" }} spacing={2}>
         <Grid item>
           <ButtonAtoms

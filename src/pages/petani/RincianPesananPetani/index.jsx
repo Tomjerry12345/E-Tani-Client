@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { makeStyles, createTheme } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -10,13 +10,19 @@ import Paper from "@material-ui/core/Paper";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import Box from "@material-ui/core/Box";
-import { Button, Typography, useMediaQuery } from "@material-ui/core";
+import { Button, Collapse, IconButton, TextField, Typography, useMediaQuery } from "@material-ui/core";
 import { baseUrl } from "../../../config/constant/Constant";
+import { TypographyAtoms } from "../../../components/atoms";
+import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 
 const useStyles = makeStyles((theme) => ({
   table: {
     // minWidth: 400,
     // width: "100vw",
+    "& > *": {
+      borderBottom: "unset",
+    },
   },
   errorBtn: {
     backgroundColor: theme.palette.error.dark,
@@ -44,6 +50,7 @@ export default function RincianPesanan() {
   const [data, setData] = useState([]);
   const [refresh, setRefresh] = useState(false);
   const [hover, setHover] = useState(false);
+  const [open, setOpen] = useState([]);
   const [isBtnClick, setIsBtnClick] = useState(false);
 
   const [transactionStatus, setTransactionStatus] = useState([]);
@@ -52,7 +59,7 @@ export default function RincianPesanan() {
 
   const md = useMediaQuery(theme.breakpoints.up("md"));
 
-  console.log(`md => ${md}`);
+  // console.log(`md => ${md}`);
 
   useEffect(() => {
     const request = new FormData();
@@ -77,6 +84,7 @@ export default function RincianPesanan() {
           }
         });
         setData(data1);
+        setOpen([...Array(data1.length)].map((val) => false));
       })
       .catch((err) => console.log(err));
   }, [refresh]);
@@ -111,9 +119,48 @@ export default function RincianPesanan() {
       .catch((err) => console.log(err));
   };
 
-  const deletePesanan = (id) => {
+  // const deletePesanan = (id) => {
+  //   axios
+  //     .delete(`${baseUrl}/rincian-pesanan/delete/${id}`)
+  //     .then((result) => {
+  //       console.log(`response => ${result}`);
+  //       setRefresh(!refresh);
+  //     })
+  //     .catch((err) => console.log(err));
+  // };
+
+  const handleClick = (index) => {
+    setOpen(
+      open.map((boolean_value, i) => {
+        if (index === i) {
+          // once we retrieve the collapse index, we negate it
+          return !boolean_value;
+        } else {
+          // all other collapse will be closed
+          return false;
+        }
+      })
+    );
+  };
+
+  const handleChange = (e, id, message) => {
+    console.log(`id ${id}`);
+    // const request = new FormData();
+    // request.append("message", message);
+    // request.append("jenisAkun", dataUsers.kategori);
+    const status = message === "Sudah Terkirim" ? "Belum Terkirim" : "Sudah Terkirim";
+    const data = {
+      message: status,
+      jenisAkun: dataUsers.kategori,
+    };
+
     axios
-      .delete(`${baseUrl}/rincian-pesanan/delete/${id}`)
+      .put(`${baseUrl}/rincian-pesanan/update/${id}`, {
+        data,
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+      })
       .then((result) => {
         console.log(`response => ${result}`);
         setRefresh(!refresh);
@@ -122,10 +169,11 @@ export default function RincianPesanan() {
   };
 
   return (
-    <TableContainer component={Paper} style={{ width: md ? "90vw" : "85vw" }}>
-      <Table className={classes.table} aria-label="simple table">
+    <TableContainer component={Paper} style={{ width: "90vw" }}>
+      <Table className={classes.table} aria-label="collapsible table">
         <TableHead>
           <TableRow>
+            <TableCell align="left"></TableCell>
             <TableCell>Nama Produk</TableCell>
             <TableCell align="right">Harga</TableCell>
             <TableCell align="right">Jumlah</TableCell>
@@ -140,30 +188,65 @@ export default function RincianPesanan() {
         </TableHead>
         <TableBody>
           {data.map((row, index) => (
-            <TableRow key={index}>
-              <TableCell component="th" scope="row">
-                {row.namaProduk.map((res, index) => (
-                  <Typography variant="subtitle1">{res}</Typography>
-                ))}
-              </TableCell>
-              <TableCell align="right">
-                {row.harga.map((res, index) => (
-                  <Typography variant="subtitle1">{res}</Typography>
-                ))}
-              </TableCell>
-              <TableCell align="right">
-                {row.jumlah.map((res, index) => (
-                  <Typography variant="subtitle1">{res}</Typography>
-                ))}
-              </TableCell>
-              <TableCell align="right">{row.metodePembayaran}</TableCell>
-              <TableCell align="right">{transactionStatus[index]}</TableCell>
-              <TableCell align="right">{row.statusPengiriman}</TableCell>
-              <TableCell align="right">{row.statusPenerima}</TableCell>
-              <TableCell align="right">{row.alamatPembeli}</TableCell>
-              <TableCell align="right">{row.rincian.gross_amount}</TableCell>
-              <TableCell align="right">
-                <Box display="flex">
+            <Fragment>
+              <TableRow key={index}>
+                {row.namaProduk.length > 1 ? (
+                  <TableCell>
+                    <IconButton aria-label="expand row" size="small" onClick={() => handleClick(index)}>
+                      {open[index] ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+                    </IconButton>
+                  </TableCell>
+                ) : (
+                  <TableCell></TableCell>
+                )}
+                <TableCell component="th" scope="row">
+                  {`${row.namaProduk[0]}`}
+                  {row.namaProduk.length > 1 ? <p>...</p> : null}
+                  {/* {row.namaProduk.map((res, index) => (
+                    <Typography variant="subtitle1">{res}</Typography>
+                  ))} */}
+                </TableCell>
+                <TableCell align="right">
+                  {`${row.harga[0]}`}
+                  {row.namaProduk.length > 1 ? <p>...</p> : null}
+                  {/* {row.harga.map((res, index) => (
+                    <Typography variant="subtitle1">{res}</Typography>
+                  ))} */}
+                </TableCell>
+                <TableCell align="right">
+                  {`${row.jumlah[0]}`}
+                  {row.namaProduk.length > 1 ? <p>...</p> : null}
+                  {/* {row.jumlah.map((res, index) => (
+                    <Typography variant="subtitle1">{res}</Typography>
+                  ))} */}
+                </TableCell>
+                <TableCell align="right">{row.metodePembayaran}</TableCell>
+                <TableCell align="right">{transactionStatus[index]}</TableCell>
+                <TableCell align="right">{row.statusPengiriman}</TableCell>
+                <TableCell align="right">{row.statusPenerima}</TableCell>
+                <TableCell align="right">{row.alamatPembeli}</TableCell>
+                <TableCell align="right">{row.rincian.gross_amount}</TableCell>
+                <TableCell align="right">
+                  <TextField
+                    id="filled-select-currency-native"
+                    className={row.statusPengiriman === "Sudah Terkirim" ? classes.succesBtn : classes.errorBtn}
+                    select
+                    label="Status Penerima"
+                    value={row.statusPengiriman}
+                    // defaultValue={row.statusPenerima === "Sudah Diterima" ? "Belum Diterima" : "Sudah Diterima"}
+                    onChange={(e) => handleChange(e, row._id, row.statusPengiriman)}
+                    SelectProps={{
+                      native: true,
+                    }}
+                    variant="filled"
+                    style={{
+                      width: "150px",
+                    }}
+                  >
+                    <option value={"Sudah Terkirim"}>Sudah Terkirim</option>
+                    <option value={"Belum Terkirim"}>Belum Terkirim</option>
+                  </TextField>
+                  {/* <Box display="flex">
                   <Button
                     className={row.statusPengiriman === "Sudah Terkirim" ? classes.succesBtn : classes.errorBtn}
                     onMouseEnter={() => setHover(true)}
@@ -173,13 +256,13 @@ export default function RincianPesanan() {
                     onClick={() => btnTerima(row._id, row.statusPengiriman)}
                   >
                     {row.statusPengiriman === "Belum Terkirim" ? "Belum Terkirim" : "Sudah Terkirim"}
-                  </Button>
+                  </Button> */}
                   {/* <Button variant="contained" style={{ margin: "8px", background: "red", color: "white", fontSize: "10px" }} onClick={() => deletePesanan(row._id)}>
                     Batalkan Pesanan
                   </Button> */}
-                </Box>
-              </TableCell>
-              {/* <TableCell align="right">
+                  {/* </Box> */}
+                </TableCell>
+                {/* <TableCell align="right">
                 <Button
                   // color={row.statusPenerima === "Sudah Diterima" ? "succes" : "error"}
                   className={row.statusPengiriman === "Sudah Terkirim" ? classes.succesBtn : classes.errorBtn}
@@ -191,7 +274,49 @@ export default function RincianPesanan() {
                   {row.statusPengiriman === "Belum Terkirim" ? "Belum Terkirim" : "Sudah Terkirim"}
                 </Button>
               </TableCell> */}
-            </TableRow>
+              </TableRow>
+              <TableRow>
+                {row.namaProduk.length > 1 ? (
+                  <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+                    <Collapse in={open[index]} timeout="auto" unmountOnExit>
+                      <Box margin={1}>
+                        <Typography variant="h6" gutterBottom component="div">
+                          Data lainnya
+                        </Typography>
+                        <Table size="small" aria-label="purchases">
+                          <TableHead>
+                            <TableRow>
+                              <TableCell>
+                                <TypographyAtoms variant="h6" title={"Nama Produk"} />
+                              </TableCell>
+                              <TableCell>
+                                <TypographyAtoms variant="h6" title={"Harga"} />
+                              </TableCell>
+                              <TableCell align="right">
+                                <TypographyAtoms variant="h6" title={"Jumlah"} />
+                              </TableCell>
+                            </TableRow>
+                          </TableHead>
+                          <TableBody>
+                            {row.namaProduk.map((data, index) =>
+                              index > 0 ? (
+                                <TableRow key={index}>
+                                  <TableCell component="th" scope="row">
+                                    {data}
+                                  </TableCell>
+                                  <TableCell>{row.harga[index]}</TableCell>
+                                  <TableCell align="right">{row.jumlah[index]}</TableCell>
+                                </TableRow>
+                              ) : null
+                            )}
+                          </TableBody>
+                        </Table>
+                      </Box>
+                    </Collapse>
+                  </TableCell>
+                ) : null}
+              </TableRow>
+            </Fragment>
           ))}
         </TableBody>
       </Table>

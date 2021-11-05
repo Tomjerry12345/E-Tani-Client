@@ -85,27 +85,15 @@ const Product = (props) => {
         <div style={{ marginLeft: 20 }}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <TypographyAtoms variant="h4" title={namaProduk} />
+              <TypographyAtoms variant="subtitle1" style={{fontWeight: 'bold'}} title={namaProduk} />
             </Grid>
             <Grid item xs={12}>
-              <TypographyAtoms variant="subtitle1" title={`Rp. ${harga}`} style={{ fontWeight: "bold", color: "green" }} />
+              <TypographyAtoms variant="subtitle2" title={`Rp. ${harga}`} style={{ fontWeight: "bold", color: "green" }} />
             </Grid>
             <Grid item xs={12}>
-              <TypographyAtoms variant="subtitle1" title={`Stok tersedia : ${stok}`} style={{ fontWeight: "bold", color: "green" }} />
+              <TypographyAtoms variant="subtitle2" title={`Stok tersedia : ${stok}`} style={{ fontWeight: "bold", color: "green" }} />
             </Grid>
             <Grid item xs={12} style={{ display: "flex" }}>
-              <ButtonAtoms
-                classes={{
-                  root: classes.button,
-                  disabled: classes.disabled,
-                }}
-                title={"+"}
-                color="primary"
-                variant="contained"
-                onClick={onClickTambah}
-                disabled={!checked}
-              />
-              <TypographyAtoms title={jumlahBeli} style={{ margin: "8px 10px", fontWeight: "bold" }} />
               <ButtonAtoms
                 classes={{
                   root: classes.button,
@@ -115,6 +103,18 @@ const Product = (props) => {
                 color="primary"
                 variant="contained"
                 onClick={onClickKurang}
+                disabled={!checked}
+              />
+              <TypographyAtoms title={jumlahBeli} style={{ margin: "8px 10px", fontWeight: "bold" }} />
+              <ButtonAtoms
+                classes={{
+                  root: classes.button,
+                  disabled: classes.disabled,
+                }}
+                title={"+"}
+                color="primary"
+                variant="contained"
+                onClick={onClickTambah}
                 disabled={!checked}
               />
             </Grid>
@@ -362,7 +362,7 @@ const TroliKonsumen = () => {
 
   return (
     <div>
-      <TypographyAtoms style={{ marginTop: 10, marginBottom: 20, fontWeight: "bold" }} title={"Troli Saya"} variant="h6" />
+      <TypographyAtoms style={{ marginTop: 10, marginBottom: 20, fontWeight: "bold" }} title={"Troli Saya"} variant="h5" />
       <Grid container spacing={2}>
         <Grid item xs={12} md={12} lg={12}>
           {dataTroli

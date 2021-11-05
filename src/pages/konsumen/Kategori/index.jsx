@@ -37,7 +37,7 @@ const KategoriProduk = ({ title, icon }) => {
 const KategoriKonsumen = () => {
   return (
     <div>
-      <TypographyAtoms title={"Kategori"} variant="h6" style={{ margin: "20px 0 20px 0" }} />
+      <TypographyAtoms title={"Kategori"} variant="h5" style={{ margin: "20px 0 20px 0", fontWeight: 'bold' }} />
       <Grid container justifyContent="flex-start" alignItems="flex-start" spacing={2}>
         <KategoriProduk title={"Sayur-mayur"} icon={cabbage} />
         <KategoriProduk title={"Serelia"} icon={corn} />

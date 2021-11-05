@@ -9,7 +9,7 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import { useSelector } from "react-redux";
 import axios from "axios";
-import { Button, Grid, IconButton, useMediaQuery } from "@material-ui/core";
+import { Button, Grid, IconButton, TextField, useMediaQuery } from "@material-ui/core";
 import { TypographyAtoms } from "../../../components/atoms";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
@@ -55,6 +55,7 @@ export default function RincianPesanan(props) {
   const [transactionStatus, setTransactionStatus] = useState([]);
   const [refresh, setRefresh] = useState(false);
   const [open, setOpen] = useState([]);
+  // const [statusPengiriman, setStatusPengiriman] = useState();
 
   useEffect(() => {
     const request = new FormData();
@@ -91,7 +92,54 @@ export default function RincianPesanan(props) {
       rincian,
     });
 
-  const btnTerima = (id, message) => {
+  // const btnTerima = (id, message) => {
+  //   console.log(`id ${id}`);
+  //   const status = message === "Sudah Diterima" ? "Belum Diterima" : "Sudah Diterima";
+  //   const data = {
+  //     message: status,
+  //     jenisAkun: dataUsers.kategori,
+  //   };
+
+  //   axios
+  //     .put(`${baseUrl}/rincian-pesanan/update/${id}`, {
+  //       data,
+  //       headers: {
+  //         "content-type": "multipart/form-data",
+  //       },
+  //     })
+  //     .then((result) => {
+  //       console.log(`response => ${result}`);
+  //       setRefresh(!refresh);
+  //     })
+  //     .catch((err) => console.log(err));
+  // };
+
+  // const deletePesanan = (id) => {
+  //   axios
+  //     .delete(`${baseUrl}/rincian-pesanan/delete/${id}`)
+  //     .then((result) => {
+  //       console.log(`response => ${result}`);
+  //       setRefresh(!refresh);
+  //     })
+  //     .catch((err) => console.log(err));
+  // };
+
+  const handleClick = (index) => {
+    setOpen(
+      open.map((boolean_value, i) => {
+        if (index === i) {
+          // once we retrieve the collapse index, we negate it
+          return !boolean_value;
+        } else {
+          // all other collapse will be closed
+          return false;
+        }
+      })
+    );
+  };
+
+  const handledChange = (e, id, message) => {
+    // setStatusPengiriman(e.target.value);
     console.log(`id ${id}`);
     const status = message === "Sudah Diterima" ? "Belum Diterima" : "Sudah Diterima";
     const data = {
@@ -113,30 +161,6 @@ export default function RincianPesanan(props) {
       .catch((err) => console.log(err));
   };
 
-  const deletePesanan = (id) => {
-    axios
-      .delete(`${baseUrl}/rincian-pesanan/delete/${id}`)
-      .then((result) => {
-        console.log(`response => ${result}`);
-        setRefresh(!refresh);
-      })
-      .catch((err) => console.log(err));
-  };
-
-  const handleClick = (index) => {
-    setOpen(
-      open.map((boolean_value, i) => {
-        if (index === i) {
-          // once we retrieve the collapse index, we negate it
-          return !boolean_value;
-        } else {
-          // all other collapse will be closed
-          return false;
-        }
-      })
-    );
-  };
-
   return (
     // <TableTesting />
     <TableContainer component={Paper} style={{ width: "97vw" }}>
@@ -155,7 +179,7 @@ export default function RincianPesanan(props) {
               <TableCell align="right">Alamat Pembeli</TableCell>
             </Fragment>
             <Fragment>
-              <TableCell align="right">Total Harga</TableCell>
+              <TableCell align="right">Total Harga (Rp.)</TableCell>
               <TableCell align="center">Action</TableCell>
             </Fragment>
           </TableRow>
@@ -199,14 +223,34 @@ export default function RincianPesanan(props) {
                 <Fragment>
                   <TableCell align="right">{row.rincian.gross_amount}</TableCell>
                   <TableCell align="right">
-                    <Box display="flex">
+                    <TextField
+                      id="filled-select-currency-native"
+                      className={row.statusPenerima === "Sudah Diterima" ? classes.succesBtn : classes.errorBtn}
+                      select
+                      label="Status Penerima"
+                      value={row.statusPenerima}
+                      // defaultValue={row.statusPenerima === "Sudah Diterima" ? "Belum Diterima" : "Sudah Diterima"}
+                      onChange={(e) => handledChange(e, row._id, row.statusPenerima)}
+                      SelectProps={{
+                        native: true,
+                      }}
+                      variant="filled"
+                      style={{
+                        width: "180px",
+                      }}
+                      disabled={row.statusPengiriman === "Sudah Terkirim" ? false : true}
+                    >
+                      <option value={"Sudah Diterima"}>Sudah Diterima</option>
+                      <option value={"Belum Diterima"}>Belum Diterima</option>
+                    </TextField>
+                    {/* <Box display="flex">
                       <Button className={row.statusPenerima !== "Sudah Diterima" ? classes.succesBtn : classes.errorBtn} variant="contained" style={{ margin: "8px" }} onClick={() => btnTerima(row._id, row.statusPenerima)}>
                         {row.statusPenerima === "Sudah Diterima" ? "Belum Diterima" : "Sudah Diterima"}
                       </Button>
                       <Button variant="contained" style={{ margin: "8px", background: "red", color: "white", fontSize: "10px" }} onClick={() => deletePesanan(row._id)}>
                         Batalkan Pesanan
                       </Button>
-                    </Box>
+                    </Box> */}
                   </TableCell>
                 </Fragment>
               </TableRow>

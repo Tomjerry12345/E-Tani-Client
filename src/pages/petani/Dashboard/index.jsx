@@ -6,12 +6,15 @@ import StorefrontIcon from "@material-ui/icons/Storefront";
 import Axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { baseUrl } from "../../../config/constant/Constant";
+import { useHistory } from "react-router-dom";
 
 function DashboardPetani() {
   const [totalProduk, setTotalProduk] = useState(0);
   const [totalPesanan, setTotalPesanan] = useState(0);
   const { dataProduk, refresh, dataUsers } = useSelector((state) => state);
   const dispatch = useDispatch();
+  const history = useHistory();
+
   useEffect(() => {
     dispatch({ type: "UPDATE_REFRESH", payload: !refresh });
     Axios.get(`${baseUrl}/produk/getProduk/${dataUsers.username}`)
@@ -27,7 +30,9 @@ function DashboardPetani() {
   }, []);
 
   useEffect(() => {
+
     const request = new FormData();
+
     request.append("username", dataUsers.username);
     request.append("jenisAkun", dataUsers.kategori);
     Axios.post(`${baseUrl}/rincian-pesanan/get/byName`, request, {
@@ -45,12 +50,12 @@ function DashboardPetani() {
 
   return (
     <div>
-      <TypographyAtoms title={"Dashboard"} variant="h6" style={{ fontWeight: "bold", marginBottom: 16 }} />
+      <TypographyAtoms title={"Dashboard"} variant="h5" style={{ fontWeight: "bold", marginBottom: 16 }} />
       <Grid container justifyContent="flex-start" alignItems="flex-start" spacing={2}>
         <Grid item>
           <Grid container direction="column" alignItems="center">
             <Grid item>
-              <IconButton color="inherit">
+              <IconButton color="inherit" onClick={() => history.push('/produk')}>
                 <StorefrontIcon fontSize="large" />
               </IconButton>
             </Grid>
@@ -62,7 +67,7 @@ function DashboardPetani() {
         <Grid item>
           <Grid container direction="column" alignItems="center">
             <Grid item>
-              <IconButton color="inherit">
+              <IconButton color="inherit" onClick={() => history.push('/petani/rincian-pesanan')}>
                 <ShoppingCartIcon fontSize="large" />
               </IconButton>
             </Grid>
