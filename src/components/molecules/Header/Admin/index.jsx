@@ -178,7 +178,8 @@ const HeaderAdmin = () => {
                 Keluar
               </Typography> */}
             </Fragment>
-          ) : (
+          ) : null }
+          {/* (
             <Fragment>
               <IconButton color="inherit" aria-label="more" aria-controls="long-menu" aria-haspopup="true" onClick={(event) => setAnchorEl(event.currentTarget)}>
                 <MoreVertIcon />
@@ -190,7 +191,7 @@ const HeaderAdmin = () => {
                 <MenuItem onClick={() => handleClose("keluar")}>Keluar</MenuItem>
               </Menu>
             </Fragment>
-          )}
+          )} */}
         </Toolbar>
       </AppBar>
       {/* <Drawer

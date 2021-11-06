@@ -15,6 +15,7 @@ import EditAkun from "../Akun/EditAkun";
 import DetailProduk from "../detail";
 import { baseUrl } from "../../config/constant/Constant";
 import BottomKonsumen from "../../components/molecules/Bottom/Konsumen";
+import BottomPetani from "../../components/molecules/Bottom/Petani";
 import { useMediaQuery } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
@@ -76,36 +77,34 @@ const Home = () => {
   }
 
   return (
-    <div>
-      <div className={classes.root}>
-        <Router>
-          <CssBaseline />
-          {/* AppBar */}
-          {header}
+    <div className={!matches ? classes.root : null}>
+      <Router>
+        <CssBaseline />
+        {/* AppBar */}
+        {header}
 
-          <main className={classes.content}>
-            <div className={classes.appBarSpacer} />
-            <div className={classes.container}>
-              <Switch>
-                {routerx}
-                <Route path="/produk" component={Produk} />
-                <Route path="/detail-produk" component={DetailProduk} />
-                <Route path="/tambahProduk" component={TambahDanEditProduk} />
-                <Route path="/edit-produk" component={TambahDanEditProduk} />
-                <Route path="/kategori" component={KategoriKonsumen} />
-                <Route path="/tampil-kategori" component={TampilKategori} />
-                <Route path="/cari" component={TampilCari} />
-                <Route path="/troli" component={TroliKonsumen} />
-                <Route path="/akun" component={AkunPage} />
-                <Route path="/edit-akun" component={EditAkun} />
-                <Route path="/konsumen/rincian-pesanan" component={RincianPesananKonsumen} />
-                <Route path="/petani/rincian-pesanan" component={RincianPesananPetani} />
-              </Switch>
-            </div>
-          </main>
-        </Router>
-      </div>
-      {matches ? <BottomKonsumen /> : null}
+        <main className={classes.content}>
+          <div className={classes.appBarSpacer} />
+          <div className={classes.container}>
+            <Switch>
+              {routerx}
+              <Route path="/produk" component={Produk} />
+              <Route path="/detail-produk" component={DetailProduk} />
+              <Route path="/tambahProduk" component={TambahDanEditProduk} />
+              <Route path="/edit-produk" component={TambahDanEditProduk} />
+              <Route path="/kategori" component={KategoriKonsumen} />
+              <Route path="/tampil-kategori" component={TampilKategori} />
+              <Route path="/cari" component={TampilCari} />
+              <Route path="/troli" component={TroliKonsumen} />
+              <Route path="/akun" component={AkunPage} />
+              <Route path="/edit-akun" component={EditAkun} />
+              <Route path="/konsumen/rincian-pesanan" component={RincianPesananKonsumen} />
+              <Route path="/petani/rincian-pesanan" component={RincianPesananPetani} />
+            </Switch>
+          </div>
+        </main>
+        {matches ? dataUsers.kategori === "Petani" ? <BottomPetani /> : <BottomKonsumen /> : null}
+      </Router>
     </div>
   );
 };

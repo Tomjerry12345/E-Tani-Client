@@ -18,7 +18,7 @@ import { Badge } from "@material-ui/core";
 
 const useStyles = makeStyles({
   root: {
-    width: "99vw",
+    width: "100vw",
     height: 50,
   },
   icon: {
@@ -29,7 +29,7 @@ const useStyles = makeStyles({
   },
 });
 
-const BottomKonsumen = () => {
+const BottomPetani = () => {
   const classes = useStyles();
   const [value, setValue] = useState(0);
   const history = useHistory();
@@ -73,21 +73,21 @@ const BottomKonsumen = () => {
           style={{
             color: "green",
           }}
-          label="Kategori"
+          label="Produk"
           icon={<CategoryIcon />}
-          onClick={() => history.push("/kategori")}
+          onClick={() => history.push("/produk")}
         />
         <BottomNavigationAction
           style={{
             color: "green",
           }}
-          label="Troli"
+          label="Pesanan"
           icon={
             <Badge badgeContent={totalData} color="secondary">
               <ShoppingCartIcon />
             </Badge>
           }
-          onClick={() => history.push("/troli")}
+          onClick={() => history.push("/petani/rincian-pesanan")}
         />
         <BottomNavigationAction
           style={{
@@ -95,18 +95,12 @@ const BottomKonsumen = () => {
           }}
           label="Akun"
           icon={<AccountCircleIcon />}
-          aria-controls="simple-menu"
-          aria-haspopup="true"
-          onClick={(event) => setAnchorEl(event.currentTarget)}
+          onClick={() => history.push("/akun")}
         />
         {/* <BottomNavigationAction label="Nearby" icon={<LocationOnIcon />} /> */}
       </BottomNavigation>
-      <Menu id="simple-menu" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
-        <MenuItem onClick={() => handleClose("pesananSaya")}>Pesanan saya</MenuItem>
-        <MenuItem onClick={() => handleClose("informasiAkun")}>Informasi Akun</MenuItem>
-      </Menu>
     </div>
   );
 };
 
-export default withStyles(useStyles)(BottomKonsumen);
+export default withStyles(useStyles)(BottomPetani);

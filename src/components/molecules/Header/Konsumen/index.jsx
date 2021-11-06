@@ -193,7 +193,7 @@ export const HeaderKonsumen = () => {
     <div className={classes.root}>
       <AppBar position="absolute" className={classes.appBar}>
         <Toolbar className={classes.toolbar}>
-          {!hideArrow ? null : (
+          {!hideArrow || matches ? null : (
             <IconButton color="inherit" onClick={() => history.push("/")}>
               <ArrowBackIcon />
             </IconButton>

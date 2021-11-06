@@ -19,7 +19,10 @@ const useStyles = makeStyles((theme) => ({
   },
   root: {
     width: "80vw",
-    maxWidth: "600px",
+    // maxWidth: "600px"
+  },
+  height: {
+    height: "87vh",
   },
   media: {
     height: 250,
@@ -44,6 +47,9 @@ export const AkunPage = () => {
   const { dataUsers, statusLogin } = useSelector((state) => state);
   const dispatch = useDispatch();
 
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down("sm"));
+
   const btnLogout = () => {
     axios
       .put(`${baseUrl}/auth/logout`)
@@ -59,7 +65,7 @@ export const AkunPage = () => {
 
   return (
     <div className={classes.container}>
-      <Card className={classes.root}>
+      <Card className={matches ? classes.root && classes.height : classes.root}>
         <CardActionArea>
           <CardMedia className={classes.media} image={`${baseUrl}/${dataUsers.image}`} title="Contemplative Reptile" />
           <CardContent>
@@ -85,7 +91,14 @@ export const AkunPage = () => {
                 </Typography>
               </Grid>
               <Grid item>
-                <Typography variant="body2" color="textSecondary" component="p">
+                <Typography
+                  variant="body2"
+                  color="textSecondary"
+                  component="p"
+                  style={{
+                    textAlign: "center",
+                  }}
+                >
                   {`${dataUsers.alamat} kec. ${dataUsers.kecamatan} Kab. ${dataUsers.kabupaten}`}
                 </Typography>
               </Grid>
@@ -99,11 +112,11 @@ export const AkunPage = () => {
                   <Button fullWidth variant="contained" className={classes.button} onClick={() => history.push("/edit-akun")}>
                     Edit Profil
                   </Button>
-                  {dataUsers.kategori === "Petani" ? null : (
-                    <Button fullWidth className={classes.button} variant="contained" onClick={btnLogout}>
-                      Logout
-                    </Button>
-                  )}
+                  {/* {dataUsers.kategori === "Petani" ? null : ( */}
+                  <Button fullWidth className={classes.button} variant="contained" onClick={btnLogout}>
+                    Logout
+                  </Button>
+                  {/* )} */}
                 </Box>
               </Grid>
               {/* {dataUsers.kategori === "Petani" ? null : (

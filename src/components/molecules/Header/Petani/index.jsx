@@ -137,10 +137,13 @@ const HeaderPetani = () => {
     <Fragment>
       <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)} style={{ background: "green" }}>
         <Toolbar className={classes.toolbar}>
-          <IconButton edge="start" color="inherit" aria-label="open drawer" onClick={handleDrawerOpen} className={clsx(classes.menuButton, open && classes.menuButtonHidden)}>
-            <MenuIcon />
-          </IconButton>
-          {!hideArrow ? null : (
+          {!matches ? (
+            <IconButton edge="start" color="inherit" aria-label="open drawer" onClick={handleDrawerOpen} className={clsx(classes.menuButton, open && classes.menuButtonHidden)}>
+              <MenuIcon />
+            </IconButton>
+          ) : null}
+
+          {!hideArrow || matches ? null : (
             <IconButton color="inherit" onClick={() => history.push("/")}>
               <ArrowBackIcon />
             </IconButton>
@@ -177,7 +180,8 @@ const HeaderPetani = () => {
                 Keluar
               </Typography> */}
             </Fragment>
-          ) : (
+          ) : null}
+          {/* (
             <Fragment>
               <IconButton color="inherit" aria-label="more" aria-controls="long-menu" aria-haspopup="true" onClick={(event) => setAnchorEl(event.currentTarget)}>
                 <MoreVertIcon />
@@ -189,62 +193,64 @@ const HeaderPetani = () => {
                 <MenuItem onClick={() => handleClose("keluar")}>Keluar</MenuItem>
               </Menu>
             </Fragment>
-          )}
+          )} */}
         </Toolbar>
       </AppBar>
-      <Drawer
-        variant="permanent"
-        classes={{
-          paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
-        }}
-        open={open}
-        style={{ marginTop: "8px" }}
-      >
-        <div className={classes.toolbarIcon}>
-          <IconButton onClick={handleDrawerClose}>
-            <ChevronLeftIcon />
-          </IconButton>
-        </div>
-        <Divider />
-        <List>
-          <ListItem
-            button
-            onClick={() => {
-              dispatch({ type: "UPDATE_REFRESH", payload: !refresh });
-              history.push("/");
-            }}
-          >
-            <ListItemIcon>
-              <DashboardIcon />
-            </ListItemIcon>
-            <ListItemText primary="Dashboard" />
-          </ListItem>
-          <ListItem
-            button
-            onClick={() => {
-              dispatch({ type: "UPDATE_REFRESH", payload: !refresh });
-              history.push("/produk");
-            }}
-          >
-            <ListItemIcon>
-              <ShoppingCartIcon />
-            </ListItemIcon>
-            <ListItemText primary="Katalog Produk" />
-          </ListItem>
-          <ListItem
-            button
-            onClick={() => {
-              dispatch({ type: "UPDATE_REFRESH", payload: !refresh });
-              history.push("/petani/rincian-pesanan");
-            }}
-          >
-            <ListItemIcon>
-              <BarChartIcon />
-            </ListItemIcon>
-            <ListItemText primary="Pesanan Masuk" />
-          </ListItem>
-        </List>
-      </Drawer>
+      {!matches ? (
+        <Drawer
+          variant="permanent"
+          classes={{
+            paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
+          }}
+          open={open}
+          style={{ marginTop: "8px" }}
+        >
+          <div className={classes.toolbarIcon}>
+            <IconButton onClick={handleDrawerClose}>
+              <ChevronLeftIcon />
+            </IconButton>
+          </div>
+          <Divider />
+          <List>
+            <ListItem
+              button
+              onClick={() => {
+                dispatch({ type: "UPDATE_REFRESH", payload: !refresh });
+                history.push("/");
+              }}
+            >
+              <ListItemIcon>
+                <DashboardIcon />
+              </ListItemIcon>
+              <ListItemText primary="Dashboard" />
+            </ListItem>
+            <ListItem
+              button
+              onClick={() => {
+                dispatch({ type: "UPDATE_REFRESH", payload: !refresh });
+                history.push("/produk");
+              }}
+            >
+              <ListItemIcon>
+                <ShoppingCartIcon />
+              </ListItemIcon>
+              <ListItemText primary="Katalog Produk" />
+            </ListItem>
+            <ListItem
+              button
+              onClick={() => {
+                dispatch({ type: "UPDATE_REFRESH", payload: !refresh });
+                history.push("/petani/rincian-pesanan");
+              }}
+            >
+              <ListItemIcon>
+                <BarChartIcon />
+              </ListItemIcon>
+              <ListItemText primary="Pesanan Masuk" />
+            </ListItem>
+          </List>
+        </Drawer>
+      ) : null}
     </Fragment>
   );
 };
