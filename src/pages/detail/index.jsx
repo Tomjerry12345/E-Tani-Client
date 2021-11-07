@@ -17,7 +17,7 @@ export default function DetailProduk() {
     <div>
       <Grid container>
         <Grid item md={6} xs={12}>
-          <img src={data.image} alt="gambar" width="500" />
+          <img src={data.image} alt="gambar" width="500" height="300" />
         </Grid>
         <Grid item md={6} sxs={12}>
           <Grid container>
