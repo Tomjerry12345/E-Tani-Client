@@ -106,15 +106,15 @@ export default function RincianPesanan(props) {
   //     .catch((err) => console.log(err));
   // };
 
-  // const deletePesanan = (id) => {
-  //   axios
-  //     .delete(`${baseUrl}/rincian-pesanan/delete/${id}`)
-  //     .then((result) => {
-  //       console.log(`response => ${result}`);
-  //       setRefresh(!refresh);
-  //     })
-  //     .catch((err) => console.log(err));
-  // };
+  const deletePesanan = (id) => {
+    axios
+      .delete(`${baseUrl}/rincian-pesanan/delete/${id}`)
+      .then((result) => {
+        console.log(`response => ${result}`);
+        setRefresh(!refresh);
+      })
+      .catch((err) => console.log(err));
+  };
 
   const handleClick = (index) => {
     setOpen(
@@ -172,7 +172,9 @@ export default function RincianPesanan(props) {
             </Fragment>
             <Fragment>
               <TableCell align="right">Total Harga (Rp.)</TableCell>
-              <TableCell align="center">Action</TableCell>
+              <TableCell align="center" colSpan={3}>
+                Action
+              </TableCell>
             </Fragment>
           </TableRow>
         </TableHead>
@@ -235,6 +237,9 @@ export default function RincianPesanan(props) {
                       <option value={"Sudah Diterima"}>Sudah Diterima</option>
                       <option value={"Belum Diterima"}>Belum Diterima</option>
                     </TextField>
+                    {/* <Button variant="contained" style={{ margin: "8px", background: "red", color: "white", fontSize: "10px" }} onClick={() => deletePesanan(row._id)}>
+                      Batalkan Pesanan
+                    </Button> */}
                     {/* <Box display="flex">
                       <Button className={row.statusPenerima !== "Sudah Diterima" ? classes.succesBtn : classes.errorBtn} variant="contained" style={{ margin: "8px" }} onClick={() => btnTerima(row._id, row.statusPenerima)}>
                         {row.statusPenerima === "Sudah Diterima" ? "Belum Diterima" : "Sudah Diterima"}
@@ -243,6 +248,11 @@ export default function RincianPesanan(props) {
                         Batalkan Pesanan
                       </Button>
                     </Box> */}
+                  </TableCell>
+                  <TableCell align="right">
+                    <Button variant="contained" style={{ margin: "8px", background: "red", color: "white", fontSize: "10px" }} onClick={() => deletePesanan(row._id)}>
+                      Batalkan Pesanan
+                    </Button>
                   </TableCell>
                 </Fragment>
               </TableRow>

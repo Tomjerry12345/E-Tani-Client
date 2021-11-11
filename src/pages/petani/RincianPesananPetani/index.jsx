@@ -111,15 +111,15 @@ export default function RincianPesanan() {
       .catch((err) => console.log(err));
   };
 
-  // const deletePesanan = (id) => {
-  //   axios
-  //     .delete(`${baseUrl}/rincian-pesanan/delete/${id}`)
-  //     .then((result) => {
-  //       console.log(`response => ${result}`);
-  //       setRefresh(!refresh);
-  //     })
-  //     .catch((err) => console.log(err));
-  // };
+  const deletePesanan = (id) => {
+    axios
+      .delete(`${baseUrl}/rincian-pesanan/delete/${id}`)
+      .then((result) => {
+        console.log(`response => ${result}`);
+        setRefresh(!refresh);
+      })
+      .catch((err) => console.log(err));
+  };
 
   const handleClick = (index) => {
     setOpen(
@@ -175,7 +175,9 @@ export default function RincianPesanan() {
             <TableCell align="right">Status Penerima</TableCell>
             <TableCell align="right">Alamat Pembeli</TableCell>
             <TableCell align="right">Total Harga</TableCell>
-            <TableCell align="center">Action</TableCell>
+            <TableCell align="center" colSpan={3}>
+              Action
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -238,6 +240,7 @@ export default function RincianPesanan() {
                     <option value={"Sudah Terkirim"}>Sudah Terkirim</option>
                     <option value={"Belum Terkirim"}>Belum Terkirim</option>
                   </TextField>
+
                   {/* <Box display="flex">
                   <Button
                     className={row.statusPengiriman === "Sudah Terkirim" ? classes.succesBtn : classes.errorBtn}
@@ -253,6 +256,11 @@ export default function RincianPesanan() {
                     Batalkan Pesanan
                   </Button> */}
                   {/* </Box> */}
+                </TableCell>
+                <TableCell align="right">
+                  <Button variant="contained" style={{ margin: "8px", background: "red", color: "white", fontSize: "10px" }} onClick={() => deletePesanan(row._id)}>
+                    Batalkan Pesanan
+                  </Button>
                 </TableCell>
                 {/* <TableCell align="right">
                 <Button
