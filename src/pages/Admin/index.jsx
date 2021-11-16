@@ -76,7 +76,7 @@ const Admin = () => {
   return (
     <div>
       <HeaderAdmin />
-      <TypographyAtoms title={"Katalog Produk"} variant="h5" style={{ fontWeight: "bold", marginTop: 100, marginLeft: 32 }} />
+      <TypographyAtoms title={"Katalog Produk"} variant="h5" style={{ fontWeight: "bold", marginTop: 40, marginLeft: 32 }} />
       <Grid container direction="column" style={{ margin: 32 }} spacing={2}>
         {/* <Grid item>
           <ButtonAtoms
