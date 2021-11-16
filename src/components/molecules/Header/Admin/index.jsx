@@ -22,7 +22,7 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
-import Logo from "../../../../assets/icon/logo.png";
+import Logo from "../../../../assets/icon/logoo.png";
 import { Box, useMediaQuery } from "@material-ui/core";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Menu from "@material-ui/core/Menu";
@@ -151,7 +151,7 @@ const HeaderAdmin = () => {
           </Box>
           {!matches ? (
             <Typography className={classes.title} component="h1" variant="h6" color="inherit" noWrap>
-              E-Tani
+              E-Tani Takalar
             </Typography>
           ) : (
             <Typography className={classes.title} component="h1" variant="h6" color="inherit" noWrap></Typography>

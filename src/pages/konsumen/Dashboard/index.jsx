@@ -36,7 +36,7 @@ const DashboardKonsumen = ({ userKategori }) => {
       .get(`${baseUrl}/produk/getAllProduk`)
       .then((result) => {
         const data = result.data.data;
-        console.log("data => ", data);
+        console.log("result => ", result.data);
         if (online) {
           localStorage.setItem("produk", JSON.stringify(data));
           setProduk(data);

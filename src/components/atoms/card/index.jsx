@@ -38,7 +38,7 @@ const CardAtoms = (props) => {
   const history = useHistory();
   const [disableBtn1, setDisableBtn] = useState(false);
 
-  const { id, image, namaProduk, deskripsiProduk, kategori, harga, stok, userNamePenjual, namaPenjual, onDelete, userKategori, onAddToTroli, disableBtn } = props;
+  const { id, image, namaProduk, deskripsiProduk, kategori, namapenjual, harga, stok, userNamePenjual, namaPenjual, onDelete, userKategori, onAddToTroli, disableBtn } = props;
 
   const data = {
     image,
@@ -97,6 +97,9 @@ const CardAtoms = (props) => {
           </Typography>
           <Typography variant="subtitle1" style={{ color: "green" }} gutterBottom>
             {kategori}
+          </Typography>
+          <Typography variant="subtitle1" style={{ color: "green" }} gutterBottom>
+            {namapenjual}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
             {deskripsiProduk}

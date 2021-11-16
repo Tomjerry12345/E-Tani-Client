@@ -15,7 +15,7 @@ import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import { useHistory } from "react-router";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import Logo from "../../../../assets/icon/logo.png";
+import Logo from "../../../../assets/icon/logoo.png";
 import { Box, Typography } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import InputBase from "@material-ui/core/InputBase";
@@ -199,11 +199,11 @@ export const HeaderKonsumen = () => {
             </IconButton>
           )}
           <Box>
-            <img src={Logo} alt="logo" width={matches ? "40" : "60"} height={matches ? "40" : "50"} />
+            <img src={Logo} alt="logo" width={matches ? "60" : "60"} height={matches ? "40" : "50"} />
           </Box>
           {!matches ? (
             <Typography className={classes.title} component="h1" variant="h6" color="inherit" noWrap>
-              E-Tani
+              E-Tani Takalar
             </Typography>
           ) : null}
 

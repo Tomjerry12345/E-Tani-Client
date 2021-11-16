@@ -103,6 +103,7 @@ const Admin = () => {
                         namaProduk={result.namaProduk}
                         deskripsiProduk={result.deskripsiProduk}
                         kategori={result.kategori}
+                        namapenjual={result.namaPenjual}
                         harga={result.harga}
                         stok={result.stok}
                         userNamePenjual={result.userNamePenjual}
