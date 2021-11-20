@@ -17,12 +17,12 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
-import BarChartIcon from "@material-ui/icons/BarChart";
+import AssignmentIcon from '@material-ui/icons/Assignment';
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
-import Logo from "../../../../assets/icon/logoku.png";
+import Logo from "../../../../assets/icon/logoini.png";
 import { Box, useMediaQuery } from "@material-ui/core";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Menu from "@material-ui/core/Menu";
@@ -149,11 +149,11 @@ const HeaderPetani = () => {
             </IconButton>
           )}
           <Box style={{ marginRight: "10px" }}>
-            <img src={Logo} alt="logo" width="60" />
+            <img src={Logo} alt="logo" width="48" />
           </Box>
           {!matches ? (
             <Typography className={classes.title} component="h1" variant="h6" color="inherit" noWrap>
-              E-Tani
+              e-Tani Takalar
             </Typography>
           ) : (
             <Typography className={classes.title} component="h1" variant="h6" color="inherit" noWrap></Typography>
@@ -244,7 +244,7 @@ const HeaderPetani = () => {
               }}
             >
               <ListItemIcon>
-                <BarChartIcon />
+                <AssignmentIcon />
               </ListItemIcon>
               <ListItemText primary="Pesanan Masuk" />
             </ListItem>

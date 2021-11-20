@@ -162,18 +162,18 @@ export default function RincianPesanan(props) {
             <TableCell align="left"></TableCell>
             <TableCell align="left">Nama Produk</TableCell>
             <TableCell align="left">Harga</TableCell>
-            <TableCell align="right">Jumlah</TableCell>
-            <TableCell align="right">Metode Pembayaran</TableCell>
+            <TableCell align="left">Jumlah</TableCell>
+            <TableCell align="left">Metode Pembayaran</TableCell>
             <Fragment>
-              <TableCell align="right">Status Pembayaran</TableCell>
-              <TableCell align="right">Status Pengiriman</TableCell>
-              <TableCell align="right">Status Penerima</TableCell>
-              <TableCell align="right">Alamat Pembeli</TableCell>
+              <TableCell align="left">Status Pembayaran</TableCell>
+              <TableCell align="left">Status Pengiriman</TableCell>
+              <TableCell align="left">Status Penerima</TableCell>
+              <TableCell align="left">Alamat Pembeli</TableCell>
             </Fragment>
             <Fragment>
-              <TableCell align="right">Total Harga (Rp.)</TableCell>
-              <TableCell align="center" colSpan={3}>
-                Action
+              <TableCell align="left">Total Harga (Rp.)</TableCell>
+              <TableCell align="left" colSpan={3}>
+                Status Pesanan
               </TableCell>
             </Fragment>
           </TableRow>
@@ -202,21 +202,21 @@ export default function RincianPesanan(props) {
                   {row.namaProduk.length > 1 ? <p>...</p> : null}
                   {/* {row.harga.map((res, index) => `[${index + 1}] ${res} `)} */}
                 </TableCell>
-                <TableCell align="right">
+                <TableCell align="left">
                   {`${row.jumlah[0]}`}
                   {row.namaProduk.length > 1 ? <p>...</p> : null}
                   {/* {row.jumlah.map((res, index) => `[${index + 1}] ${res} `)} */}
                 </TableCell>
-                <TableCell align="right">{row.metodePembayaran}</TableCell>
+                <TableCell align="left">{row.metodePembayaran}</TableCell>
                 <Fragment>
-                  <TableCell align="right">{transactionStatus[index]}</TableCell>
-                  <TableCell align="right">{row.statusPengiriman}</TableCell>
-                  <TableCell align="right">{row.statusPenerima}</TableCell>
-                  <TableCell align="right">{row.alamatPembeli}</TableCell>
+                  <TableCell align="left">{transactionStatus[index]}</TableCell>
+                  <TableCell align="left">{row.statusPengiriman}</TableCell>
+                  <TableCell align="left">{row.statusPenerima}</TableCell>
+                  <TableCell align="left">{row.alamatPembeli}</TableCell>
                 </Fragment>
                 <Fragment>
-                  <TableCell align="right">{row.rincian.gross_amount}</TableCell>
-                  <TableCell align="right">
+                  <TableCell align="left">{row.rincian.gross_amount}</TableCell>
+                  <TableCell align="left">
                     <TextField
                       id="filled-select-currency-native"
                       className={row.statusPenerima === "Sudah Diterima" ? classes.succesBtn : classes.errorBtn}

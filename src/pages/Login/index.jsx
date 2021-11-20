@@ -117,8 +117,8 @@ const Login = () => {
       <CssBaseline />
       <div className={classes.paper}>
         <img src={Logo} height="80" width="100" />
-        <TypographyAtoms variant="h5" title={"Login E-Tani Takalar"} />
-        <TypographyAtoms variant="subtitle1" title={`"Jaya Selalu Pertanian Takalar"`} />
+        <TypographyAtoms variant="h5" title={"Login e-Tani Takalar"} />
+        <TypographyAtoms align ="center" variant="subtitle1" title={`Produk yang berkualitas berasal dari petani terpercaya`} />
         {loading && (
           <Box display="flex" className={classes.progress} style={{ margin: 8 }}>
             <CircularProgress />
@@ -130,7 +130,7 @@ const Login = () => {
             <TextField variant="outlined" margin="normal" required fullWidth name="password" label="Password" type="password" id="password" autoComplete="current-password" value={state.namaLengkap} onChange={handleChange} />
           </ThemeProvider>
 
-          <ButtonAtoms fullWidth variant="contained" color="primary" title={"Sign In"} className={classes.submit} onClick={btnLogin} style={{ background: "green" }} />
+          <ButtonAtoms fullWidth variant="contained" color="primary" title={"Masuk"} className={classes.submit} onClick={btnLogin} style={{ background: "green" }} />
           <Grid container justifyContent="center" direction="column" alignItems="center">
             <Grid item className={classes.typography}>
               <LinkAtoms to="/lupa-password" variant="body2" title={"Lupa password?"} style={{ color: "green" }} />

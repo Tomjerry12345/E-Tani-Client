@@ -81,7 +81,7 @@ const Product = (props) => {
           </ThemeProvider>
         </div>
         <div style={{ marginLeft: 10 }}>
-          <img src={image} alt="Test" width="150" />
+          <img src={image} alt="Test" width="110" />
         </div>
         <div style={{ marginLeft: 20 }}>
           <Grid container spacing={2}>
@@ -380,7 +380,7 @@ const TroliKonsumen = () => {
 
   return (
     <div>
-      <TypographyAtoms style={{ marginTop: 10, marginBottom: 20, fontWeight: "bold" }} title={"Troli Saya"} variant="h5" />
+      <TypographyAtoms style={{ marginTop: 5, marginBottom: 20, fontWeight: "bold" }} title={"Troli Saya"} variant="h5" />
       <Grid container spacing={2}>
         <Grid item xs={12} md={12} lg={12}>
           {dataTroli
@@ -402,19 +402,21 @@ const TroliKonsumen = () => {
             : []}
         </Grid>
         <Grid item style={{ marginBottom: "10px" }}>
+        <TypographyAtoms style={{ marginTop: 0, marginBottom: 0, fontWeight: "" }} title={"Metode Pembayaran"} variant="h6" />
           <FormControl component="fieldset">
-            <RadioGroup aria-label="payment" name="payment" value={dataRincianPesanan.metodePembayaran} onChange={handleChange}>
+                <RadioGroup aria-label="payment" name="payment" value={dataRincianPesanan.metodePembayaran} onChange={handleChange}>
               <FormControlLabel value="cod" control={<Radio />} label="COD (Bayar di tempat)" />
               <FormControlLabel value="digital" control={<Radio />} label="Pembayaran Digital" />
             </RadioGroup>
           </FormControl>
         </Grid>
         <Grid item xs={12}>
+          <TypographyAtoms style={{ marginTop: 0, marginBottom: 0, fontWeight: "" }} title={"Alamat"} variant="h6" />
           <TextField variant="outlined" required fullWidth value={dataRincianPesanan.alamatPembeli} name="alamat" onChange={handleChangeAlamat} />
         </Grid>
         <Grid item xs={12} md={12} lg={12}>
           <Paper elevation={3} style={{ padding: "10px" }}>
-            <TypographyAtoms variant="subtitle1" title={"Total Harga: " + total} />
+            <TypographyAtoms variant="subtitle1" title={"Total Harga: Rp." + total} />
             <ButtonAtoms
               classes={{
                 root: classes.button,

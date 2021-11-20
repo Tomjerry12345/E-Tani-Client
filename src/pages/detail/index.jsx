@@ -16,12 +16,12 @@ export default function DetailProduk() {
   return (
     <div>
       <Grid container>
-        <Grid item md={6} xs={12}>
-          <img src={data.image} alt="gambar" width="500" height="300" />
+        <Grid item md={3} xs={9}>
+          <img src={data.image} alt="gambar" width="300" height="300" />
         </Grid>
-        <Grid item md={6} sxs={12}>
+        <Grid item md={4} sxs={10}>
           <Grid container>
-            <Grid item xs={12}>
+            <Grid item xs={10}>
               <Typography
                 variant="h4"
                 style={{
@@ -47,7 +47,7 @@ export default function DetailProduk() {
                 marginTop: "14px",
               }}
             >
-              <Typography variant="h6">{data.deskripsiProduk}</Typography>
+              <Typography variant="h7">{data.deskripsiProduk}</Typography>
             </Grid>
             <Grid
               item
@@ -89,9 +89,6 @@ export default function DetailProduk() {
                 marginTop: "20px",
               }}
             >
-              <Button variant="contained" style={{ background: "green", color: "white" }} onClick={() => history.push("/")}>
-                Kembali ke menu awal
-              </Button>
             </Grid>
           </Grid>
         </Grid>

@@ -33,8 +33,8 @@ const Produk = () => {
 
   const onConfirmDelete = (id) => {
     confirmAlert({
-      title: "Delete produk",
-      message: "Apakah anda yakin ingin menghapus data ini ?",
+      title: "Hapus produk",
+      message: "Apakah anda yakin ingin menghapus produk ini ?",
       buttons: [
         {
           label: "Ya",
