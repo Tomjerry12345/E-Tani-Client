@@ -1,4 +1,5 @@
 import { Button, Grid, Typography } from "@material-ui/core";
+import { DataUsageRounded } from "@material-ui/icons";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
@@ -86,9 +87,20 @@ export default function DetailProduk() {
               item
               xs={12}
               style={{
-                marginTop: "20px",
+                marginTop: "10px",
               }}
             >
+              <Typography variant="subtitle1">
+                Alamat: <span style={{ color: "green" }}>{data.namaPenjual}</span>
+              </Typography>
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              style={{
+                marginTop: "20px",
+              }}
+          >
             </Grid>
           </Grid>
         </Grid>

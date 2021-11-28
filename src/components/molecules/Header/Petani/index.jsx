@@ -170,30 +170,11 @@ const HeaderPetani = () => {
               >
                 <AccountCircleIcon />
               </IconButton>
-              {/* <Typography variant="subtitle1" color="inherit" noWrap style={{ marginBottom: "10px" }}>
-                Akun
-              </Typography> */}
               <IconButton color="inherit" onClick={btnLogout}>
                 <ExitToAppIcon />
               </IconButton>
-              {/* <Typography variant="subtitle1" color="inherit" noWrap style={{ marginBottom: "10px" }}>
-                Keluar
-              </Typography> */}
             </Fragment>
           ) : null}
-          {/* (
-            <Fragment>
-              <IconButton color="inherit" aria-label="more" aria-controls="long-menu" aria-haspopup="true" onClick={(event) => setAnchorEl(event.currentTarget)}>
-                <MoreVertIcon />
-              </IconButton>
-
-              <Menu id="long-menu" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
-                <MenuItem onClick={() => handleClose("informasiAkun")}>Informasi Akun</MenuItem>
-
-                <MenuItem onClick={() => handleClose("keluar")}>Keluar</MenuItem>
-              </Menu>
-            </Fragment>
-          )} */}
         </Toolbar>
       </AppBar>
       {!matches ? (

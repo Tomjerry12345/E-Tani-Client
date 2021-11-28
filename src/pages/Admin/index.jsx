@@ -76,26 +76,14 @@ const Admin = () => {
   return (
     <div>
       <HeaderAdmin />
-      <TypographyAtoms title={"Katalog Produk"} variant="h5" style={{ fontWeight: "bold", marginTop: 40, marginLeft: 32 }} />
-      <Grid container direction="column" style={{ margin: 32 }} spacing={2}>
-        {/* <Grid item>
-          <ButtonAtoms
-            title={"Tambah Produk"}
-            startIcon={<AddIcon />}
-            variant="contained"
-            color="primary"
-            onClick={() => {
-              history.push({ pathname: "/tambahProduk", title: "Tambah Produk", btnTitle: "Simpan" });
-            }}
-            style={{ backgroundColor: "green" }}
-          />
-        </Grid> */}
+      <TypographyAtoms title={"Katalog Produk"} variant="h5" style={{ fontWeight: "bold", marginTop: 10, marginLeft: 25 }} />
+      <Grid container direction="column" style={{ margin: 0 }} spacing={1}>
         <Grid item>
-          <Grid container direction="row" spacing={2}>
+          <Grid container direction="row" spacing={1}>
             {produk
               ? produk.map((result) => {
                   return (
-                    <Grid item md={3} sm={6} xs={12}>
+                    <Grid item lg= {3} md={3} sm={6} xs={12}>
                       <CardAtoms
                         key={result._id}
                         id={result._id}

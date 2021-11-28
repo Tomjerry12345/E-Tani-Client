@@ -116,8 +116,8 @@ const Login = () => {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <img src={Logo} height="80" width="100" />
-        <TypographyAtoms variant="h5" title={"Login e-Tani Takalar"} />
+        <img src={Logo} height="80" width="90" />
+        <TypographyAtoms variant="h6" title={"Login e-Tani Takalar"} />
         <TypographyAtoms align ="center" variant="subtitle1" title={`Produk yang berkualitas berasal dari petani terpercaya`} />
         {loading && (
           <Box display="flex" className={classes.progress} style={{ margin: 8 }}>

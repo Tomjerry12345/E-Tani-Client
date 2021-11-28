@@ -95,6 +95,9 @@ const CardAtoms = (props) => {
           <Typography variant="h5" component="h2">
             {namaProduk}
           </Typography>
+          <Typography variant="h6" component="h2">
+            Rp.{harga}
+          </Typography>
           <Typography variant="subtitle1" style={{ color: "green" }} gutterBottom>
             {kategori}
           </Typography>
