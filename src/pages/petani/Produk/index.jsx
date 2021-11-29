@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { ButtonAtoms, CardAtoms, TypographyAtoms } from "../../../components/atoms";
+import {
+  ButtonAtoms,
+  CardAtoms,
+  TypographyAtoms,
+} from "../../../components/atoms";
 import AddIcon from "@material-ui/icons/Add";
 import { Grid } from "@material-ui/core";
 import Axios from "axios";
@@ -47,7 +51,10 @@ const Produk = () => {
                 setSeverity("success");
                 setResponse(message);
                 setOpen(true);
-                dispatch({ type: "UPDATE_STATUS_PRODUK", payload: !statusProduk });
+                dispatch({
+                  type: "UPDATE_STATUS_PRODUK",
+                  payload: !statusProduk,
+                });
               })
               .catch((err) => {
                 const message = err.response.data.message;
@@ -74,8 +81,17 @@ const Produk = () => {
 
   return (
     <div>
-      <TypographyAtoms title={"Katalog Produk"} variant="h5" style={{ fontWeight: "bold" }} />
-      <Grid container direction="column" style={{ marginTop: "10px" }} spacing={2}>
+      <TypographyAtoms
+        title={"Katalog Produk"}
+        variant="h5"
+        style={{ fontWeight: "bold" }}
+      />
+      <Grid
+        container
+        direction="column"
+        style={{ marginTop: "10px" }}
+        spacing={2}
+      >
         <Grid item>
           <ButtonAtoms
             title={"Tambah Produk"}
@@ -83,7 +99,11 @@ const Produk = () => {
             variant="contained"
             color="primary"
             onClick={() => {
-              history.push({ pathname: "/tambahProduk", title: "Tambah Produk", btnTitle: "Simpan" });
+              history.push({
+                pathname: "/tambahProduk",
+                title: "Tambah Produk",
+                btnTitle: "Simpan",
+              });
             }}
             style={{ backgroundColor: "green" }}
           />
@@ -105,6 +125,8 @@ const Produk = () => {
                         stok={result.stok}
                         userNamePenjual={result.userNamePenjual}
                         namaPenjual={result.namaPenjual}
+                        alamat={result.alamat}
+                        noHp={result.noHp}
                         onDelete={onConfirmDelete}
                         userKategori={dataUsers.kategori}
                       />
