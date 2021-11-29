@@ -1,7 +1,17 @@
-import { Container, FormControl, Grid, IconButton, TextField } from "@material-ui/core";
+import {
+  Container,
+  FormControl,
+  Grid,
+  IconButton,
+  TextField,
+} from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { ButtonAtoms, TypographyAtoms } from "../../../components/atoms";
-import { makeStyles, ThemeProvider, createTheme } from "@material-ui/core/styles";
+import {
+  makeStyles,
+  ThemeProvider,
+  createTheme,
+} from "@material-ui/core/styles";
 import AddPhotoAlternateIcon from "@material-ui/icons/AddPhotoAlternate";
 import { Snackbar } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
@@ -49,6 +59,8 @@ const TambahDanEditProduk = () => {
     harga: "",
     stok: "",
     image: "",
+    alamat: "",
+    noHp: "",
   });
 
   const [open, setOpen] = useState(false);
@@ -125,6 +137,8 @@ const TambahDanEditProduk = () => {
     data.append("image", state.image);
     data.append("userNamePenjual", dataUsers.username);
     data.append("namaPenjual", dataUsers.namaLengkap);
+    data.append("alamat", dataUsers.alamat);
+    data.append("noHp", dataUsers.noHp);
     if (location.btnTitle === "Simpan") {
       const insertData = axios.post(`${baseUrl}/produk/createProduk`, data, {
         headers: {
@@ -182,7 +196,12 @@ const TambahDanEditProduk = () => {
         <TypographyAtoms title={location.title} variant="h6" />
         <ThemeProvider theme={theme}>
           <form className={classes.form} noValidate>
-            <Grid container spacing={2} justifyContent="flex-start" alignItems="flex-start">
+            <Grid
+              container
+              spacing={2}
+              justifyContent="flex-start"
+              alignItems="flex-start"
+            >
               <Grid
                 item
                 xs={12}
@@ -190,25 +209,67 @@ const TambahDanEditProduk = () => {
                   height: "50%",
                 }}
               >
-                <Grid container direction="column" alignItems="center" style={styleImage} justifyContent="center">
+                <Grid
+                  container
+                  direction="column"
+                  alignItems="center"
+                  style={styleImage}
+                  justifyContent="center"
+                >
                   <Grid item>
-                    <input accept="image/*" id="icon-button-file" type="file" hidden onChange={(e) => onSetImage(e)} />
+                    <input
+                      accept="image/*"
+                      id="icon-button-file"
+                      type="file"
+                      hidden
+                      onChange={(e) => onSetImage(e)}
+                    />
                     <label htmlFor="icon-button-file">
                       <IconButton component="span">
-                        <AddPhotoAlternateIcon fontSize="large" style={{ color: `${colorText}` }} />
+                        <AddPhotoAlternateIcon
+                          fontSize="large"
+                          style={{ color: `${colorText}` }}
+                        />
                       </IconButton>
                     </label>
                   </Grid>
                   <Grid item>
-                    <TypographyAtoms title={"Tambah Foto"} variant="subtitle" style={{ color: `${colorText}` }} />
+                    <TypographyAtoms
+                      title={"Tambah Foto"}
+                      variant="subtitle"
+                      style={{ color: `${colorText}` }}
+                    />
                   </Grid>
                 </Grid>
               </Grid>
               <Grid item xs={12}>
-                <TextField autoComplete="namaProduk" name="namaProduk" variant="outlined" required fullWidth id="namaProduk" label="Nama Produk" autoFocus value={state.namaProduk} onChange={handleChange} />
+                <TextField
+                  autoComplete="namaProduk"
+                  name="namaProduk"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="namaProduk"
+                  label="Nama Produk"
+                  autoFocus
+                  value={state.namaProduk}
+                  onChange={handleChange}
+                />
               </Grid>
               <Grid item xs={12}>
-                <TextField autoComplete="deskripsiProduk" name="deskripsiProduk" variant="outlined" required fullWidth id="deskripsiProduk" label="Deskripsi" multiline rows={4} value={state.deskripsiProduk} onChange={handleChange} />
+                <TextField
+                  autoComplete="deskripsiProduk"
+                  name="deskripsiProduk"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="deskripsiProduk"
+                  label="Deskripsi"
+                  multiline
+                  rows={4}
+                  value={state.deskripsiProduk}
+                  onChange={handleChange}
+                />
               </Grid>
               <Grid item xs={12}>
                 {/* Select Molecules */}
@@ -234,16 +295,46 @@ const TambahDanEditProduk = () => {
                 </FormControl>
               </Grid>
               <Grid item xs={12}>
-                <TextField variant="outlined" required fullWidth name="harga" label="Harga" type="number" id="harga" autoComplete="harga" value={state.harga} onChange={handleChange} />
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="harga"
+                  label="Harga"
+                  type="number"
+                  id="harga"
+                  autoComplete="harga"
+                  value={state.harga}
+                  onChange={handleChange}
+                />
               </Grid>
               <Grid item xs={12}>
-                <TextField variant="outlined" required fullWidth name="stok" label="Stok" type="number" id="stok" autoComplete="stok" value={state.stok} onChange={handleChange} />
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="stok"
+                  label="Stok"
+                  type="number"
+                  id="stok"
+                  autoComplete="stok"
+                  value={state.stok}
+                  onChange={handleChange}
+                />
               </Grid>
               {/* Batas grid */}
             </Grid>
           </form>
         </ThemeProvider>
-        <ButtonAtoms style={{ backgroundColor: "green" }} fullWidth variant="contained" color="primary" className={classes.submit} title={location.btnTitle} onClick={btnClick} />
+        <ButtonAtoms
+          style={{ backgroundColor: "green" }}
+          fullWidth
+          variant="contained"
+          color="primary"
+          className={classes.submit}
+          title={location.btnTitle}
+          onClick={btnClick}
+        />
         <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
           <Alert onClose={handleClose} severity={severity}>
             {response}

@@ -157,6 +157,8 @@ const DashboardKonsumen = ({ userKategori }) => {
                         stok={dataProduk.stok}
                         userNamePenjual={dataProduk.userNamePenjual}
                         namaPenjual={dataProduk.namaPenjual}
+                        alamat={dataProduk.alamat}
+                        noHp={dataProduk.noHp}
                         userKategori={userKategori}
                         onAddToTroli={onAddToTroli}
                         disableBtn={disableBtn[i++]}

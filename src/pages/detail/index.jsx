@@ -58,7 +58,8 @@ export default function DetailProduk() {
               }}
             >
               <Typography variant="subtitle1">
-                Kategori: <span style={{ color: "green" }}>{data.kategori}</span>
+                Kategori:{" "}
+                <span style={{ color: "green" }}>{data.kategori}</span>
               </Typography>
             </Grid>
             <Grid
@@ -80,7 +81,8 @@ export default function DetailProduk() {
               }}
             >
               <Typography variant="subtitle1">
-                Penjual: <span style={{ color: "green" }}>{data.namaPenjual}</span>
+                Penjual:{" "}
+                <span style={{ color: "green" }}>{data.namaPenjual}</span>
               </Typography>
             </Grid>
             <Grid
@@ -91,7 +93,20 @@ export default function DetailProduk() {
               }}
             >
               <Typography variant="subtitle1">
-                Alamat: <span style={{ color: "green" }}>{data.namaPenjual}</span>
+                Alamat Penjual:{" "}
+                <span style={{ color: "green" }}>{data.alamat}</span>
+              </Typography>
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              style={{
+                marginTop: "10px",
+              }}
+            >
+              <Typography variant="subtitle1">
+                Nomor Penjual:{" "}
+                <span style={{ color: "green" }}>{data.noHp}</span>
               </Typography>
             </Grid>
             <Grid
@@ -100,8 +115,7 @@ export default function DetailProduk() {
               style={{
                 marginTop: "20px",
               }}
-          >
-            </Grid>
+            ></Grid>
           </Grid>
         </Grid>
       </Grid>

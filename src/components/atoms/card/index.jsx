@@ -38,7 +38,24 @@ const CardAtoms = (props) => {
   const history = useHistory();
   const [disableBtn1, setDisableBtn] = useState(false);
 
-  const { id, image, namaProduk, deskripsiProduk, kategori, namapenjual, harga, stok, userNamePenjual, namaPenjual, onDelete, userKategori, onAddToTroli, disableBtn } = props;
+  const {
+    id,
+    image,
+    namaProduk,
+    deskripsiProduk,
+    kategori,
+    namapenjual,
+    harga,
+    stok,
+    userNamePenjual,
+    namaPenjual,
+    alamat,
+    noHp,
+    onDelete,
+    userKategori,
+    onAddToTroli,
+    disableBtn,
+  } = props;
 
   const data = {
     image,
@@ -49,18 +66,50 @@ const CardAtoms = (props) => {
     stok,
     userNamePenjual,
     namaPenjual,
+    alamat,
+    noHp,
   };
 
   let button;
   if (userKategori === "Petani") {
     button = (
       <Fragment>
-        <ButtonAtoms size="small" color="primary" onClick={() => history.push({ pathname: "/edit-produk", id: id, title: "Edit Produk", btnTitle: "Edit", data: data })} title={"Ubah"} style={{ color: "green" }} />
-        <ButtonAtoms size="small" color="primary" onClick={() => onDelete(id)} title={"Hapus"} style={{ color: "green" }} />
+        <ButtonAtoms
+          size="small"
+          color="primary"
+          onClick={() =>
+            history.push({
+              pathname: "/edit-produk",
+              id: id,
+              title: "Edit Produk",
+              btnTitle: "Edit",
+              data: data,
+            })
+          }
+          title={"Ubah"}
+          style={{ color: "green" }}
+        />
+        <ButtonAtoms
+          size="small"
+          color="primary"
+          onClick={() => onDelete(id)}
+          title={"Hapus"}
+          style={{ color: "green" }}
+        />
       </Fragment>
     );
   } else if (userKategori === "Admin") {
-    button = <ButtonAtoms size="large" color="primary" fullWidth variant="contained" onClick={() => onDelete(id)} title={"Hapus"} style={{ color: "#fff", backgroundColor: "green" }} />;
+    button = (
+      <ButtonAtoms
+        size="large"
+        color="primary"
+        fullWidth
+        variant="contained"
+        onClick={() => onDelete(id)}
+        title={"Hapus"}
+        style={{ color: "#fff", backgroundColor: "green" }}
+      />
+    );
   } else {
     button = (
       <Button
@@ -75,7 +124,16 @@ const CardAtoms = (props) => {
         disabled={disableBtn ? disableBtn : disableBtn1}
         onClick={() => {
           setDisableBtn(true);
-          onAddToTroli(id, image, namaProduk, deskripsiProduk, kategori, harga, stok, userNamePenjual);
+          onAddToTroli(
+            id,
+            image,
+            namaProduk,
+            deskripsiProduk,
+            kategori,
+            harga,
+            stok,
+            userNamePenjual
+          );
         }}
       >
         Tambah ke troli
@@ -90,7 +148,11 @@ const CardAtoms = (props) => {
   return (
     <Card className={classes.root} style={{ position: "relative" }}>
       <CardActionArea onClick={clickCard}>
-        <CardMedia className={classes.media} image={image} title="Contemplative Reptile" />
+        <CardMedia
+          className={classes.media}
+          image={image}
+          title="Contemplative Reptile"
+        />
         <CardContent>
           <Typography variant="h5" component="h2">
             {namaProduk}
@@ -98,10 +160,18 @@ const CardAtoms = (props) => {
           <Typography variant="h6" component="h2">
             Rp.{harga}
           </Typography>
-          <Typography variant="subtitle1" style={{ color: "green" }} gutterBottom>
+          <Typography
+            variant="subtitle1"
+            style={{ color: "green" }}
+            gutterBottom
+          >
             {kategori}
           </Typography>
-          <Typography variant="subtitle1" style={{ color: "green" }} gutterBottom>
+          <Typography
+            variant="subtitle1"
+            style={{ color: "green" }}
+            gutterBottom
+          >
             {namapenjual}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
@@ -110,7 +180,11 @@ const CardAtoms = (props) => {
         </CardContent>
       </CardActionArea>
       <Box style={{ height: 70, position: "absolute", bottom: "0px" }}>
-        <CardActions style={{ position: "absolute", bottom: "0px", width: 344 }}>{button}</CardActions>
+        <CardActions
+          style={{ position: "absolute", bottom: "0px", width: 344 }}
+        >
+          {button}
+        </CardActions>
       </Box>
     </Card>
   );
