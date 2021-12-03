@@ -174,14 +174,14 @@ const CardAtoms = (props) => {
           >
             {namapenjual}
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
+          <Typography variant="h7" color="textSecondary" component="p">
             {deskripsiProduk}
           </Typography>
         </CardContent>
       </CardActionArea>
       <Box style={{ height: 70, position: "absolute", bottom: "0px" }}>
         <CardActions
-          style={{ position: "absolute", bottom: "0px", width: 344 }}
+          style={{ position: "absolute", bottom: "0px", width: 315 }}
         >
           {button}
         </CardActions>

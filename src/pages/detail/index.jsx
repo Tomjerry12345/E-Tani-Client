@@ -24,7 +24,7 @@ export default function DetailProduk() {
           <Grid container>
             <Grid item xs={10}>
               <Typography
-                variant="h4"
+                variant="h5"
                 style={{
                   fontWeight: "bold",
                 }}
@@ -39,7 +39,7 @@ export default function DetailProduk() {
                 marginTop: "10px",
               }}
             >
-              <Typography variant="h4">{`Rp. ${data.harga}`}</Typography>
+              <Typography variant="h5">{`Rp. ${data.harga}`}</Typography>
             </Grid>
             <Grid
               item
@@ -57,7 +57,7 @@ export default function DetailProduk() {
                 marginTop: "10px",
               }}
             >
-              <Typography variant="subtitle1">
+              <Typography variant="h7">
                 Kategori:{" "}
                 <span style={{ color: "green" }}>{data.kategori}</span>
               </Typography>
@@ -69,7 +69,7 @@ export default function DetailProduk() {
                 marginTop: "10px",
               }}
             >
-              <Typography variant="subtitle1">
+              <Typography variant="h7">
                 Stok: <span style={{ color: "green" }}>{data.stok}</span>
               </Typography>
             </Grid>
@@ -80,7 +80,7 @@ export default function DetailProduk() {
                 marginTop: "10px",
               }}
             >
-              <Typography variant="subtitle1">
+              <Typography variant="h7">
                 Penjual:{" "}
                 <span style={{ color: "green" }}>{data.namaPenjual}</span>
               </Typography>
@@ -92,7 +92,7 @@ export default function DetailProduk() {
                 marginTop: "10px",
               }}
             >
-              <Typography variant="subtitle1">
+              <Typography variant="h7">
                 Alamat Penjual:{" "}
                 <span style={{ color: "green" }}>{data.alamat}</span>
               </Typography>
@@ -104,7 +104,7 @@ export default function DetailProduk() {
                 marginTop: "10px",
               }}
             >
-              <Typography variant="subtitle1">
+              <Typography variant="h7">
                 Nomor Penjual:{" "}
                 <span style={{ color: "green" }}>{data.noHp}</span>
               </Typography>
