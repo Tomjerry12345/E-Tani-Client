@@ -84,28 +84,6 @@ export default function RincianPesanan(props) {
       rincian,
     });
 
-  // const btnTerima = (id, message) => {
-  //   console.log(`id ${id}`);
-  //   const status = message === "Sudah Diterima" ? "Belum Diterima" : "Sudah Diterima";
-  //   const data = {
-  //     message: status,
-  //     jenisAkun: dataUsers.kategori,
-  //   };
-
-  //   axios
-  //     .put(`${baseUrl}/rincian-pesanan/update/${id}`, {
-  //       data,
-  //       headers: {
-  //         "content-type": "multipart/form-data",
-  //       },
-  //     })
-  //     .then((result) => {
-  //       console.log(`response => ${result}`);
-  //       setRefresh(!refresh);
-  //     })
-  //     .catch((err) => console.log(err));
-  // };
-
   const deletePesanan = (id) => {
     axios
       .delete(`${baseUrl}/rincian-pesanan/delete/${id}`)
@@ -230,27 +208,16 @@ export default function RincianPesanan(props) {
                       }}
                       variant="filled"
                       style={{
-                        width: "180px",
+                        width: "160px",
                       }}
                       disabled={row.statusPengiriman === "Sudah Terkirim" ? false : true}
                     >
                       <option value={"Sudah Diterima"}>Sudah Diterima</option>
                       <option value={"Belum Diterima"}>Belum Diterima</option>
                     </TextField>
-                    {/* <Button variant="contained" style={{ margin: "8px", background: "red", color: "white", fontSize: "10px" }} onClick={() => deletePesanan(row._id)}>
-                      Batalkan Pesanan
-                    </Button> */}
-                    {/* <Box display="flex">
-                      <Button className={row.statusPenerima !== "Sudah Diterima" ? classes.succesBtn : classes.errorBtn} variant="contained" style={{ margin: "8px" }} onClick={() => btnTerima(row._id, row.statusPenerima)}>
-                        {row.statusPenerima === "Sudah Diterima" ? "Belum Diterima" : "Sudah Diterima"}
-                      </Button>
-                      <Button variant="contained" style={{ margin: "8px", background: "red", color: "white", fontSize: "10px" }} onClick={() => deletePesanan(row._id)}>
-                        Batalkan Pesanan
-                      </Button>
-                    </Box> */}
                   </TableCell>
                   <TableCell align="right">
-                    <Button variant="contained" style={{ margin: "8px", background: "red", color: "white", fontSize: "10px" }} onClick={() => deletePesanan(row._id)}>
+                    <Button variant="contained" style={{ margin: "8px", background: "gray", color: "white", fontSize: "10px" }} onClick={() => deletePesanan(row._id)}>
                       Batalkan Pesanan
                     </Button>
                   </TableCell>

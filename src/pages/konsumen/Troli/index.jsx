@@ -363,6 +363,13 @@ const TroliKonsumen = () => {
     });
   };
 
+  const handleChangeNama = (e) => {
+    setDataRincianPesanan({
+      ...dataRincianPesanan,
+      namaPenerima: e.target.value,
+    });
+  };
+
   const statusAlert = (msg) => {
     confirmAlert({
       // title: "Delete produk",
@@ -401,7 +408,7 @@ const TroliKonsumen = () => {
               ))
             : []}
         </Grid>
-        <Grid item style={{ marginBottom: "10px" }}>
+        <Grid item style={{ marginBottom: "8px" }}>
         <TypographyAtoms style={{ marginTop: 0, marginBottom: 0, fontWeight: "" }} title={"Metode Pembayaran"} variant="h6" />
           <FormControl component="fieldset">
                 <RadioGroup aria-label="payment" name="payment" value={dataRincianPesanan.metodePembayaran} onChange={handleChange}>

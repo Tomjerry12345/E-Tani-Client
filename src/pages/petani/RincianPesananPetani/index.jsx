@@ -196,23 +196,14 @@ export default function RincianPesanan() {
                 <TableCell component="th" scope="row">
                   {`${row.namaProduk[0]}`}
                   {row.namaProduk.length > 1 ? <p>...</p> : null}
-                  {/* {row.namaProduk.map((res, index) => (
-                    <Typography variant="subtitle1">{res}</Typography>
-                  ))} */}
                 </TableCell>
                 <TableCell align="left">
                   {`${row.harga[0]}`}
                   {row.namaProduk.length > 1 ? <p>...</p> : null}
-                  {/* {row.harga.map((res, index) => (
-                    <Typography variant="subtitle1">{res}</Typography>
-                  ))} */}
                 </TableCell>
                 <TableCell align="left">
                   {`${row.jumlah[0]}`}
-                  {row.namaProduk.length > 1 ? <p>...</p> : null}
-                  {/* {row.jumlah.map((res, index) => (
-                    <Typography variant="subtitle1">{res}</Typography>
-                  ))} */}
+                  {row.namaProduk.length > 1 ? <p>...</p> : null}  
                 </TableCell>
                 <TableCell align="left">{row.metodePembayaran}</TableCell>
                 <TableCell align="left">{transactionStatus[index]}</TableCell>
@@ -227,7 +218,6 @@ export default function RincianPesanan() {
                     select
                     label="Status Penerima"
                     value={row.statusPengiriman}
-                    // defaultValue={row.statusPenerima === "Sudah Diterima" ? "Belum Diterima" : "Sudah Diterima"}
                     onChange={(e) => handleChange(e, row._id, row.statusPengiriman)}
                     SelectProps={{
                       native: true,
@@ -240,40 +230,12 @@ export default function RincianPesanan() {
                     <option value={"Sudah Terkirim"}>Sudah Terkirim</option>
                     <option value={"Belum Terkirim"}>Belum Terkirim</option>
                   </TextField>
-
-                  {/* <Box display="flex">
-                  <Button
-                    className={row.statusPengiriman === "Sudah Terkirim" ? classes.succesBtn : classes.errorBtn}
-                    onMouseEnter={() => setHover(true)}
-                    onMouseLeave={() => setHover(false)}
-                    variant="contained"
-                    style={{ margin: "8px" }}
-                    onClick={() => btnTerima(row._id, row.statusPengiriman)}
-                  >
-                    {row.statusPengiriman === "Belum Terkirim" ? "Belum Terkirim" : "Sudah Terkirim"}
-                  </Button> */}
-                  {/* <Button variant="contained" style={{ margin: "8px", background: "red", color: "white", fontSize: "10px" }} onClick={() => deletePesanan(row._id)}>
-                    Batalkan Pesanan
-                  </Button> */}
-                  {/* </Box> */}
                 </TableCell>
                 <TableCell align="right">
-                  <Button variant="contained" style={{ margin: "10px", background: "red", color: "white", fontSize: "8px" }} onClick={() => deletePesanan(row._id)}>
+                  <Button variant="contained" style={{ margin: "8px", background: "Gray", color: "white", fontSize: "10px" }} onClick={() => deletePesanan(row._id)}>
                     Batalkan Pesanan
                   </Button>
                 </TableCell>
-                {/* <TableCell align="right">
-                <Button
-                  // color={row.statusPenerima === "Sudah Diterima" ? "succes" : "error"}
-                  className={row.statusPengiriman === "Sudah Terkirim" ? classes.succesBtn : classes.errorBtn}
-                  onMouseEnter={() => setHover(true)}
-                  onMouseLeave={() => setHover(false)}
-                  variant="contained"
-                  onClick={() => btnTerima(row._id, row.statusPengiriman)}
-                >
-                  {row.statusPengiriman === "Belum Terkirim" ? "Belum Terkirim" : "Sudah Terkirim"}
-                </Button>
-              </TableCell> */}
               </TableRow>
               <TableRow>
                 {row.namaProduk.length > 1 ? (
