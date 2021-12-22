@@ -42,6 +42,7 @@ const CardAtoms = (props) => {
     id,
     image,
     namaProduk,
+    namaKondisi,
     deskripsiProduk,
     kategori,
     namapenjual,
@@ -60,6 +61,7 @@ const CardAtoms = (props) => {
   const data = {
     image,
     namaProduk,
+    namaKondisi,
     deskripsiProduk,
     kategori,
     harga,
@@ -128,6 +130,7 @@ const CardAtoms = (props) => {
             id,
             image,
             namaProduk,
+            namaKondisi,
             deskripsiProduk,
             kategori,
             harga,
@@ -154,12 +157,32 @@ const CardAtoms = (props) => {
           title="Contemplative Reptile"
         />
         <CardContent>
-          <Typography variant="h5" component="h2">
+          <Typography
+            variant="body1"
+            style={{ fontWeight: "bold", fontSize: "16px" }}
+          >
             {namaProduk}
           </Typography>
-          <Typography variant="h6" component="h2">
-            Rp.{harga}
-          </Typography>
+          {stok === 0 ? (
+            <Box
+              style={{
+                border: "1px solid red",
+                marginTop: 8,
+                marginBottom: 8,
+                textAlign: "center",
+              }}
+            >
+              <Typography
+                variant="body2"
+                style={{ padding: 4, color: "red", fontWeight: "bold" }}
+              >
+                Stok habis
+              </Typography>
+            </Box>
+          ) : null}
+
+          <Typography variant="subtitle1">{namaKondisi}</Typography>
+          <Typography variant="subtitle1">Rp.{harga}</Typography>
           <Typography
             variant="subtitle1"
             style={{ color: "green" }}
@@ -174,7 +197,7 @@ const CardAtoms = (props) => {
           >
             {namapenjual}
           </Typography>
-          <Typography variant="h7" color="textSecondary" component="p">
+          <Typography variant="h7" color="textSecondary" gutterBottom>
             {deskripsiProduk}
           </Typography>
         </CardContent>

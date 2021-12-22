@@ -119,6 +119,7 @@ const Produk = () => {
                         id={result._id}
                         image={`${baseUrl}/${result.image}`}
                         namaProduk={result.namaProduk}
+                        namaKondisi={result.namaKondisi}
                         deskripsiProduk={result.deskripsiProduk}
                         kategori={result.kategori}
                         harga={result.harga}

@@ -79,6 +79,7 @@ const TambahDanEditProduk = () => {
       setState({
         ...state,
         namaProduk: data.namaProduk,
+        namaKondisi: data.namaKondisi,
         deskripsiProduk: data.deskripsiProduk,
         kategori: data.kategori,
         harga: data.harga,
@@ -110,6 +111,7 @@ const TambahDanEditProduk = () => {
         setSeverity("success");
         setResponse(message);
         state.namaProduk = "";
+        state.namaKondisi = "";
         state.deskripsiProduk = "";
         state.kategori = "";
         state.harga = "";
@@ -130,6 +132,7 @@ const TambahDanEditProduk = () => {
   const btnClick = () => {
     const data = new FormData();
     data.append("namaProduk", state.namaProduk);
+    data.append("namaKondisi", state.namaKondisi);
     data.append("deskripsiProduk", state.deskripsiProduk);
     data.append("kategori", state.kategori);
     data.append("harga", state.harga);
@@ -253,6 +256,20 @@ const TambahDanEditProduk = () => {
                   label="Nama Produk"
                   autoFocus
                   value={state.namaProduk}
+                  onChange={handleChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  autoComplete="namaKondisi"
+                  name="namaKondisi"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="namaKondisi"
+                  label="Nama Kondisi"
+                  autoFocus
+                  value={state.namaKondisi}
                   onChange={handleChange}
                 />
               </Grid>
