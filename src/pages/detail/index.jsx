@@ -48,7 +48,7 @@ export default function DetailProduk() {
                 marginTop: "14px",
               }}
             >
-              <Typography variant="h7">{data.deskripsiProduk}</Typography>
+              <Typography variant="h7">Deskripsi Produk: {data.deskripsiProduk}</Typography>
             </Grid>
             <Grid
               item

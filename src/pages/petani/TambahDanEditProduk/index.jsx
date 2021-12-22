@@ -267,8 +267,9 @@ const TambahDanEditProduk = () => {
                   required
                   fullWidth
                   id="namaKondisi"
-                  label="Nama Kondisi"
-                  autoFocus
+                  label="Kondisi Produk"
+                  multiline
+                  rows={4}
                   value={state.namaKondisi}
                   onChange={handleChange}
                 />

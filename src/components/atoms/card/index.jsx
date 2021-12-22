@@ -157,12 +157,6 @@ const CardAtoms = (props) => {
           title="Contemplative Reptile"
         />
         <CardContent>
-          <Typography
-            variant="body1"
-            style={{ fontWeight: "bold", fontSize: "16px" }}
-          >
-            {namaProduk}
-          </Typography>
           {stok === 0 ? (
             <Box
               style={{
@@ -174,35 +168,39 @@ const CardAtoms = (props) => {
             >
               <Typography
                 variant="body2"
-                style={{ padding: 4, color: "red", fontWeight: "bold" }}
+                style={{ padding: 2, color: "red", fontWeight: "bold" }}
               >
                 Stok habis
               </Typography>
             </Box>
           ) : null}
 
-          <Typography variant="subtitle1">{namaKondisi}</Typography>
-          <Typography variant="subtitle1">Rp.{harga}</Typography>
           <Typography
-            variant="subtitle1"
-            style={{ color: "green" }}
-            gutterBottom
+            variant="body1"
+            style={{ fontWeight: "bold", fontSize: "18px" }}
           >
-            {kategori}
+            {namaProduk}
           </Typography>
-          <Typography
-            variant="subtitle1"
-            style={{ color: "green" }}
-            gutterBottom
-          >
-            {namapenjual}
+          <Typography 
+            variant="body2"
+            style={{ fontWeight: "bold", fontSize: "18px" }}
+            >
+              Rp.{harga}
+            </Typography>
+            <Typography 
+            variant="body2"
+            style={{ fontWeight: "", fontSize: "14px" }}
+            >
+              Kategori : {kategori}
+            </Typography>
+          <Typography 
+          variant="body1"
+          style={{ fontWeight: "", fontSize: "14px" }}
+          >Kondisi Produk : {namaKondisi}
           </Typography>
-          <Typography variant="h7" color="textSecondary" gutterBottom>
-            {deskripsiProduk}
-          </Typography>
-        </CardContent>
+              </CardContent>
       </CardActionArea>
-      <Box style={{ height: 70, position: "absolute", bottom: "0px" }}>
+      <Box style={{ height: 60, position: "absolute", bottom: "0px" }}>
         <CardActions
           style={{ position: "absolute", bottom: "0px", width: 315 }}
         >
