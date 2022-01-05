@@ -143,8 +143,6 @@ export const HeaderKonsumen = () => {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down("sm"));
 
-  console.log(`matches => ${matches}`);
-
   const path = history.location.pathname;
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -165,7 +163,6 @@ export const HeaderKonsumen = () => {
   };
 
   const handleChange = (event) => {
-    console.log(`${event.keyCode}`);
     if (event.keyCode === 13) {
       history.push({ pathname: "/cari", state: { cari: event.target.value } });
       console.log("value", event.target.value);
@@ -199,10 +196,21 @@ export const HeaderKonsumen = () => {
             </IconButton>
           )}
           <Box>
-            <img src={Logo} alt="logo" width={matches ? "60" : "60"} height={matches ? "50" : "50"} />
+            <img
+              src={Logo}
+              alt="logo"
+              width={matches ? "60" : "60"}
+              height={matches ? "50" : "50"}
+            />
           </Box>
           {!matches ? (
-            <Typography className={classes.title} component="h1" variant="h6" color="inherit" noWrap>
+            <Typography
+              className={classes.title}
+              component="h1"
+              variant="h6"
+              color="inherit"
+              noWrap
+            >
               e-Tani Takalar
             </Typography>
           ) : null}
@@ -225,20 +233,41 @@ export const HeaderKonsumen = () => {
           </div>
           {!matches ? (
             <Fragment>
-              <IconButton color="inherit" onClick={() => history.push("/kategori")}>
+              <IconButton
+                color="inherit"
+                onClick={() => history.push("/kategori")}
+              >
                 <CategoryIcon />
               </IconButton>
-              <IconButton color="inherit" onClick={() => history.push("/troli")}>
+              <IconButton
+                color="inherit"
+                onClick={() => history.push("/troli")}
+              >
                 <Badge badgeContent={totalData} color="secondary">
                   <ShoppingCartIcon />
                 </Badge>
               </IconButton>
-              <IconButton color="inherit" aria-controls="simple-menu" aria-haspopup="true" onClick={(event) => setAnchorEl(event.currentTarget)}>
+              <IconButton
+                color="inherit"
+                aria-controls="simple-menu"
+                aria-haspopup="true"
+                onClick={(event) => setAnchorEl(event.currentTarget)}
+              >
                 <AccountCircleIcon />
               </IconButton>
-              <Menu id="simple-menu" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
-                <MenuItem onClick={() => handleClose("pesananSaya")}>Pesanan saya</MenuItem>
-                <MenuItem onClick={() => handleClose("informasiAkun")}>Informasi Akun</MenuItem>
+              <Menu
+                id="simple-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+              >
+                <MenuItem onClick={() => handleClose("pesananSaya")}>
+                  Pesanan saya
+                </MenuItem>
+                <MenuItem onClick={() => handleClose("informasiAkun")}>
+                  Informasi Akun
+                </MenuItem>
               </Menu>
             </Fragment>
           ) : null}

@@ -23,7 +23,6 @@ const DashboardKonsumen = ({ userKategori }) => {
 
   useEffect(() => {
     const online = window.navigator.onLine;
-    console.log("statusOnline => ", online);
 
     if (!online) {
       const local = localStorage.getItem("produk");
@@ -36,7 +35,7 @@ const DashboardKonsumen = ({ userKategori }) => {
       .get(`${baseUrl}/produk/getAllProduk`)
       .then((result) => {
         const data = result.data.data;
-        console.log("data => ", data)
+
         if (online) {
           localStorage.setItem("produk", JSON.stringify(data));
           setProduk(data);
@@ -70,14 +69,13 @@ const DashboardKonsumen = ({ userKategori }) => {
     id,
     image,
     namaProduk,
+    namaKondisi,
     deskripsiProduk,
     kategori,
     harga,
     stok,
     usernamePenjual
   ) => {
-    console.log(`username penjual => ${usernamePenjual}`);
-    console.log(`produk => ${JSON.stringify(produk)}`);
     const data = new FormData();
     data.append("idProduk", id);
     data.append("namaProduk", namaProduk);
@@ -88,6 +86,8 @@ const DashboardKonsumen = ({ userKategori }) => {
     data.append("image", image);
     data.append("usernamePembeli", dataUsers.username);
     data.append("usernamePenjual", usernamePenjual);
+
+    console.log("harga => ", harga);
 
     axios
       .post(`${baseUrl}/troli/createTroli`, data, {
@@ -104,10 +104,11 @@ const DashboardKonsumen = ({ userKategori }) => {
         dispatch({ type: "UPDATE_STATUS_PRODUK", payload: !statusProduk });
       })
       .catch((err) => {
-        const message = err.response.data.message;
-        setSeverity("error");
-        setResponse(message);
-        setOpen(true);
+        // const message = err.response.data.message;
+        console.log("error => ", err);
+        // setSeverity("error");
+        // setResponse(err);
+        // setOpen(true);
       });
   };
 
@@ -163,6 +164,7 @@ const DashboardKonsumen = ({ userKategori }) => {
                         userKategori={userKategori}
                         onAddToTroli={onAddToTroli}
                         disableBtn={disableBtn[i++]}
+                        isDisabledBtnByStok={dataProduk.stok === 0}
                       />
                     </Grid>
                   );

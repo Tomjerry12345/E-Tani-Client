@@ -56,6 +56,7 @@ const CardAtoms = (props) => {
     userKategori,
     onAddToTroli,
     disableBtn,
+    isDisabledBtnByStok,
   } = props;
 
   const data = {
@@ -123,7 +124,14 @@ const CardAtoms = (props) => {
         size="large"
         color="primary"
         fullWidth
-        disabled={disableBtn ? disableBtn : disableBtn1}
+        disabled={
+          isDisabledBtnByStok
+            ? isDisabledBtnByStok
+            : disableBtn
+            ? disableBtn
+            : disableBtn1
+        }
+        // disabled={isDisabledBtnByStok}
         onClick={() => {
           setDisableBtn(true);
           onAddToTroli(
@@ -181,24 +189,25 @@ const CardAtoms = (props) => {
           >
             {namaProduk}
           </Typography>
-          <Typography 
+          <Typography
             variant="body2"
             style={{ fontWeight: "bold", fontSize: "18px" }}
-            >
-              Rp.{harga}
-            </Typography>
-            <Typography 
+          >
+            Rp.{harga}
+          </Typography>
+          <Typography
             variant="body2"
             style={{ fontWeight: "", fontSize: "14px" }}
-            >
-              Kategori : {kategori}
-            </Typography>
-          <Typography 
-          variant="body1"
-          style={{ fontWeight: "", fontSize: "14px" }}
-          >Kondisi Produk : {namaKondisi}
+          >
+            Kategori : {kategori}
           </Typography>
-              </CardContent>
+          <Typography
+            variant="body1"
+            style={{ fontWeight: "", fontSize: "14px" }}
+          >
+            Kondisi Produk : {namaKondisi}
+          </Typography>
+        </CardContent>
       </CardActionArea>
       <Box style={{ height: 60, position: "absolute", bottom: "0px" }}>
         <CardActions
