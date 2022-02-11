@@ -79,6 +79,7 @@ const Register = () => {
       "Bontolempangan",
       "Tompobulu",
     ],
+
   };
 
   const [state, setState] = React.useState({

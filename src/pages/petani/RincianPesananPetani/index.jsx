@@ -53,6 +53,7 @@ export default function RincianPesanan() {
 
   // console.log(`md => ${md}`);
 
+console.log("datausers => ", dataUsers.namaLengkap)
   useEffect(() => {
     const request = new FormData();
     request.append("username", dataUsers.username);
@@ -65,11 +66,11 @@ export default function RincianPesanan() {
       })
       .then((result) => {
         const data1 = result.data.data;
-        console.log(`response => ${JSON.stringify(data1)}`);
+        // console.log(`response => ${JSON.stringify(data1)}`);
         data1.map(async (res) => {
           if (res.metodePembayaran === "digital") {
             const res1 = await getStatusPembayaran(res.rincian);
-            console.log(`res1=> ${JSON.stringify(res1.data.status)}`);
+            // console.log(`res1=> ${JSON.stringify(res1.data.status)}`);
             setTransactionStatus((currentArray) => [...currentArray, res1.data.status]);
           } else {
             setTransactionStatus((currentArray) => [...currentArray, "-"]);

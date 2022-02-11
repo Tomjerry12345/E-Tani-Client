@@ -151,6 +151,7 @@ const TroliKonsumen = () => {
     metodePembayaran: "cod",
     statusPembayaran: "",
     alamatPembeli: dataUsers.alamat,
+    noHp: dataUsers.noHp
   });
 
   // console.log(`list id produk => ${dataTroli}`);

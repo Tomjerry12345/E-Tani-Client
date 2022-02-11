@@ -318,7 +318,7 @@ const TambahDanEditProduk = () => {
                   required
                   fullWidth
                   name="harga"
-                  label="Harga"
+                  label="Harga/kg"
                   type="number"
                   id="harga"
                   autoComplete="harga"
