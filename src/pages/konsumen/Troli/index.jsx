@@ -67,7 +67,7 @@ const Product = (props) => {
 
   const onClickKurang = () => {
     jumlah = jumlahBeli - 1;
-    if (jumlah < 0) jumlah = 0;
+    if (jumlah <= 1) jumlah = 1;
     setJumlahBeli(jumlah);
     setCheckBtn(false);
   };
@@ -89,7 +89,7 @@ const Product = (props) => {
               <TypographyAtoms variant="subtitle1" style={{ fontWeight: "bold" }} title={namaProduk} />
             </Grid>
             <Grid item xs={12}>
-              <TypographyAtoms variant="subtitle2" title={`Rp. ${harga}`} style={{ fontWeight: "bold", color: "green" }} />
+              <TypographyAtoms variant="subtitle2" title={`Rp. ${harga}.000`} style={{ fontWeight: "bold", color: "green" }} />
             </Grid>
             <Grid item xs={12}>
               <TypographyAtoms variant="subtitle2" title={`Stok tersedia : ${stok}`} style={{ fontWeight: "bold", color: "green" }} />
@@ -424,7 +424,7 @@ const TroliKonsumen = () => {
         </Grid>
         <Grid item xs={12} md={12} lg={12}>
           <Paper elevation={3} style={{ padding: "10px" }}>
-            <TypographyAtoms variant="subtitle1" title={"Total Harga: Rp." + total} />
+            <TypographyAtoms variant="subtitle1" title={`Total Harga: Rp. ${total}.000`} />
             <ButtonAtoms
               classes={{
                 root: classes.button,

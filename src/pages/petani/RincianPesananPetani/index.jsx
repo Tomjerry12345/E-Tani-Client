@@ -199,7 +199,7 @@ console.log("datausers => ", dataUsers.namaLengkap)
                   {row.namaProduk.length > 1 ? <p>...</p> : null}
                 </TableCell>
                 <TableCell align="left">
-                  {`${row.harga[0]}`}
+                  {`${row.harga[0]}`}.000
                   {row.namaProduk.length > 1 ? <p>...</p> : null}
                 </TableCell>
                 <TableCell align="left">
@@ -211,7 +211,7 @@ console.log("datausers => ", dataUsers.namaLengkap)
                 <TableCell align="left">{row.statusPengiriman}</TableCell>
                 <TableCell align="left">{row.statusPenerima}</TableCell>
                 <TableCell align="left">{row.alamatPembeli}</TableCell>
-                <TableCell align="left">{row.rincian.gross_amount}</TableCell>
+                <TableCell align="left">{row.rincian.gross_amount}.000</TableCell>
                 <TableCell align="left">
                   <TextField
                     id="filled-select-currency-native"
@@ -267,7 +267,7 @@ console.log("datausers => ", dataUsers.namaLengkap)
                                   <TableCell component="th" scope="row">
                                     {data}
                                   </TableCell>
-                                  <TableCell>{row.harga[index]}</TableCell>
+                                  <TableCell>{row.harga[index]}.000</TableCell>
                                   <TableCell align="right">{row.jumlah[index]}</TableCell>
                                 </TableRow>
                               ) : null

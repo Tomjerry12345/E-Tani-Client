@@ -39,7 +39,7 @@ export default function DetailProduk() {
                 marginTop: "10px",
               }}
             >
-              <Typography variant="h5">{`Rp. ${data.harga}`}</Typography>
+              <Typography variant="h5">{`Rp. ${data.harga}`}.000</Typography>
             </Grid>
             <Grid
               item

@@ -176,7 +176,7 @@ export default function RincianPesanan(props) {
                   {row.namaProduk.length > 1 ? <p>...</p> : null}
                 </TableCell>
                 <TableCell component="th">
-                  {`${row.harga[0]}`}
+                  {`${row.harga[0]}.000`}
                   {row.namaProduk.length > 1 ? <p>...</p> : null}
                   {/* {row.harga.map((res, index) => `[${index + 1}] ${res} `)} */}
                 </TableCell>
@@ -193,7 +193,7 @@ export default function RincianPesanan(props) {
                   <TableCell align="left">{row.alamatPembeli}</TableCell>
                 </Fragment>
                 <Fragment>
-                  <TableCell align="left">{row.rincian.gross_amount}</TableCell>
+                  <TableCell align="left">{row.rincian.gross_amount}.000</TableCell>
                   <TableCell align="left">
                     <TextField
                       id="filled-select-currency-native"
@@ -252,7 +252,7 @@ export default function RincianPesanan(props) {
                                   <TableCell component="th" scope="row">
                                     {data}
                                   </TableCell>
-                                  <TableCell>{row.harga[index]}</TableCell>
+                                  <TableCell>{row.harga[index]}.000</TableCell>
                                   <TableCell align="right">{row.jumlah[index]}</TableCell>
                                 </TableRow>
                               ) : null

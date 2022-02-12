@@ -135,13 +135,17 @@ const TambahDanEditProduk = () => {
     data.append("namaKondisi", state.namaKondisi);
     data.append("deskripsiProduk", state.deskripsiProduk);
     data.append("kategori", state.kategori);
-    data.append("harga", state.harga);
+    data.append("harga", parseFloat(state.harga).toFixed(3));
     data.append("stok", state.stok);
     data.append("image", state.image);
     data.append("userNamePenjual", dataUsers.username);
     data.append("namaPenjual", dataUsers.namaLengkap);
     data.append("alamat", dataUsers.alamat);
     data.append("noHp", dataUsers.noHp);
+
+    // const test = parseFloat(state.harga)
+
+    // console.log(`data => ${typeof test}`)
     if (location.btnTitle === "Simpan") {
       const insertData = axios.post(`${baseUrl}/produk/createProduk`, data, {
         headers: {

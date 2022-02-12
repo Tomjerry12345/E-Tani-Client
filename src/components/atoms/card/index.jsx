@@ -193,7 +193,7 @@ const CardAtoms = (props) => {
             variant="body2"
             style={{ fontWeight: "bold", fontSize: "18px" }}
           >
-            Rp.{harga}/kg
+            Rp.{harga}.000/kg
           </Typography>
           <Typography
             variant="body2"
