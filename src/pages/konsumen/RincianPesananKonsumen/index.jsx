@@ -176,7 +176,7 @@ export default function RincianPesanan(props) {
                   {row.namaProduk.length > 1 ? <p>...</p> : null}
                 </TableCell>
                 <TableCell component="th">
-                  {`${row.harga[0]}.000`}
+                  {`${row.harga[0]}`}.000
                   {row.namaProduk.length > 1 ? <p>...</p> : null}
                   {/* {row.harga.map((res, index) => `[${index + 1}] ${res} `)} */}
                 </TableCell>

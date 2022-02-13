@@ -135,7 +135,7 @@ const TambahDanEditProduk = () => {
     data.append("namaKondisi", state.namaKondisi);
     data.append("deskripsiProduk", state.deskripsiProduk);
     data.append("kategori", state.kategori);
-    data.append("harga", parseFloat(state.harga).toFixed(3));
+    data.append("harga", parseFloat (state.harga).toFixed(3));
     data.append("stok", state.stok);
     data.append("image", state.image);
     data.append("userNamePenjual", dataUsers.username);
@@ -322,7 +322,7 @@ const TambahDanEditProduk = () => {
                   required
                   fullWidth
                   name="harga"
-                  label="Harga/kg"
+                  label="Harga/kg (contoh:10.000)"
                   type="number"
                   id="harga"
                   autoComplete="harga"
