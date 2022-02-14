@@ -1,8 +1,21 @@
-import { Grid, Checkbox, Paper, FormControl, FormControlLabel, Radio, RadioGroup, TextField } from "@material-ui/core";
+import {
+  Grid,
+  Checkbox,
+  Paper,
+  FormControl,
+  FormControlLabel,
+  Radio,
+  RadioGroup,
+  TextField,
+} from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { ButtonAtoms, TypographyAtoms } from "../../../components/atoms";
-import { makeStyles, ThemeProvider, createTheme } from "@material-ui/core/styles";
+import {
+  makeStyles,
+  ThemeProvider,
+  createTheme,
+} from "@material-ui/core/styles";
 import { green } from "@material-ui/core/colors";
 import axios from "axios";
 import { useHistory } from "react-router";
@@ -37,7 +50,21 @@ const Product = (props) => {
   const [checkBtn, setCheckBtn] = useState(null);
   let jumlah;
 
-  const { index, key, idProduk, id, image, namaProduk, deskripsiProduk, kategori, harga, stok, usernamePenjual, usernamePembeli, onTotal } = props;
+  const {
+    index,
+    key,
+    idProduk,
+    id,
+    image,
+    namaProduk,
+    deskripsiProduk,
+    kategori,
+    harga,
+    stok,
+    usernamePenjual,
+    usernamePembeli,
+    onTotal,
+  } = props;
 
   useEffect(() => {
     const harga1 = harga * jumlahBeli;
@@ -49,7 +76,19 @@ const Product = (props) => {
   const handleChange = (event) => {
     setChecked(event.target.checked);
     if (!checked) {
-      onTotal(total, index, true, false, namaProduk, harga, null, id, usernamePembeli, usernamePenjual, idProduk);
+      onTotal(
+        total,
+        index,
+        true,
+        false,
+        namaProduk,
+        harga,
+        null,
+        id,
+        usernamePembeli,
+        usernamePenjual,
+        idProduk
+      );
     } else {
       setJumlahBeli(0);
       setTotal(0);
@@ -77,7 +116,13 @@ const Product = (props) => {
       <Grid item xs={12} style={{ display: "flex" }}>
         <div>
           <ThemeProvider theme={theme}>
-            <Checkbox checked={checked} defaultChecked color="primary" inputProps={{ "aria-label": "secondary checkbox" }} onChange={handleChange} />{" "}
+            <Checkbox
+              checked={checked}
+              defaultChecked
+              color="primary"
+              inputProps={{ "aria-label": "secondary checkbox" }}
+              onChange={handleChange}
+            />{" "}
           </ThemeProvider>
         </div>
         <div style={{ marginLeft: 10 }}>
@@ -86,13 +131,25 @@ const Product = (props) => {
         <div style={{ marginLeft: 20 }}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <TypographyAtoms variant="subtitle1" style={{ fontWeight: "bold" }} title={namaProduk} />
+              <TypographyAtoms
+                variant="subtitle1"
+                style={{ fontWeight: "bold" }}
+                title={namaProduk}
+              />
             </Grid>
             <Grid item xs={12}>
-              <TypographyAtoms variant="subtitle2" title={`Rp. ${harga}.000`} style={{ fontWeight: "bold", color: "green" }} />
+              <TypographyAtoms
+                variant="subtitle2"
+                title={`Rp. ${harga}.000`}
+                style={{ fontWeight: "bold", color: "green" }}
+              />
             </Grid>
             <Grid item xs={12}>
-              <TypographyAtoms variant="subtitle2" title={`Stok tersedia : ${stok}`} style={{ fontWeight: "bold", color: "green" }} />
+              <TypographyAtoms
+                variant="subtitle2"
+                title={`Stok tersedia : ${stok}`}
+                style={{ fontWeight: "bold", color: "green" }}
+              />
             </Grid>
             <Grid item xs={12} style={{ display: "flex" }}>
               <ButtonAtoms
@@ -106,7 +163,10 @@ const Product = (props) => {
                 onClick={onClickKurang}
                 disabled={!checked}
               />
-              <TypographyAtoms title={jumlahBeli} style={{ margin: "8px 10px", fontWeight: "bold" }} />
+              <TypographyAtoms
+                title={jumlahBeli}
+                style={{ margin: "8px 10px", fontWeight: "bold" }}
+              />
               <ButtonAtoms
                 classes={{
                   root: classes.button,
@@ -151,7 +211,7 @@ const TroliKonsumen = () => {
     metodePembayaran: "cod",
     statusPembayaran: "",
     alamatPembeli: dataUsers.alamat,
-    noHp: dataUsers.noHp
+    noHp: dataUsers.noHp,
   });
 
   // console.log(`list id produk => ${dataTroli}`);
@@ -160,7 +220,7 @@ const TroliKonsumen = () => {
   useEffect(() => {
     const reducer = (accumulator, curr) => accumulator + curr;
     const totalHarga = listHarga.reduce(reducer);
-    setTotal(totalHarga);
+    setTotal(totalHarga.toFixed(3));
     if (totalHarga > 0) setDisableBtn(false);
     else setDisableBtn(true);
 
@@ -189,7 +249,19 @@ const TroliKonsumen = () => {
     }
   }, [listHarga, clickConfirm]);
 
-  const onTotal = (total, index, checked, isBtnClick, namaProduk, harga, jumlah, id, usernamePembeli, usernamePenjual, idProduk) => {
+  const onTotal = (
+    total,
+    index,
+    checked,
+    isBtnClick,
+    namaProduk,
+    harga,
+    jumlah,
+    id,
+    usernamePembeli,
+    usernamePenjual,
+    idProduk
+  ) => {
     if (total === 0) {
       const test = [];
       listHarga.map((res, i) => {
@@ -291,14 +363,28 @@ const TroliKonsumen = () => {
       });
       statusAlert("Pemesanan Berhasil");
     } else {
-      paymentGateway(listNamaProduk, listJumlah, listHarga, listUsernamePenjual, usernamePembeli);
+      paymentGateway(
+        listNamaProduk,
+        listJumlah,
+        listHarga,
+        listUsernamePenjual,
+        usernamePembeli
+      );
     }
   };
 
-  const paymentGateway = (listNamaProduk, listJumlah, listHarga, listUsernamePenjual, usernamePembeli) => {
+  const paymentGateway = (
+    listNamaProduk,
+    listJumlah,
+    listHarga,
+    listUsernamePenjual,
+    usernamePembeli
+  ) => {
+    const myTotal = total.replace(".", "");
+    console.log(`myTotal => ${myTotal}`);
     axios
       .post(`${baseUrl}/pembayaran/transaction`, {
-        total,
+        total: myTotal,
       })
       .then((res) => {
         const transactionToken = res.data.transactionToken;
@@ -388,7 +474,11 @@ const TroliKonsumen = () => {
 
   return (
     <div>
-      <TypographyAtoms style={{ marginTop: 5, marginBottom: 20, fontWeight: "bold" }} title={"Troli Saya"} variant="h5" />
+      <TypographyAtoms
+        style={{ marginTop: 5, marginBottom: 20, fontWeight: "bold" }}
+        title={"Troli Saya"}
+        variant="h5"
+      />
       <Grid container spacing={2}>
         <Grid item xs={12} md={12} lg={12}>
           {dataTroli
@@ -410,21 +500,52 @@ const TroliKonsumen = () => {
             : []}
         </Grid>
         <Grid item style={{ marginBottom: "8px" }}>
-        <TypographyAtoms style={{ marginTop: 0, marginBottom: 0, fontWeight: "" }} title={"Metode Pembayaran"} variant="h6" />
+          <TypographyAtoms
+            style={{ marginTop: 0, marginBottom: 0, fontWeight: "" }}
+            title={"Metode Pembayaran"}
+            variant="h6"
+          />
           <FormControl component="fieldset">
-                <RadioGroup aria-label="payment" name="payment" value={dataRincianPesanan.metodePembayaran} onChange={handleChange}>
-              <FormControlLabel value="cod" control={<Radio />} label="COD (Bayar di tempat)" />
-              <FormControlLabel value="digital" control={<Radio />} label="Pembayaran Digital" />
+            <RadioGroup
+              aria-label="payment"
+              name="payment"
+              value={dataRincianPesanan.metodePembayaran}
+              onChange={handleChange}
+            >
+              <FormControlLabel
+                value="cod"
+                control={<Radio />}
+                label="COD (Bayar di tempat)"
+              />
+              <FormControlLabel
+                value="digital"
+                control={<Radio />}
+                label="Pembayaran Digital"
+              />
             </RadioGroup>
           </FormControl>
         </Grid>
         <Grid item xs={12}>
-          <TypographyAtoms style={{ marginTop: 0, marginBottom: 0, fontWeight: "" }} title={"Alamat"} variant="h6" />
-          <TextField variant="outlined" required fullWidth value={dataRincianPesanan.alamatPembeli} name="alamat" onChange={handleChangeAlamat} />
+          <TypographyAtoms
+            style={{ marginTop: 0, marginBottom: 0, fontWeight: "" }}
+            title={"Alamat"}
+            variant="h6"
+          />
+          <TextField
+            variant="outlined"
+            required
+            fullWidth
+            value={dataRincianPesanan.alamatPembeli}
+            name="alamat"
+            onChange={handleChangeAlamat}
+          />
         </Grid>
         <Grid item xs={12} md={12} lg={12}>
           <Paper elevation={3} style={{ padding: "10px" }}>
-            <TypographyAtoms variant="subtitle1" title={`Total Harga: Rp. ${total}.000`} />
+            <TypographyAtoms
+              variant="subtitle1"
+              title={`Total Harga: Rp. ${total}`}
+            />
             <ButtonAtoms
               classes={{
                 root: classes.button,
