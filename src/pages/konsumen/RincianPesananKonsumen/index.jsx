@@ -9,7 +9,13 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import { useSelector } from "react-redux";
 import axios from "axios";
-import { Button, Grid, IconButton, TextField, useMediaQuery } from "@material-ui/core";
+import {
+  Button,
+  Grid,
+  IconButton,
+  TextField,
+  useMediaQuery,
+} from "@material-ui/core";
 import { TypographyAtoms } from "../../../components/atoms";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
@@ -68,7 +74,10 @@ export default function RincianPesanan(props) {
           if (res.metodePembayaran === "digital") {
             const res1 = await getStatusPembayaran(res.rincian);
             console.log(`res1=> ${JSON.stringify(res1.data.status)}`);
-            setTransactionStatus((currentArray) => [...currentArray, res1.data.status]);
+            setTransactionStatus((currentArray) => [
+              ...currentArray,
+              res1.data.status,
+            ]);
           } else {
             setTransactionStatus((currentArray) => [...currentArray, "-"]);
           }
@@ -111,7 +120,8 @@ export default function RincianPesanan(props) {
   const handledChange = (e, id, message) => {
     // setStatusPengiriman(e.target.value);
     console.log(`id ${id}`);
-    const status = message === "Sudah Diterima" ? "Belum Diterima" : "Sudah Diterima";
+    const status =
+      message === "Sudah Diterima" ? "Belum Diterima" : "Sudah Diterima";
     const data = {
       message: status,
       jenisAkun: dataUsers.kategori,
@@ -162,8 +172,16 @@ export default function RincianPesanan(props) {
               <TableRow key={index}>
                 {row.namaProduk.length > 1 ? (
                   <TableCell>
-                    <IconButton aria-label="expand row" size="small" onClick={() => handleClick(index)}>
-                      {open[index] ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+                    <IconButton
+                      aria-label="expand row"
+                      size="small"
+                      onClick={() => handleClick(index)}
+                    >
+                      {open[index] ? (
+                        <KeyboardArrowUpIcon />
+                      ) : (
+                        <KeyboardArrowDownIcon />
+                      )}
                     </IconButton>
                   </TableCell>
                 ) : (
@@ -193,16 +211,22 @@ export default function RincianPesanan(props) {
                   <TableCell align="left">{row.alamatPembeli}</TableCell>
                 </Fragment>
                 <Fragment>
-                  <TableCell align="left">{row.rincian.gross_amount}.000</TableCell>
+                  <TableCell align="left">{row.rincian.gross_amount}</TableCell>
                   <TableCell align="left">
                     <TextField
                       id="filled-select-currency-native"
-                      className={row.statusPenerima === "Sudah Diterima" ? classes.succesBtn : classes.errorBtn}
+                      className={
+                        row.statusPenerima === "Sudah Diterima"
+                          ? classes.succesBtn
+                          : classes.errorBtn
+                      }
                       select
                       label="Status Penerima"
                       value={row.statusPenerima}
                       // defaultValue={row.statusPenerima === "Sudah Diterima" ? "Belum Diterima" : "Sudah Diterima"}
-                      onChange={(e) => handledChange(e, row._id, row.statusPenerima)}
+                      onChange={(e) =>
+                        handledChange(e, row._id, row.statusPenerima)
+                      }
                       SelectProps={{
                         native: true,
                       }}
@@ -210,14 +234,25 @@ export default function RincianPesanan(props) {
                       style={{
                         width: "160px",
                       }}
-                      disabled={row.statusPengiriman === "Sudah Terkirim" ? false : true}
+                      disabled={
+                        row.statusPengiriman === "Sudah Terkirim" ? false : true
+                      }
                     >
                       <option value={"Sudah Diterima"}>Sudah Diterima</option>
                       <option value={"Belum Diterima"}>Belum Diterima</option>
                     </TextField>
                   </TableCell>
                   <TableCell align="right">
-                    <Button variant="contained" style={{ margin: "8px", background: "gray", color: "white", fontSize: "10px" }} onClick={() => deletePesanan(row._id)}>
+                    <Button
+                      variant="contained"
+                      style={{
+                        margin: "8px",
+                        background: "gray",
+                        color: "white",
+                        fontSize: "10px",
+                      }}
+                      onClick={() => deletePesanan(row._id)}
+                    >
                       Batalkan Pesanan
                     </Button>
                   </TableCell>
@@ -225,7 +260,10 @@ export default function RincianPesanan(props) {
               </TableRow>
               <TableRow>
                 {row.namaProduk.length > 1 ? (
-                  <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+                  <TableCell
+                    style={{ paddingBottom: 0, paddingTop: 0 }}
+                    colSpan={6}
+                  >
                     <Collapse in={open[index]} timeout="auto" unmountOnExit>
                       <Box margin={1}>
                         <Typography variant="h6" gutterBottom component="div">
@@ -235,13 +273,19 @@ export default function RincianPesanan(props) {
                           <TableHead>
                             <TableRow>
                               <TableCell>
-                                <TypographyAtoms variant="h6" title={"Nama Produk"} />
+                                <TypographyAtoms
+                                  variant="h6"
+                                  title={"Nama Produk"}
+                                />
                               </TableCell>
                               <TableCell>
                                 <TypographyAtoms variant="h6" title={"Harga"} />
                               </TableCell>
                               <TableCell align="right">
-                                <TypographyAtoms variant="h6" title={"Jumlah"} />
+                                <TypographyAtoms
+                                  variant="h6"
+                                  title={"Jumlah"}
+                                />
                               </TableCell>
                             </TableRow>
                           </TableHead>
@@ -253,7 +297,9 @@ export default function RincianPesanan(props) {
                                     {data}
                                   </TableCell>
                                   <TableCell>{row.harga[index]}.000</TableCell>
-                                  <TableCell align="right">{row.jumlah[index]}</TableCell>
+                                  <TableCell align="right">
+                                    {row.jumlah[index]}
+                                  </TableCell>
                                 </TableRow>
                               ) : null
                             )}

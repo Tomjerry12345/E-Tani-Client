@@ -10,7 +10,14 @@ import Paper from "@material-ui/core/Paper";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import Box from "@material-ui/core/Box";
-import { Button, Collapse, IconButton, TextField, Typography, useMediaQuery } from "@material-ui/core";
+import {
+  Button,
+  Collapse,
+  IconButton,
+  TextField,
+  Typography,
+  useMediaQuery,
+} from "@material-ui/core";
 import { baseUrl } from "../../../config/constant/Constant";
 import { TypographyAtoms } from "../../../components/atoms";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
@@ -53,7 +60,7 @@ export default function RincianPesanan() {
 
   // console.log(`md => ${md}`);
 
-console.log("datausers => ", dataUsers.namaLengkap)
+  console.log("datausers => ", dataUsers.namaLengkap);
   useEffect(() => {
     const request = new FormData();
     request.append("username", dataUsers.username);
@@ -71,7 +78,10 @@ console.log("datausers => ", dataUsers.namaLengkap)
           if (res.metodePembayaran === "digital") {
             const res1 = await getStatusPembayaran(res.rincian);
             // console.log(`res1=> ${JSON.stringify(res1.data.status)}`);
-            setTransactionStatus((currentArray) => [...currentArray, res1.data.status]);
+            setTransactionStatus((currentArray) => [
+              ...currentArray,
+              res1.data.status,
+            ]);
           } else {
             setTransactionStatus((currentArray) => [...currentArray, "-"]);
           }
@@ -92,7 +102,8 @@ console.log("datausers => ", dataUsers.namaLengkap)
     // const request = new FormData();
     // request.append("message", message);
     // request.append("jenisAkun", dataUsers.kategori);
-    const status = message === "Sudah Terkirim" ? "Belum Terkirim" : "Sudah Terkirim";
+    const status =
+      message === "Sudah Terkirim" ? "Belum Terkirim" : "Sudah Terkirim";
     const data = {
       message: status,
       jenisAkun: dataUsers.kategori,
@@ -141,7 +152,8 @@ console.log("datausers => ", dataUsers.namaLengkap)
     // const request = new FormData();
     // request.append("message", message);
     // request.append("jenisAkun", dataUsers.kategori);
-    const status = message === "Sudah Terkirim" ? "Belum Terkirim" : "Sudah Terkirim";
+    const status =
+      message === "Sudah Terkirim" ? "Belum Terkirim" : "Sudah Terkirim";
     const data = {
       message: status,
       jenisAkun: dataUsers.kategori,
@@ -187,8 +199,16 @@ console.log("datausers => ", dataUsers.namaLengkap)
               <TableRow key={index}>
                 {row.namaProduk.length > 1 ? (
                   <TableCell>
-                    <IconButton aria-label="expand row" size="small" onClick={() => handleClick(index)}>
-                      {open[index] ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+                    <IconButton
+                      aria-label="expand row"
+                      size="small"
+                      onClick={() => handleClick(index)}
+                    >
+                      {open[index] ? (
+                        <KeyboardArrowUpIcon />
+                      ) : (
+                        <KeyboardArrowDownIcon />
+                      )}
                     </IconButton>
                   </TableCell>
                 ) : (
@@ -204,22 +224,28 @@ console.log("datausers => ", dataUsers.namaLengkap)
                 </TableCell>
                 <TableCell align="left">
                   {`${row.jumlah[0]}`}
-                  {row.namaProduk.length > 1 ? <p>...</p> : null}  
+                  {row.namaProduk.length > 1 ? <p>...</p> : null}
                 </TableCell>
                 <TableCell align="left">{row.metodePembayaran}</TableCell>
                 <TableCell align="left">{transactionStatus[index]}</TableCell>
                 <TableCell align="left">{row.statusPengiriman}</TableCell>
                 <TableCell align="left">{row.statusPenerima}</TableCell>
                 <TableCell align="left">{row.alamatPembeli}</TableCell>
-                <TableCell align="left">{row.rincian.gross_amount}.000</TableCell>
+                <TableCell align="left">{row.rincian.gross_amount}</TableCell>
                 <TableCell align="left">
                   <TextField
                     id="filled-select-currency-native"
-                    className={row.statusPengiriman === "Sudah Terkirim" ? classes.succesBtn : classes.errorBtn}
+                    className={
+                      row.statusPengiriman === "Sudah Terkirim"
+                        ? classes.succesBtn
+                        : classes.errorBtn
+                    }
                     select
                     label="Status Penerima"
                     value={row.statusPengiriman}
-                    onChange={(e) => handleChange(e, row._id, row.statusPengiriman)}
+                    onChange={(e) =>
+                      handleChange(e, row._id, row.statusPengiriman)
+                    }
                     SelectProps={{
                       native: true,
                     }}
@@ -233,14 +259,26 @@ console.log("datausers => ", dataUsers.namaLengkap)
                   </TextField>
                 </TableCell>
                 <TableCell align="right">
-                  <Button variant="contained" style={{ margin: "8px", background: "Gray", color: "white", fontSize: "10px" }} onClick={() => deletePesanan(row._id)}>
+                  <Button
+                    variant="contained"
+                    style={{
+                      margin: "8px",
+                      background: "Gray",
+                      color: "white",
+                      fontSize: "10px",
+                    }}
+                    onClick={() => deletePesanan(row._id)}
+                  >
                     Batalkan Pesanan
                   </Button>
                 </TableCell>
               </TableRow>
               <TableRow>
                 {row.namaProduk.length > 1 ? (
-                  <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+                  <TableCell
+                    style={{ paddingBottom: 0, paddingTop: 0 }}
+                    colSpan={6}
+                  >
                     <Collapse in={open[index]} timeout="auto" unmountOnExit>
                       <Box margin={1}>
                         <Typography variant="h6" gutterBottom component="div">
@@ -250,13 +288,19 @@ console.log("datausers => ", dataUsers.namaLengkap)
                           <TableHead>
                             <TableRow>
                               <TableCell>
-                                <TypographyAtoms variant="h6" title={"Nama Produk"} />
+                                <TypographyAtoms
+                                  variant="h6"
+                                  title={"Nama Produk"}
+                                />
                               </TableCell>
                               <TableCell>
                                 <TypographyAtoms variant="h6" title={"Harga"} />
                               </TableCell>
                               <TableCell align="right">
-                                <TypographyAtoms variant="h6" title={"Jumlah"} />
+                                <TypographyAtoms
+                                  variant="h6"
+                                  title={"Jumlah"}
+                                />
                               </TableCell>
                             </TableRow>
                           </TableHead>
@@ -268,7 +312,9 @@ console.log("datausers => ", dataUsers.namaLengkap)
                                     {data}
                                   </TableCell>
                                   <TableCell>{row.harga[index]}.000</TableCell>
-                                  <TableCell align="right">{row.jumlah[index]}</TableCell>
+                                  <TableCell align="right">
+                                    {row.jumlah[index]}
+                                  </TableCell>
                                 </TableRow>
                               ) : null
                             )}
