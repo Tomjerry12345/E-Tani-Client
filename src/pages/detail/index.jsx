@@ -70,7 +70,7 @@ export default function DetailProduk() {
               }}
             >
               <Typography variant="h7">
-                Stok: <span style={{ color: "green" }}>{data.stok}</span>
+                Stok: <span style={{ color: "green" }}>{data.stok}/kg</span>
               </Typography>
             </Grid>
             <Grid
@@ -113,9 +113,34 @@ export default function DetailProduk() {
               item
               xs={12}
               style={{
-                marginTop: "20px",
+                marginTop: "10px",
               }}
-            ></Grid>
+            >
+              <Typography variant="h7">
+                Nomor Rekening:{" "}
+                <span style={{ color: "green" }}>{data.noRekening}</span>
+              </Typography>
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              style={{
+                marginTop: "10px",
+              }}
+            >
+              <Typography variant="h7">
+                Nama Bank:{" "}
+                <span style={{ color: "green" }}>{data.namaBank}</span>
+              </Typography>
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              style={{
+                marginTop: "10px",
+              }}
+            >
+            </Grid>
           </Grid>
         </Grid>
       </Grid>

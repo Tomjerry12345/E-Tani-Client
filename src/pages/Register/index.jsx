@@ -90,6 +90,8 @@ const Register = () => {
     alamat: "",
     kabupaten: "",
     kecamatan: "",
+    noRekening:"",
+    namaBank: "",
     kategori: "",
     image: "",
   });
@@ -122,11 +124,13 @@ const Register = () => {
     data.append("noHp", state.noHp);
     data.append("kabupaten", state.kabupaten);
     data.append("kecamatan", state.kecamatan);
+    data.append("noRekening", state.noRekening);
+    data.append("namaBank", state.namaBank);
     data.append("kategori", state.kategori);
     data.append("statusLogin", true);
     data.append("image", state.image);
 
-    console.log("data : ", data);
+    console.log("data : ", state);
 
     Axios.post(`${baseUrl}/auth/register`, data, {
       headers: {
@@ -235,7 +239,7 @@ const Register = () => {
               <Grid item xs={12}>
                 <TextField variant="outlined" required fullWidth name="alamat" value={state.alamat} onChange={handleChange} label="Alamat" type="alamat" id="alamat" />
               </Grid>
-
+              
               <Grid item xs={12}>
                 <FormControl variant="outlined">
                   <InputLabel htmlFor="kabupaten">Kabupaten</InputLabel>
@@ -276,7 +280,30 @@ const Register = () => {
                   </Select>
                 </FormControl>
               </Grid>
-
+              <Grid item xs={12}>
+              <TextField variant="outlined" required fullWidth name="noRekening" value={state.noRekening} onChange={handleChange} label="No. Rekening" type="number" id="noRekening" />
+              </Grid>
+              <Grid item xs={12}>
+                <FormControl variant="outlined">
+                  <InputLabel htmlFor="namaBank">Nama Bank</InputLabel>
+                  <Select
+                    native
+                    value={state.namaBank}
+                    onChange={handleChange}
+                    label="namaBank"
+                    inputProps={{
+                      name: "namaBank",
+                      id: "namaBank",
+                    }}
+                  >
+                    <option aria-label="None" value="" />
+                    <option value={"BNI"}>BNI</option>
+                    <option value={"BNI"}>BRI</option>
+                    <option value={"BCA"}>BCA</option>
+                    <option value={"Mandiri"}>Mandiri</option>
+                  </Select>
+                </FormControl>
+              </Grid>
               <Grid item xs={12}>
                 {/* Select molecules */}
                 <RadioMolecules title={"Kategori"} aria-label="kategori1" name="kategori" value={state.kategori} onChange={handleChange} mValue={"Petani"} mValue1={"Konsumen"} />

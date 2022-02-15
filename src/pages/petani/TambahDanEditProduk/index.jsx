@@ -142,6 +142,8 @@ const TambahDanEditProduk = () => {
     data.append("namaPenjual", dataUsers.namaLengkap);
     data.append("alamat", dataUsers.alamat);
     data.append("noHp", dataUsers.noHp);
+    data.append("noRekening", dataUsers.noRekening);
+    data.append("namaBank", dataUsers.namaBank);
 
     // const test = parseFloat(state.harga)
 

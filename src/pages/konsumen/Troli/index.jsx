@@ -147,7 +147,7 @@ const Product = (props) => {
             <Grid item xs={12}>
               <TypographyAtoms
                 variant="subtitle2"
-                title={`Stok tersedia : ${stok}`}
+                title={`Stok tersedia : ${stok}/kg`}
                 style={{ fontWeight: "bold", color: "green" }}
               />
             </Grid>

@@ -52,6 +52,8 @@ const CardAtoms = (props) => {
     namaPenjual,
     alamat,
     noHp,
+    noRekening,
+    namaBank,
     onDelete,
     userKategori,
     onAddToTroli,
@@ -71,6 +73,8 @@ const CardAtoms = (props) => {
     namaPenjual,
     alamat,
     noHp,
+    noRekening,
+    namaBank,
   };
 
   let button;

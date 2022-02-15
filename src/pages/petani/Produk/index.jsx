@@ -128,6 +128,8 @@ const Produk = () => {
                         namaPenjual={result.namaPenjual}
                         alamat={result.alamat}
                         noHp={result.noHp}
+                        noRekening={result.noRekening}
+                        namaBank={result.namaBank}
                         onDelete={onConfirmDelete}
                         userKategori={dataUsers.kategori}
                       />
