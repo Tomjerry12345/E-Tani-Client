@@ -124,13 +124,31 @@ export default function RincianPesanan() {
   };
 
   const deletePesanan = (id) => {
+    const data = {
+      message: "Pesanan di batalkan",
+      jenisAkun: dataUsers.kategori,
+    };
+
     axios
-      .delete(`${baseUrl}/rincian-pesanan/delete/${id}`)
+      .put(`${baseUrl}/rincian-pesanan/update/${id}`, {
+        data,
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+      })
       .then((result) => {
         console.log(`response => ${result}`);
         setRefresh(!refresh);
       })
       .catch((err) => console.log(err));
+
+    // axios
+    //   .delete(`${baseUrl}/rincian-pesanan/delete/${id}`)
+    //   .then((result) => {
+    //     console.log(`response => ${result}`);
+    //     setRefresh(!refresh);
+    //   })
+    //   .catch((err) => console.log(err));
   };
 
   const handleClick = (index) => {
@@ -219,7 +237,7 @@ export default function RincianPesanan() {
                   {row.namaProduk.length > 1 ? <p>...</p> : null}
                 </TableCell>
                 <TableCell align="left">
-                  {`${row.harga[0]}`}.000
+                  {`${row.harga[0]}`}00
                   {row.namaProduk.length > 1 ? <p>...</p> : null}
                 </TableCell>
                 <TableCell align="left">
@@ -311,7 +329,7 @@ export default function RincianPesanan() {
                                   <TableCell component="th" scope="row">
                                     {data}
                                   </TableCell>
-                                  <TableCell>{row.harga[index]}.000</TableCell>
+                                  <TableCell>{row.harga[index]}00</TableCell>
                                   <TableCell align="right">
                                     {row.jumlah[index]}
                                   </TableCell>
