@@ -94,13 +94,30 @@ export default function RincianPesanan(props) {
     });
 
   const deletePesanan = (id) => {
+    const data = {
+      message: "Pesanan di batalkan",
+      jenisAkun: dataUsers.kategori,
+    };
+
     axios
-      .delete(`${baseUrl}/rincian-pesanan/delete/${id}`)
+      .put(`${baseUrl}/rincian-pesanan/update/${id}`, {
+        data,
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+      })
       .then((result) => {
         console.log(`response => ${result}`);
         setRefresh(!refresh);
       })
       .catch((err) => console.log(err));
+    // axios
+    //   .delete(`${baseUrl}/rincian-pesanan/delete/${id}`)
+    //   .then((result) => {
+    //     console.log(`response => ${result}`);
+    //     setRefresh(!refresh);
+    //   })
+    //   .catch((err) => console.log(err));
   };
 
   const handleClick = (index) => {
@@ -194,7 +211,7 @@ export default function RincianPesanan(props) {
                   {row.namaProduk.length > 1 ? <p>...</p> : null}
                 </TableCell>
                 <TableCell component="th">
-                  {`${row.harga[0]}`}.000
+                  {`${row.harga[0]}`}00
                   {row.namaProduk.length > 1 ? <p>...</p> : null}
                   {/* {row.harga.map((res, index) => `[${index + 1}] ${res} `)} */}
                 </TableCell>
